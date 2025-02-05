@@ -1,0 +1,1348 @@
+﻿<Page x:Class="WpfApp4.page.usepage.MotionControlPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp4.page.usepage"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:WpfApp4.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Unloaded="Page_Unloaded"
+      Title="Page1">
+    
+    <Page.Resources>
+        <!-- 定义框架边框样式 -->
+        <Style x:Key="BorderStyle1" TargetType="Border">
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <!-- 定义边框样式2 -->
+        <Style x:Key="BorderStyle2" TargetType="Border">
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <!-- 定义边框样式3 -->
+        <Style x:Key="BorderStyle3" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Blue"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Margin" Value="15"/>
+        </Style>
+
+        <!-- 定义顶部导航栏样式 -->
+        <Style x:Key="TopNavBarStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <!-- 定义按钮样式 -->
+        <Style x:Key="TopNavigationButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignSelection}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignSelection}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <!-- 定义选中按钮样式 -->
+        <Style x:Key="SelectedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignSelection}"/>
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 左侧导航栏按钮样式 -->
+        <Style x:Key="LeftNavigationButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- 定义字体样式 -->
+        <Style x:Key="StatusTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0 4"/>
+        </Style>
+
+        <!--文本间隔样式-->
+        <Style x:Key="TextMargin" TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+
+        <!-- 添加其他已有的资源 -->
+        <converters:BoolToOpenCloseConverter x:Key="BoolToOpenCloseConverter"/>
+        <converters:RadioButtonConverter x:Key="RadioButtonConverter"/>
+        <converters:BoolToYesNoConverter x:Key="BoolToYesNoConverter"/>
+        <converters:BoolToOnOffConverter x:Key="BoolToOnOffConverter"/>
+        <converters:BooleanToBackgroundConverter x:Key="BooleanToBackgroundConverter"/>
+        <converters:BooleanToInverseBooleanConverter x:Key="BooleanToInverseBooleanConverter"/>
+        <converters:BoatStatusToColorConverter x:Key="BoatStatusToColorConverter"/>
+        <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" ></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--上半部分-->
+        <Grid Grid.Row="0"  Margin="20,10,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" ></ColumnDefinition>
+                <ColumnDefinition Width="450"></ColumnDefinition>
+                <ColumnDefinition Width="360"></ColumnDefinition>
+                <ColumnDefinition Width="380"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card Grid.Column="0" Margin="5,5,5,5">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="进出料门锁1:" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                        <TextBlock Text="{Binding MotionPlcData.InOutDoor1Lock, Converter={StaticResource BoolToOpenCloseConverter}}" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="进出料门锁2:" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                        <TextBlock Text="{Binding MotionPlcData.InOutDoor2Lock, Converter={StaticResource BoolToOpenCloseConverter}}" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="维修门锁1:" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                        <TextBlock Text="{Binding MotionPlcData.MaintenanceDoor1Lock, Converter={StaticResource BoolToOpenCloseConverter}}" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="维修门锁2:" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                        <TextBlock Text="{Binding MotionPlcData.MaintenanceDoor2Lock, Converter={StaticResource BoolToOpenCloseConverter}}" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3,10,3,3">
+                        <Button Command="{Binding ToggleBuzzerCommand}"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Width="140" Height="30"
+                                ToolTip="点击关闭蜂鸣器">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="VolumeHigh" Margin="0,0,8,0"/>
+                                <TextBlock Text="关闭蜂鸣器"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="1" Padding="5" Margin="8,0,8,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 左侧桨区卡片 -->
+                    <materialDesign:Card Grid.Column="0" Margin="2">
+                        <StackPanel>
+                            <TextBlock Text="桨区" FontSize="14" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+                            <UniformGrid Columns="3" Margin="5">
+                                <!-- 桨区1 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区1" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding PaddleAreas[0].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[0].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[0].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding PaddleAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区2 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区2" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding PaddleAreas[1].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[1].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[1].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding PaddleAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区3 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区3" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding PaddleAreas[2].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[2].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[2].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding PaddleAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区4 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区4" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding PaddleAreas[3].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[3].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[3].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding PaddleAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区5 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区5" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding PaddleAreas[4].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[4].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[4].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding PaddleAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区6 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding PaddleAreas[5].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[5].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[5].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding PaddleAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding PaddleAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                            </Border>
+                            </UniformGrid>
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <!-- 右侧暂存区卡片 -->
+                    <materialDesign:Card Grid.Column="1" Margin="2">
+                        <StackPanel>
+                            <TextBlock Text="暂存区" FontSize="14" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
+                            <UniformGrid Columns="3" Margin="5">
+                                <!-- 暂存区1 (原小车区) -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区1" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[0].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[0].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[0].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区2 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区2" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[1].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[1].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[1].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区3 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区3" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[2].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[2].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[2].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区4 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区4" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[3].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[3].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[3].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区5 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区5" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[4].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[4].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[4].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                        </StackPanel>
+                            </Border>
+                                <!-- 暂存区6 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[5].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[5].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[5].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                        </StackPanel>
+                            </Border>
+                            </UniformGrid>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="2" Margin="5,5,10,5" >
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <!-- 源位选择 -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="250">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="源位选择" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <RadioButton Content="暂存区1" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage1BoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区1}"/>
+                            <RadioButton Content="暂存区2" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage2BoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区2}"/>
+                            <RadioButton Content="暂存区3" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage3BoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区3}"/>
+                            <RadioButton Content="暂存区4" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage4BoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区4}"/>
+                            <RadioButton Content="暂存区5" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage5BoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区5}"/>
+                            <RadioButton Content="暂存区6" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage6BoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区6}"/>
+                            <RadioButton Content="桨区1" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[0].PaddleBoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区1}"/>
+                            <RadioButton Content="桨区2" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="SourcePosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[1].PaddleBoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区2}"/>
+                            <RadioButton Content="桨区3" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="SourcePosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[2].PaddleBoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区3}"/>
+                            <RadioButton Content="桨区4" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="SourcePosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[3].PaddleBoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区4}"/>
+                            <RadioButton Content="桨区5" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="SourcePosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[4].PaddleBoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区5}"/>
+                            <RadioButton Content="桨区6" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="SourcePosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[5].PaddleBoatSensor}"
+                                         IsChecked="{Binding SelectedSourcePosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区6}"/>
+                    </StackPanel>
+                    </ScrollViewer>
+                    
+                    <StackPanel Width="100" Margin="10,2,10,5" VerticalAlignment="Center">
+                        <Button Content="启动" 
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Height="30"
+                                Width="80"
+                                FontSize="14"
+                                Margin="0,2,0,5"
+                                Command="{Binding AutoModeStartCommand}"
+                                IsEnabled="{Binding IsAutoModeSelected}"/>
+                        <Button Content="暂停" 
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Height="30"
+                                Width="80"
+                                FontSize="14"
+                                Margin="0,2,0,5"
+                                Command="{Binding PauseCommand}"
+                                IsEnabled="{Binding IsPauseEnabled}"/>
+                        <Button Content="恢复" 
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Height="30"
+                                Width="80"
+                                FontSize="14"
+                                Margin="0,2,0,5"
+                                Command="{Binding ResumeCommand}"
+                                IsEnabled="{Binding IsResumeEnabled}"/>
+                        <Button Content="上一步" 
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Height="30"
+                                Width="80"
+                                FontSize="14"
+                                Margin="0,2,0,5"
+                                Command="{Binding PreviousStepCommand}"
+                                IsEnabled="{Binding IsStepEnabled}"/>
+                        <Button Content="下一步" 
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Height="30"
+                                Width="80"
+                                FontSize="14"
+                                Margin="0,2,0,5"
+                                Command="{Binding NextStepCommand}"
+                                IsEnabled="{Binding IsStepEnabled}"/>
+                    </StackPanel>
+                    
+                    <!-- 目标位置选择 -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="250">
+                    <StackPanel Margin="5">
+                            <TextBlock Text="目标位置" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <RadioButton Content="暂存区1" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage1BoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区1}"/>
+                            <RadioButton Content="暂存区2" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage2BoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区2}"/>
+                            <RadioButton Content="暂存区3" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage3BoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区3}"/>
+                            <RadioButton Content="暂存区4" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage4BoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区4}"/>
+                            <RadioButton Content="暂存区5" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage5BoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区5}"/>
+                            <RadioButton Content="暂存区6" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding MotionPlcData.Storage6BoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=暂存区6}"/>
+                            <RadioButton Content="桨区1" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[0].PaddleBoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区1}"/>
+                            <RadioButton Content="桨区2" 
+                                         Margin="0,2,0,5" 
+                                         GroupName="TargetPosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[1].PaddleBoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区2}"/>
+                            <RadioButton Content="桨区3" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="TargetPosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[2].PaddleBoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区3}"/>
+                            <RadioButton Content="桨区4" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="TargetPosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[3].PaddleBoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区4}"/>
+                            <RadioButton Content="桨区5" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="TargetPosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[4].PaddleBoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区5}"/>
+                            <RadioButton Content="桨区6" 
+                                         Margin="0,2,0,5" 
+                                     GroupName="TargetPosition"
+                                         IsEnabled="{Binding FurnacePlcDataDict[5].PaddleBoatSensor, Converter={StaticResource BooleanToInverseBooleanConverter}}"
+                                         IsChecked="{Binding SelectedTargetPosition, Converter={StaticResource RadioButtonConverter}, ConverterParameter=桨区6}"/>
+                    </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="3" Margin="8,5,10,5" Background="{DynamicResource PrimaryHueLightBrush}">
+                <StackPanel  Orientation="Horizontal" Margin="10,10,10,10">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="机械手移动" Margin="0,0,0,8"></TextBlock>
+                        <StackPanel Orientation="Vertical">
+                            <Button Content="水平上轴回原点" 
+                                   Command="{Binding MoveRobotHorizontal1ToOriginCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="水平上轴移动到左限位" 
+                                   Command="{Binding MoveRobotHorizontal1ToForwardLimitCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="水平下轴回原点" 
+                                   Command="{Binding MoveRobotHorizontal2ToOriginCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="水平下轴移动到右限位" 
+                                   Command="{Binding MoveRobotHorizontal2ToBackwardLimitCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="垂直轴回原点" 
+                                   Command="{Binding MoveRobotVerticalToOriginCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="垂直轴移动到上限位" 
+                                   Command="{Binding MoveRobotVerticalToUpperLimitCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="垂直轴移动到下限位" 
+                                   Command="{Binding MoveRobotVerticalToLowerLimitCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                            <Button Content="整体回原点" 
+                                   Command="{Binding MoveAllToOriginCommand}" 
+                                   Style="{StaticResource MaterialDesignFlatDarkBgButton}" 
+                                   Width="150" Height="24" 
+                                   Margin="0,0,0,4" 
+                                   FontSize="11" 
+                                   IsEnabled="{Binding IsJogModeSelected}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                        <TextBlock Text="桨移动" Margin="0,0,0,8"></TextBlock>
+                        <StackPanel Orientation="Vertical">
+                            <!-- 桨1操作 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <TextBlock Text="桨1:" Width="25" VerticalAlignment="Center"/>
+                                <Button Content="进入炉内" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        Margin="0,4,4,0"
+                                        FontSize="11"
+                                        Command="{Binding MoveIntoFurnaceCommand}"
+                                        CommandParameter="1"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                                <Button Content="移动出炉" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        FontSize="11"
+                                        Command="{Binding MoveOutFurnaceCommand}"
+                                        CommandParameter="1"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                            </StackPanel>
+                            <!-- 桨2操作 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <TextBlock Text="桨2:" Width="25" VerticalAlignment="Center"/>
+                                <Button Content="进入炉内" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        Margin="0,4,4,0"
+                                        FontSize="11"
+                                        Command="{Binding MoveIntoFurnaceCommand}"
+                                        CommandParameter="2"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                                <Button Content="移动出炉" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        FontSize="11"
+                                        Command="{Binding MoveOutFurnaceCommand}"
+                                        CommandParameter="2"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                            </StackPanel>
+                            <!-- 桨3操作 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <TextBlock Text="桨3:" Width="25" VerticalAlignment="Center"/>
+                                <Button Content="进入炉内" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        Margin="0,4,4,0"
+                                        FontSize="11"
+                                        Command="{Binding MoveIntoFurnaceCommand}"
+                                        CommandParameter="3"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                                <Button Content="移动出炉" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        FontSize="11"
+                                        Command="{Binding MoveOutFurnaceCommand}"
+                                        CommandParameter="3"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                            </StackPanel>
+                            <!-- 桨4操作 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <TextBlock Text="桨4:" Width="25" VerticalAlignment="Center"/>
+                                <Button Content="进入炉内" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        Margin="0,4,4,0"
+                                        FontSize="11"
+                                        Command="{Binding MoveIntoFurnaceCommand}"
+                                        CommandParameter="4"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                                <Button Content="移动出炉" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        FontSize="11"
+                                        Command="{Binding MoveOutFurnaceCommand}"
+                                        CommandParameter="4"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                            </StackPanel>
+                            <!-- 桨5操作 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <TextBlock Text="桨5:" Width="25" VerticalAlignment="Center"/>
+                                <Button Content="进入炉内" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        Margin="0,4,4,0"
+                                        FontSize="11"
+                                        Command="{Binding MoveIntoFurnaceCommand}"
+                                        CommandParameter="5"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                                <Button Content="移动出炉" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        FontSize="11"
+                                        Command="{Binding MoveOutFurnaceCommand}"
+                                        CommandParameter="5"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                            </StackPanel>
+                            <!-- 桨6操作 -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <TextBlock Text="桨6:" Width="25" VerticalAlignment="Center"/>
+                                <Button Content="进入炉内" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        Margin="0,4,4,0"
+                                        FontSize="11"
+                                        Command="{Binding MoveIntoFurnaceCommand}"
+                                        CommandParameter="6"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                                <Button Content="移动出炉" 
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Width="75" Height="24"
+                                        FontSize="11"
+                                        Command="{Binding MoveOutFurnaceCommand}"
+                                        CommandParameter="6"
+                                        IsEnabled="{Binding IsJogModeSelected}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            <!--模式切换区域-->
+            <materialDesign:Card Grid.Column="4" Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="模式切换" FontSize="14" FontWeight="Bold" Margin="5,5,5,10"/>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{Binding AutoModeCommand}"
+                            Width="80" Height="30" Margin="2"
+                            Background="{Binding IsAutoModeSelected, Converter={StaticResource BooleanToBackgroundConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Robot" Width="25" Height="16" Margin="0,0,4,0" 
+                                                   VerticalAlignment="Center"/>
+                            <TextBlock Text="自动模式" FontSize="11" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{Binding JogModeCommand}"
+                            Width="80" Height="30" Margin="2"
+                            Background="{Binding IsJogModeSelected, Converter={StaticResource BooleanToBackgroundConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="HandBackRight" Width="25" Height="16" Margin="0,0,4,0"
+                                                   VerticalAlignment="Center"/>
+                            <TextBlock Text="点动模式" FontSize="11" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{Binding ValueModeCommand}"
+                            Width="80" Height="30" Margin="2"
+                            Background="{Binding IsValueModeSelected, Converter={StaticResource BooleanToBackgroundConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Calculator" Width="25" Height="16" Margin="0,0,4,0"
+                                                   VerticalAlignment="Center"/>
+                            <TextBlock Text="数值模式" FontSize="11" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    </Button>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+        
+        <!--下半部分-->
+        <Grid Grid.Row="1" Margin="20,10,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical"  Grid.Column="0" Margin="5,10,10,10" >
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="机械手传感器检测区" FontSize="14" FontWeight="Bold" Margin="5,5,5,5"></TextBlock>
+                    <materialDesign:Card Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                    <TextBlock Text="水平上轴前限位:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平上轴后限位:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平上轴原点:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平下轴前限位:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平下轴后限位:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平下轴原点:" Margin="2,5,2,5"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding MotionPlcData.RobotHorizontal1ForwardLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                        <TextBlock Text="{Binding MotionPlcData.RobotHorizontal1BackwardLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                        <TextBlock Text="{Binding MotionPlcData.RobotHorizontal1OriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                        <TextBlock Text="{Binding MotionPlcData.RobotHorizontal2ForwardLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                        <TextBlock Text="{Binding MotionPlcData.RobotHorizontal2BackwardLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                        <TextBlock Text="{Binding MotionPlcData.RobotHorizontal2OriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <TextBlock Text="垂直轴上限位:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="垂直轴下限位:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="垂直轴原点:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平上轴运动:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="水平下轴运动:" Margin="2,5,2,5"/>
+                                    <TextBlock Text="垂直轴运动:" Margin="2,5,2,5"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding MotionPlcData.RobotVerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                    <TextBlock Text="{Binding MotionPlcData.RobotVerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                    <TextBlock Text="{Binding MotionPlcData.RobotVerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                    <TextBlock Text="{Binding MotionPlcData.Horizontal1Moving, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                    <TextBlock Text="{Binding MotionPlcData.Horizontal2Moving, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                    <TextBlock Text="{Binding MotionPlcData.VerticalMoving, Converter={StaticResource BoolToYesNoConverter}}" Margin="0,5,15,5"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <!-- 机械手数值显示区 -->
+                    <TextBlock Text="机械手数值显示区" FontSize="14" FontWeight="Bold" Margin="5,5,5,5"></TextBlock>
+                    <materialDesign:Card>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <!-- 轴位置值显示 -->
+                            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="当前位置" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="水平上轴：" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding MotionPlcData.RobotHorizontal1Position}" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="水平下轴：" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding MotionPlcData.RobotHorizontal2Position}" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="垂直轴：" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding MotionPlcData.RobotVerticalPosition}" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <!-- 安全距离值显示 -->
+                            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                                <TextBlock Text="垂直轴安全距离" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="位置1：" VerticalAlignment="Center" Width="45"/>
+                                    <TextBlock Text="-400" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="~" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="-200" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="位置2：" VerticalAlignment="Center" Width="45"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="~" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="200" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="位置3：" VerticalAlignment="Center" Width="45"/>
+                                    <TextBlock Text="400" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="~" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="600" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="位置4：" VerticalAlignment="Center" Width="45"/>
+                                    <TextBlock Text="800" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="~" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="1000" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="位置5：" VerticalAlignment="Center" Width="45"/>
+                                    <TextBlock Text="1200" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="~" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="1400" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="位置6：" VerticalAlignment="Center" Width="45"/>
+                                    <TextBlock Text="1600" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="~" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="1800" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                            </StackPanel>
+                            <!-- 限位和原点数值显示 -->
+                            <StackPanel Orientation="Vertical" Margin="0,0,20,0">
+                                <TextBlock Text="限位和原点数值" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <!-- 水平上轴 -->
+                                <TextBlock Text="水平上轴" FontWeight="Bold" Margin="0,5,0,2"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="前限位：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="后限位：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="原点：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- 水平下轴 -->
+                                <TextBlock Text="水平下轴" FontWeight="Bold" Margin="0,5,0,2"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="前限位：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="后限位：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="原点：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- 垂直轴 -->
+                                <TextBlock Text="垂直轴" FontWeight="Bold" Margin="0,5,0,2"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="上限位：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="下限位：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="原点：" VerticalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="0" VerticalAlignment="Center" Margin="5,0"/>
+                                    <TextBlock Text="mm" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+            </StackPanel>
+            <!-- 桨台数值显示区 -->
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <TextBlock Text="桨台数值显示区" FontSize="14" FontWeight="Bold" Margin="5,5,5,5"/>
+                        <materialDesign:Card Margin="5,0,5,5">
+                                <StackPanel Orientation="Vertical" Margin="10">
+                                <!-- 桨台1 -->
+                                <StackPanel Orientation="Vertical" Margin="0,5">
+                                        <TextBlock Text="桨台1" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                                            <TextBlock Text="水平轴：" Width="50"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].HorizontalPosition}" Margin="5,0"/>
+                                            <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                            <TextBlock Text="限位：" Width="40"/>
+                                            <TextBlock Text="上：" Width="20"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].HorizontalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                            <TextBlock Text="下：" Width="20"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].HorizontalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                            <TextBlock Text="原：" Width="20"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].HorizontalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                                            <TextBlock Text="垂直轴：" Width="50"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].VerticalPosition}" Margin="5,0"/>
+                                            <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                            <TextBlock Text="限位：" Width="40"/>
+                                            <TextBlock Text="上：" Width="20"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].VerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                            <TextBlock Text="下：" Width="20"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].VerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                            <TextBlock Text="原：" Width="20"/>
+                                            <TextBlock Text="{Binding FurnacePlcDataDict[0].VerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        </StackPanel>
+                                </StackPanel>
+
+                                <!-- 桨台2 -->
+                                <StackPanel Orientation="Vertical" Margin="0,5">
+                                    <TextBlock Text="桨台2" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="水平轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].HorizontalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].HorizontalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].HorizontalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].HorizontalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="垂直轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].VerticalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].VerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].VerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[1].VerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- 桨台3 -->
+                                <StackPanel Orientation="Vertical" Margin="0,5">
+                                    <TextBlock Text="桨台3" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="水平轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].HorizontalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].HorizontalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].HorizontalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].HorizontalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="垂直轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].VerticalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].VerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].VerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[2].VerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- 桨台4 -->
+                                <StackPanel Orientation="Vertical" Margin="0,5">
+                                    <TextBlock Text="桨台4" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="水平轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].HorizontalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].HorizontalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].HorizontalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].HorizontalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="垂直轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].VerticalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].VerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].VerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[3].VerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- 桨台5 -->
+                                <StackPanel Orientation="Vertical" Margin="0,5">
+                                    <TextBlock Text="桨台5" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="水平轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].HorizontalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].HorizontalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].HorizontalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].HorizontalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="垂直轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].VerticalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].VerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].VerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[4].VerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- 桨台6 -->
+                                <StackPanel Orientation="Vertical" Margin="0,5">
+                                    <TextBlock Text="桨台6" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="水平轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].HorizontalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].HorizontalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].HorizontalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].HorizontalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="垂直轴：" Width="50"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].VerticalPosition}" Margin="5,0"/>
+                                        <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                        <TextBlock Text="限位：" Width="40"/>
+                                        <TextBlock Text="上：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].VerticalUpperLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="下：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].VerticalLowerLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                        <TextBlock Text="原：" Width="20"/>
+                                        <TextBlock Text="{Binding FurnacePlcDataDict[5].VerticalOriginLimit, Converter={StaticResource BoolToYesNoConverter}}" Width="15"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                    </materialDesign:Card>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="3,3,10,3">
+                <!-- 桨台垂直轴安全距离显示区 -->
+                <TextBlock Text="桨台垂直轴安全距离" FontSize="14" FontWeight="Bold" Margin="5,5,5,5"/>
+                <materialDesign:Card>
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <!-- 桨台1 -->
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="桨台1" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="垂直轴安全距离：" Width="100"/>
+                                <TextBlock Text="-400" Margin="5,0"/>
+                                <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                <TextBlock Text="~" Margin="0,0,10,0"/>
+                                <TextBlock Text="-200" Margin="0,0,5,0"/>
+                                <TextBlock Text="mm"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 桨台2 -->
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="桨台2" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="垂直轴安全距离：" Width="100"/>
+                                <TextBlock Text="0" Margin="5,0"/>
+                                <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                <TextBlock Text="~" Margin="0,0,10,0"/>
+                                <TextBlock Text="200" Margin="0,0,5,0"/>
+                                <TextBlock Text="mm"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 桨台3 -->
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="桨台3" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="垂直轴安全距离：" Width="100"/>
+                                <TextBlock Text="400" Margin="5,0"/>
+                                <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                <TextBlock Text="~" Margin="0,0,10,0"/>
+                                <TextBlock Text="600" Margin="0,0,5,0"/>
+                                <TextBlock Text="mm"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 桨台4 -->
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="桨台4" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="垂直轴安全距离：" Width="100"/>
+                                <TextBlock Text="800" Margin="5,0"/>
+                                <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                <TextBlock Text="~" Margin="0,0,10,0"/>
+                                <TextBlock Text="1000" Margin="0,0,5,0"/>
+                                <TextBlock Text="mm"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 桨台5 -->
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="桨台5" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="垂直轴安全距离：" Width="100"/>
+                                <TextBlock Text="1200" Margin="5,0"/>
+                                <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                <TextBlock Text="~" Margin="0,0,10,0"/>
+                                <TextBlock Text="1400" Margin="0,0,5,0"/>
+                                <TextBlock Text="mm"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 桨台6 -->
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <TextBlock Text="桨台6" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="垂直轴安全距离：" Width="100"/>
+                                <TextBlock Text="1600" Margin="5,0"/>
+                                <TextBlock Text="mm" Margin="0,0,10,0"/>
+                                <TextBlock Text="~" Margin="0,0,10,0"/>
+                                <TextBlock Text="1800" Margin="0,0,5,0"/>
+                                <TextBlock Text="mm"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+            <StackPanel Grid.Column="3" Margin="3,3,10,3">
+                <!-- 机械手精确控制 -->
+                <TextBlock Text="机械手精确控制" FontSize="14" FontWeight="Bold" Margin="5"></TextBlock>
+                <materialDesign:Card Margin="0,0,0,10">
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,5">
+                            <TextBlock Text="轴选择" FontSize="12" Margin="0,0,0,5"></TextBlock>
+                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="AxisSelect" Content="水平一轴" IsChecked="{Binding IsHorizontal1Selected}" Margin="0,0,15,0" IsEnabled="{Binding IsValueModeSelected}"/>
+                                    <RadioButton GroupName="AxisSelect" Content="水平二轴" IsChecked="{Binding IsHorizontal2Selected}" Margin="0" IsEnabled="{Binding IsValueModeSelected}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <RadioButton GroupName="AxisSelect" Content="垂直轴" IsChecked="{Binding IsVerticalSelected}" Margin="0" IsEnabled="{Binding IsValueModeSelected}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,5">
+                            <TextBlock Text="速度选择" FontSize="12" Margin="0,0,0,5"></TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                <RadioButton GroupName="SpeedSelect" Content="快速" IsChecked="{Binding IsHighSpeedSelected}" Margin="0,0,15,0" IsEnabled="{Binding IsValueModeSelected}"/>
+                                <RadioButton GroupName="SpeedSelect" Content="慢速" IsChecked="{Binding IsLowSpeedSelected}" Margin="0" IsEnabled="{Binding IsValueModeSelected}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
+                            <TextBlock Text="位置值：" VerticalAlignment="Center"/>
+                            <TextBox Width="60" Height="25" Text="{Binding InputValue}" Margin="5,0,0,0" IsEnabled="{Binding IsValueModeSelected}"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <Button Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                                Content="启动" 
+                                Command="{Binding StartMotionCommand}"
+                                Height="30"
+                                Width="80"
+                                IsEnabled="{Binding IsValueModeSelected}"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!-- 桨精确控制 -->
+                <TextBlock Text="桨精确控制" FontSize="14" FontWeight="Bold" Margin="5"></TextBlock>
+                <materialDesign:Card>
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <!-- 桨台选择 -->
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,5">
+                            <TextBlock Text="桨台选择" FontSize="12" Margin="0,0,0,5"/>
+                            <ComboBox Width="120" 
+                                     Margin="10,0,0,0" 
+                                     SelectedIndex="{Binding SelectedPaddleIndex}"
+                                     IsEnabled="{Binding IsValueModeSelected}">
+                                <ComboBoxItem Content="桨台1"/>
+                                <ComboBoxItem Content="桨台2"/>
+                                <ComboBoxItem Content="桨台3"/>
+                                <ComboBoxItem Content="桨台4"/>
+                                <ComboBoxItem Content="桨台5"/>
+                                <ComboBoxItem Content="桨台6"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,5">
+                            <TextBlock Text="轴选择" FontSize="12" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                <RadioButton GroupName="ClampAxisSelect" Content="水平轴" IsChecked="{Binding IsClampHorizontalSelected}" Margin="0,0,15,0" IsEnabled="{Binding IsValueModeSelected}"/>
+                                <RadioButton GroupName="ClampAxisSelect" Content="垂直轴" IsChecked="{Binding IsClampVerticalSelected}" Margin="0" IsEnabled="{Binding IsValueModeSelected}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,5">
+                            <TextBlock Text="速度选择" FontSize="12" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                <RadioButton GroupName="ClampSpeedSelect" Content="快速" IsChecked="{Binding IsClampHighSpeedSelected}" Margin="0,0,15,0" IsEnabled="{Binding IsValueModeSelected}"/>
+                                <RadioButton GroupName="ClampSpeedSelect" Content="慢速" IsChecked="{Binding IsClampLowSpeedSelected}" Margin="0" IsEnabled="{Binding IsValueModeSelected}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
+                            <TextBlock Text="位置值：" VerticalAlignment="Center"/>
+                            <TextBox Width="60" Height="25" Text="{Binding ClampInputValue}" Margin="5,0,0,0" IsEnabled="{Binding IsValueModeSelected}"/>
+                            <TextBlock Text="mm" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <Button Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                                Content="启动" 
+                                Command="{Binding StartClampMotionCommand}"
+                                Height="30"
+                                Width="80"
+                                IsEnabled="{Binding IsValueModeSelected}"/>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+
+            <StackPanel Grid.Column="4" Margin="3,3,3,3">
+                <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
+                    <TextBlock Text="事件记录" FontSize="14" FontWeight="Bold"/>
+                    <Button Content="清空" 
+                            Command="{Binding ClearEventLogsCommand}"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Margin="20,0,0,0"
+                            Height="25"
+                            Width="60"
+                            FontSize="12"/>
+                </StackPanel>
+                <Border BorderBrush="#FFD0D0D0" 
+                        BorderThickness="1" 
+                        CornerRadius="3"
+                        Height="400"
+                        Background="White">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding EventLogs}" Margin="5">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="{Binding Time, StringFormat=HH:mm:ss}" 
+                                                 Margin="0,0,10,0"
+                                                 Foreground="#FF666666"/>
+                                        <TextBlock Text="{Binding Message}" 
+                                                 TextWrapping="Wrap"
+                                                 Foreground="#FF333333"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
