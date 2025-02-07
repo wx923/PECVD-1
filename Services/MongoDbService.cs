@@ -18,7 +18,10 @@ namespace WpfApp4.Services
             new Lazy<MongoDbService>(() => new MongoDbService());
         public static MongoDbService Instance => _instance.Value;
 
+        //代表数据库
         private readonly IMongoDatabase _database;
+
+        //代表数据库里面的集合
         private readonly IMongoCollection<Boat> _boats;
         private readonly IMongoCollection<BoatMonitor> _monitors;
         private readonly IMongoCollection<ProcessExcelModel> _processExcelCollection;
@@ -50,7 +53,7 @@ namespace WpfApp4.Services
 
                 _database = client.GetDatabase("PECVD");
 
-                // 确保集合存在
+                // 确保集合存在，如果过集合不存在，则创建集合
                 var collections = _database.ListCollectionNames().ToList();
                 if (!collections.Contains("Boats"))
                     _database.CreateCollection("Boats");
@@ -63,6 +66,7 @@ namespace WpfApp4.Services
                 if (!collections.Contains("FurnaceData"))
                     _database.CreateCollection("FurnaceData");
 
+                //获取集合
                 _boats = _database.GetCollection<Boat>("Boats");
                 _monitors = _database.GetCollection<BoatMonitor>("BoatMonitors");
                 _processExcelCollection = _database.GetCollection<ProcessExcelModel>("ProcessExcel");
@@ -498,6 +502,24 @@ namespace WpfApp4.Services
             catch (Exception ex)
             {
                 throw new Exception($"从集合 {collectionName} 获取工艺数据失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 检查数据库连接状态
+        /// </summary>
+        /// <returns>如果连接正常返回true，否则返回false</returns>
+        public async Task<bool> CheckConnectionAsync()
+        {
+            try
+            {
+                // 使用现有的数据库实例执行一个简单的命令来测试连接
+                await _database.RunCommandAsync<BsonDocument>(new BsonDocument("ping", 1));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }
