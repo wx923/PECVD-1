@@ -263,20 +263,6 @@ namespace WpfApp4.Services
             }
         }
 
-        // 根据舟号获取监控对象
-        public async Task<BoatMonitor> GetBoatMonitorByNumberAsync(string boatNumber)
-        {
-            try
-            {
-                return await _monitors.Find(x => x.BoatNumber == boatNumber).FirstOrDefaultAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"根据舟号获取监控对象失败: {ex.Message}");
-                return null;
-            }
-        }
-
         // 添加监控对象
         public async Task<bool> AddBoatMonitorAsync(BoatMonitor monitor)
         {
@@ -327,18 +313,7 @@ namespace WpfApp4.Services
         }
         #endregion
 
-        #region Process Excel Operations
-        public async Task<List<ProcessExcelModel>> GetAllProcessExcelAsync()
-        {
-            try
-            {
-                return await _processExcelCollection.Find(_ => true).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"获取工艺Excel数据失败: {ex.Message}");
-            }
-        }
+        #region 工艺文件和工艺文件名操作
 
         public async Task UpdateProcessExcelAsync(string fileId, List<ProcessExcelModel> processes)
         {
@@ -365,8 +340,6 @@ namespace WpfApp4.Services
                 throw new Exception($"更新工艺Excel数据失败: {ex.Message}");
             }
         }
-        #endregion
-        #region 工艺文件集合更新工艺集合方法
         // 保存新的工艺文件
         public async Task<string> SaveProcessFileAsync(string fileName, string description, List<ProcessExcelModel> data)
         {
@@ -424,7 +397,7 @@ namespace WpfApp4.Services
                 await _processFileCollection.DeleteOneAsync(x => x.Id == fileId);
             }
         }
-
+        //判断是否有重复的集合名
         public async Task<bool> CollectionExistsAsync(string collectionName)
         {
             try
