@@ -27,11 +27,14 @@ namespace WpfApp4.Services
         private readonly IMongoCollection<ProcessExcelModel> _processExcelCollection;
         private readonly IMongoCollection<ProcessFileInfo> _processFileCollection;
         private readonly IMongoCollection<FurnaceData> _furnaceCollection;
+        private readonly IMongoCollection<Position> _positions;
 
         // 全局数据集合
         public ObservableCollection<Boat> GlobalBoats { get; private set; }
         public ObservableCollection<BoatMonitor> GlobalMonitors { get; private set; }
         public ObservableCollection<ProcessFileInfo> GlobalProcessFiles { get; private set; }
+
+        public ObservableCollection<Position> GlobalPositions { get; private set; }
 
         private MongoDbService()
         {
@@ -39,6 +42,7 @@ namespace WpfApp4.Services
             GlobalBoats = new ObservableCollection<Boat>();
             GlobalMonitors = new ObservableCollection<BoatMonitor>();
             GlobalProcessFiles = new ObservableCollection<ProcessFileInfo>();
+            GlobalPositions = new ObservableCollection<Position>();
 
             try
             {
@@ -65,6 +69,10 @@ namespace WpfApp4.Services
                     _database.CreateCollection("ProcessFiles");
                 if (!collections.Contains("FurnaceData"))
                     _database.CreateCollection("FurnaceData");
+                if (!collections.Contains("Positions"))
+                {
+                    _database.CreateCollection("Positions");
+                }
 
                 //获取集合
                 _boats = _database.GetCollection<Boat>("Boats");
@@ -72,7 +80,7 @@ namespace WpfApp4.Services
                 _processExcelCollection = _database.GetCollection<ProcessExcelModel>("ProcessExcel");
                 _processFileCollection = _database.GetCollection<ProcessFileInfo>("ProcessFiles");
                 _furnaceCollection = _database.GetCollection<FurnaceData>("FurnaceData");
-
+                _positions = _database.GetCollection<Position>("Positions");
                 // 初始化完成后加载数据
                 _ = LoadAllDataAsync();
             }
@@ -91,12 +99,13 @@ namespace WpfApp4.Services
                 GlobalBoats.Clear();
                 GlobalMonitors.Clear();
                 GlobalProcessFiles.Clear();
+                GlobalPositions.Clear();
 
                 // 从数据库加载数据
                 var boats = await _boats.Find(_ => true).ToListAsync();
                 var monitors = await _monitors.Find(_ => true).ToListAsync();
                 var processFiles = await _processFileCollection.Find(_ => true).ToListAsync();
-
+                var positions= await _positions.Find(_ => true).ToListAsync();
                 // 更新集合并添加属性变更事件
                 foreach (var boat in boats)
                 {
@@ -115,12 +124,20 @@ namespace WpfApp4.Services
                     processFile.PropertyChanged += OnProcessFilePropertyChanged;
                     GlobalProcessFiles.Add(processFile);
                 }
+
+                foreach (var position in positions)
+                {
+                    position.PropertyChanged += OnPositionPropertyChanged;
+                    GlobalPositions.Add(position);
+                }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"加载数据失败: {ex.Message}");
             }
         }
+
 
         #region 属性变更事件处理
         private async void OnBoatPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -165,6 +182,21 @@ namespace WpfApp4.Services
                 catch (Exception ex)
                 {
                     MessageBox.Show($"更新工艺文件信息失败: {ex.Message}");
+                }
+            }
+        }
+
+        private async void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is Position postion)
+            {
+                try
+                {
+                    await UpdatePositionAsync(postion);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"更新位置数据失败: {ex.Message}");
                 }
             }
         }
@@ -495,5 +527,38 @@ namespace WpfApp4.Services
                 return false;
             }
         }
+
+
+
+        #region 坐标相关操作
+        public async Task<bool> UpdatePositionAsync(Position position)
+        {
+            try
+            {
+                // 查找现有记录
+                var filter = Builders<Position>.Filter.Eq("location", position.location);
+                var existingBoat = await _positions.Find(filter).FirstOrDefaultAsync();
+
+                if (existingBoat != null)
+                {
+                    // 更新记录
+                    var updateFilter = Builders<Position>.Filter.Eq("Number", position.location);
+                    var result = await _positions.ReplaceOneAsync(updateFilter, position);
+                    return result.ModifiedCount > 0;
+                }
+                else
+                {
+                    // 如果是新记录，生成新的 id
+                    await _positions.InsertOneAsync(position);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"更新舟对象失败: {ex.Message}");
+                return false;
+            }
+        }
+        #endregion
     }
 }

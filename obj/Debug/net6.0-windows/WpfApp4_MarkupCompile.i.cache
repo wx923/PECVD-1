@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\App.xaml
-10424951638
+111429283102
 
-46-683480769
+492040242648
 232735254823
-MainWindow.xaml;page\usepage\AlarmPage.xaml;page\usepage\BoatManagementPage.xaml;page\usepage\ControlInterfacePage.xaml;page\usepage\GlobalMonitoringPage.xaml;page\usepage\HomePage.xaml;page\usepage\MotionControlPage.xaml;page\usepage\ParameterSettingPage.xaml;page\usepage\ProcessManagementPage.xaml;page\usepage\ProcessMonitoringPage.xaml;
+MainWindow.xaml;page\otherpage\spacedataup.xaml;page\usepage\AlarmPage.xaml;page\usepage\BoatManagementPage.xaml;page\usepage\ControlInterfacePage.xaml;page\usepage\GlobalMonitoringPage.xaml;page\usepage\HomePage.xaml;page\usepage\MotionControlPage.xaml;page\usepage\ParameterSettingPage.xaml;page\usepage\ProcessManagementPage.xaml;page\usepage\ProcessMonitoringPage.xaml;
 
-True
+False
 

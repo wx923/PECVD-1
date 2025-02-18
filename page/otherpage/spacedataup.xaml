@@ -1,0 +1,203 @@
+﻿<Window x:Class="WpfApp4.page.otherpage.spacedataup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp4.page.otherpage"
+        mc:Ignorable="d"
+        Title="空间数据下发" Height="550" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" Margin="4,0,0,0">
+                <TextBlock Text="暂存区1X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区2X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区3X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区4X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区5X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区6X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区7X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区1X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="15,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区2X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="15,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区3X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="15,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区4X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="15,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区5X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="15,0,0,0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区6X坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="15,0,0,0"></Button>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="4,0,0,0" >
+                <TextBlock Text="暂存区1Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0" 
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="0"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区2Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="1"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区3Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="2"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区4Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="3"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区5Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="4"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区6Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="5"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="暂存区7Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="6"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区1Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="7"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区2Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="8"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区3Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="9"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区4Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="10"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区5Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="11"></Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,4,0,0">
+                <TextBlock Text="桨区6Y坐标值：" VerticalAlignment="Center"></TextBlock>
+                <TextBox Width="70" VerticalAlignment="Center"></TextBox>
+                <Button Content="下发" Margin="5,0,0,0"
+                        Command="{Binding UpdataPositionDataCommand}"
+                        CommandParameter="12"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
