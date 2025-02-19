@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\motionplcdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\motionplcdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\plccommunicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\plccommunicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\viewmodel\\motionvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:viewmodel\\motionvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\models\\motionplcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:models\\motionplcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\motioncontrolpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\motioncontrolpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\otherpage\\spacedataup.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\otherpage\\spacedataup.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\viewmodel\\spacedatavm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:viewmodel\\spacedatavm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +34,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MotionPlcDataService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MotionPlcDataService.cs",
+              "RelativeDocumentMoniker": "Services\\MotionPlcDataService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MotionPlcDataService.cs",
+              "RelativeToolTip": "Services\\MotionPlcDataService.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T07:45:52.313Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
@@ -31,37 +56,65 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "spacedataup.xaml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\otherpage\\spacedataup.xaml",
-              "RelativeDocumentMoniker": "page\\otherpage\\spacedataup.xaml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\otherpage\\spacedataup.xaml",
-              "RelativeToolTip": "page\\otherpage\\spacedataup.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-17T09:17:07.295Z",
+              "Title": "PlcCommunicationService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\PlcCommunicationService.cs",
+              "RelativeDocumentMoniker": "Services\\PlcCommunicationService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\PlcCommunicationService.cs",
+              "RelativeToolTip": "Services\\PlcCommunicationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T09:11:58.7Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SpaceDataVM.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\SpaceDataVM.cs",
-              "RelativeDocumentMoniker": "ViewModel\\SpaceDataVM.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\SpaceDataVM.cs",
-              "RelativeToolTip": "ViewModel\\SpaceDataVM.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T09:16:19.185Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "MotionControlPage.xaml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\MotionControlPage.xaml",
               "RelativeDocumentMoniker": "page\\usepage\\MotionControlPage.xaml",
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\MotionControlPage.xaml",
               "RelativeToolTip": "page\\usepage\\MotionControlPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-17T00:34:52.01Z",
+              "WhenOpened": "2025-02-19T08:59:19.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MotionVM.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\MotionVM.cs",
+              "RelativeDocumentMoniker": "ViewModel\\MotionVM.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\MotionVM.cs",
+              "RelativeToolTip": "ViewModel\\MotionVM.cs",
+              "ViewState": "AgIAAD4DAAAAAAAAAAAtwJ4DAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T08:59:08.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MotionPlcData.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\MotionPlcData.cs",
+              "RelativeDocumentMoniker": "Models\\MotionPlcData.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\MotionPlcData.cs",
+              "RelativeToolTip": "Models\\MotionPlcData.cs",
+              "ViewState": "AgIAAKEAAAAAAAAAAAAswNkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T08:35:43.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MongoDbService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MongoDbService.cs",
+              "RelativeDocumentMoniker": "Services\\MongoDbService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MongoDbService.cs",
+              "RelativeToolTip": "Services\\MongoDbService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsCAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T07:46:01.841Z",
               "EditorCaption": ""
             }
           ]

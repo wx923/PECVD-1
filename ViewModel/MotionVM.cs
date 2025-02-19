@@ -917,6 +917,22 @@ namespace WpfApp4.ViewModel
             }
         }
 
+
+        //上料命令
+        [RelayCommand]
+        private async Task MaterialLoadingService()
+        {
+            if ()
+            {
+
+            }
+        }
+        //出料命令
+        private async Task MaterialMovingService()
+        {
+
+        }
+
         /// <summary>
         /// 清空事件记录命令
         /// </summary>

@@ -172,7 +172,8 @@
                         </Button>
 
                         <Button Margin="0,4,0,0"
-                                Content="上料"></Button>
+                                Content="上料"
+                                Command=""></Button>
 
 
                         <Button Margin="0,4,0,0"
@@ -749,7 +750,7 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Robot" Width="25" Height="16" Margin="0,0,4,0" 
                                                    VerticalAlignment="Center"/>
-                            <TextBlock Text="自动模式" FontSize="11" VerticalAlignment="Center"/>
+                            <TextBlock Text="移舟模式" FontSize="11" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}"

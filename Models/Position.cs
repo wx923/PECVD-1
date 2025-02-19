@@ -10,12 +10,12 @@ namespace WpfApp4.Models
     public partial class Position:ObservableObject
     {
         [ObservableProperty]
-        public int x;
+        public float _x;
 
         [ObservableProperty]
-        public int y;
+        public float _y;
 
         [ObservableProperty]
-        public int location;
+        public int _location;
     }
 }

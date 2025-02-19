@@ -536,13 +536,13 @@ namespace WpfApp4.Services
             try
             {
                 // 查找现有记录
-                var filter = Builders<Position>.Filter.Eq("location", position.location);
+                var filter = Builders<Position>.Filter.Eq("Location", position.Location);
                 var existingBoat = await _positions.Find(filter).FirstOrDefaultAsync();
 
                 if (existingBoat != null)
                 {
                     // 更新记录
-                    var updateFilter = Builders<Position>.Filter.Eq("Number", position.location);
+                    var updateFilter = Builders<Position>.Filter.Eq("Location", position.Location);
                     var result = await _positions.ReplaceOneAsync(updateFilter, position);
                     return result.ModifiedCount > 0;
                 }
