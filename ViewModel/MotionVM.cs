@@ -10,6 +10,8 @@ using WpfApp4.Models;
 using WpfApp4.Services;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.Logging;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using System.Linq;
 
 namespace WpfApp4.ViewModel
 {
@@ -28,9 +30,6 @@ namespace WpfApp4.ViewModel
         // 区域舟信息
         [ObservableProperty]
         private ObservableCollection<AreaBoatInfo> _storageAreas;
-
-        [ObservableProperty]
-        private ObservableCollection<AreaBoatInfo> _paddleAreas;
 
         // 事件日志相关
         public class EventLog
@@ -102,11 +101,10 @@ namespace WpfApp4.ViewModel
             StorageAreas = new ObservableCollection<AreaBoatInfo>();
             PaddleAreas = new ObservableCollection<AreaBoatInfo>();
 
-            // 初始化6个暂存区和6个桨区
-            for (int i = 0; i < 6; i++)
+            // 初始化7个暂存区和6个桨区
+            for (int i = 0; i < 13; i++)
             {
                 StorageAreas.Add(new AreaBoatInfo());
-                PaddleAreas.Add(new AreaBoatInfo());
             }
 
             // 启动区域舟信息更新
@@ -131,16 +129,7 @@ namespace WpfApp4.ViewModel
                             foreach (var area in StorageAreas)
                             {
                                 area.BoatNumber = 0;
-                                area.CurrentCoolingTime = 0;
-                                area.TotalCoolingTime = 0;
                                 area.Status = 2;
-                            }
-                            foreach (var area in PaddleAreas)
-                            {
-                                area.BoatNumber = 0;
-                                area.CurrentCoolingTime = 0;
-                                area.TotalCoolingTime = 0;
-                                area.Status = 4;
                             }
 
                             // 更新区域舟信息
@@ -920,19 +909,55 @@ namespace WpfApp4.ViewModel
 
         //上料命令
         [RelayCommand]
-        private async Task MaterialLoadingService()
+        private async Task MaterialLoading()
         {
-            if ()
+            try
             {
+                if (MotionPlcDataService.Instance.MotionPlcData.Storage1BoatSensor)
+                {
+                    var boat = new MotionBoatModel
+                    {
+                        Location = 1,
+                        Status = 0
+                    };
+                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
+                    MongoDbService.Instance.GlobalMotionBoats.Add(boat);
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"已完成上料命令" });
 
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"上料区没有舟" });
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"上料命令发生错误: {ex.Message}" });
             }
         }
         //出料命令
-        private async Task MaterialMovingService()
+        [RelayCommand]
+        private async Task MaterialMoving()
         {
-
+            try
+            {
+                if (MotionPlcDataService.Instance.MotionPlcData.Storage1BoatSensor)
+                {
+                    var motionBoat = MongoDbService.Instance.GlobalMotionBoats.FirstOrDefault(boat => boat.Location == 1);
+                    _ = await MongoDbService.Instance.DeleteMotionBoatAsync(motionBoat);
+                    _ = MongoDbService.Instance.GlobalMotionBoats.Remove(motionBoat);
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"出料区完成出料动作，请尽快取舟出去" });
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"出料区没有舟无法完成出料动作" });
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"上料命令发生错误: {ex.Message}" });
+            }
         }
-
         /// <summary>
         /// 清空事件记录命令
         /// </summary>

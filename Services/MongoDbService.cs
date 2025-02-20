@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq.Expressions;
 
 namespace WpfApp4.Services
 {
@@ -28,13 +29,15 @@ namespace WpfApp4.Services
         private readonly IMongoCollection<ProcessFileInfo> _processFileCollection;
         private readonly IMongoCollection<FurnaceData> _furnaceCollection;
         private readonly IMongoCollection<Position> _positions;
-
+        private readonly IMongoCollection<MotionBoatModel> _motionBoatModel;
         // 全局数据集合
         public ObservableCollection<Boat> GlobalBoats { get; private set; }
         public ObservableCollection<BoatMonitor> GlobalMonitors { get; private set; }
         public ObservableCollection<ProcessFileInfo> GlobalProcessFiles { get; private set; }
 
         public ObservableCollection<Position> GlobalPositions { get; private set; }
+
+        public ObservableCollection<MotionBoatModel> GlobalMotionBoats { get; private set; }
 
         private MongoDbService()
         {
@@ -43,7 +46,7 @@ namespace WpfApp4.Services
             GlobalMonitors = new ObservableCollection<BoatMonitor>();
             GlobalProcessFiles = new ObservableCollection<ProcessFileInfo>();
             GlobalPositions = new ObservableCollection<Position>();
-
+            GlobalMotionBoats = new ObservableCollection<MotionBoatModel>();
             try
             {
                 var settings = MongoClientSettings.FromConnectionString("mongodb://localhost:27017");
@@ -74,6 +77,11 @@ namespace WpfApp4.Services
                     _database.CreateCollection("Positions");
                 }
 
+                if (!collections.Contains("MotionBoats"))
+                {
+                    _database.CreateCollection("MotionBoats");
+                }
+
                 //获取集合
                 _boats = _database.GetCollection<Boat>("Boats");
                 _monitors = _database.GetCollection<BoatMonitor>("BoatMonitors");
@@ -81,6 +89,7 @@ namespace WpfApp4.Services
                 _processFileCollection = _database.GetCollection<ProcessFileInfo>("ProcessFiles");
                 _furnaceCollection = _database.GetCollection<FurnaceData>("FurnaceData");
                 _positions = _database.GetCollection<Position>("Positions");
+                _motionBoatModel = _database.GetCollection<MotionBoatModel>("MotionBoats");
                 // 初始化完成后加载数据
                 _ = LoadAllDataAsync();
             }
@@ -100,12 +109,13 @@ namespace WpfApp4.Services
                 GlobalMonitors.Clear();
                 GlobalProcessFiles.Clear();
                 GlobalPositions.Clear();
-
+                GlobalMotionBoats.Clear();
                 // 从数据库加载数据
                 var boats = await _boats.Find(_ => true).ToListAsync();
                 var monitors = await _monitors.Find(_ => true).ToListAsync();
                 var processFiles = await _processFileCollection.Find(_ => true).ToListAsync();
                 var positions= await _positions.Find(_ => true).ToListAsync();
+                var motionBoats=await _motionBoatModel.Find(_ => true).ToListAsync();
                 // 更新集合并添加属性变更事件
                 foreach (var boat in boats)
                 {
@@ -130,7 +140,11 @@ namespace WpfApp4.Services
                     position.PropertyChanged += OnPositionPropertyChanged;
                     GlobalPositions.Add(position);
                 }
-
+                foreach(var motionBoat in motionBoats)
+                {
+                    motionBoat.PropertyChanged += OnMotionBoatPropertyChanged;
+                    GlobalMotionBoats.Add(motionBoat);
+                }
             }
             catch (Exception ex)
             {
@@ -197,6 +211,21 @@ namespace WpfApp4.Services
                 catch (Exception ex)
                 {
                     MessageBox.Show($"更新位置数据失败: {ex.Message}");
+                }
+            }
+        }
+
+        private async void OnMotionBoatPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is MotionBoatModel motionBoat)
+            {
+                try
+                {
+                    await UpdataMotionBoatAsync(motionBoat);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"更新舟对象数据失败:{ex.Message}");
                 }
             }
         }
@@ -537,9 +566,9 @@ namespace WpfApp4.Services
             {
                 // 查找现有记录
                 var filter = Builders<Position>.Filter.Eq("Location", position.Location);
-                var existingBoat = await _positions.Find(filter).FirstOrDefaultAsync();
+                var existing = await _positions.Find(filter).FirstOrDefaultAsync();
 
-                if (existingBoat != null)
+                if (existing != null)
                 {
                     // 更新记录
                     var updateFilter = Builders<Position>.Filter.Eq("Location", position.Location);
@@ -555,10 +584,64 @@ namespace WpfApp4.Services
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"更新舟对象失败: {ex.Message}");
+                MessageBox.Show($"更新坐标数据失败: {ex.Message}");
                 return false;
             }
         }
         #endregion
+
+
+
+        #region 舟对象
+        //更新舟对象
+        public async Task<bool> UpdataMotionBoatAsync(MotionBoatModel motionBoat)
+        {
+            try
+            {
+                var filter = Builders<MotionBoatModel>.Filter.Eq("Location", motionBoat.Location);
+                var existing = await _motionBoatModel.Find(filter).FirstOrDefaultAsync();
+
+                if (existing != null)
+                {
+                    var result = await _motionBoatModel.ReplaceOneAsync(filter, existing);
+                    return result.ModifiedCount > 0;
+                }
+                else {
+                    await _motionBoatModel.InsertOneAsync(motionBoat);
+                    return true;
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"更新舟对象失败:{ex.Message}");
+                return false;
+            }
+        }
+
+        //删除数据库舟对象
+        public async Task<bool> DeleteMotionBoatAsync(MotionBoatModel motionBoat)
+        {
+            try {
+                var filter = Builders<MotionBoatModel>.Filter.Eq("Location",1);
+                 var result= await _motionBoatModel.DeleteOneAsync(filter);
+                if (result.DeletedCount > 0)
+                {
+                    MessageBox.Show($"删除舟对象成功");
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show($"删除舟对象失败");
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"删除舟对象失败:{ex.Message}");
+                return false;
+            }
+        }
+
+        #endregion
     }
+
 }
