@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using WpfApp4.page.otherpage;
 using WpfApp4.ViewModel;
 
 namespace WpfApp4.page.usepage
@@ -28,6 +29,12 @@ namespace WpfApp4.page.usepage
             });
         }
 
+        //点击按钮之后跳转到数据更新页面
+        private void ToSpaceDataUp(object sender, RoutedEventArgs e)
+        {
+            var spaceDataWin = new spacedataup();
+            spaceDataWin.ShowDialog();
+        }
         // 页面卸载时清理资源
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {

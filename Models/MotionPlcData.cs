@@ -208,5 +208,13 @@ namespace WpfApp4.Models
         /// </summary>
         [ObservableProperty]
         private bool _storage6BoatSensor = false;
+
+        /// <summary>
+        /// 暂存区7舟检测传感器状态
+        /// true: 有舟
+        /// false: 无舟
+        /// </summary>
+        [ObservableProperty]
+        private bool _storage7BoatSensor = false;
     }
 } 

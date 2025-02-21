@@ -80,40 +80,6 @@ namespace WpfApp4.Services
             return Task.CompletedTask;
         }
 
-        private void CheckCarriageStateChange(bool currentHasCarriage, bool currentHasMaterial)
-        {
-            // 获取当前状态组合
-            string currentState = $"{(currentHasCarriage ? "1" : "0")}{(currentHasMaterial ? "1" : "0")}";
-            string previousState = $"{(_lastHasCarriage ? "1" : "0")}{(_lastCarriageHasMaterial ? "1" : "0")}";
-
-            // 检查状态变化
-            if (previousState != currentState)
-            {
-                switch (previousState + "->" + currentState)
-                {
-                    case "00->11": // 小车带料进来
-                        CarriageArrivedWithMaterial?.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "11->10": // 料被移走
-                        MaterialRemovedFromCarriage?.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "10->11": // 料回到小车
-                        MaterialReturnedToCarriage?.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "11->00": // 小车空车离开
-                        CarriageLeftWithoutMaterial?.Invoke(this, EventArgs.Empty);
-                        break;
-                }
-            }
-
-            // 更新上一次的状态
-            _lastHasCarriage = currentHasCarriage;
-            _lastCarriageHasMaterial = currentHasMaterial;
-        }
-
         private async Task UpdatePlcDataAsync()
         {
             try
@@ -156,6 +122,7 @@ namespace WpfApp4.Services
                 data.Storage4BoatSensor = _modbusClient.ReadCoil($"{addr++}").Content;         // 地址 base + 23
                 data.Storage5BoatSensor = _modbusClient.ReadCoil($"{addr++}").Content;         // 地址 base + 24
                 data.Storage6BoatSensor = _modbusClient.ReadCoil($"{addr++}").Content;         // 地址 base + 25
+                data.Storage7BoatSensor = _modbusClient.ReadCoil($"{addr++}").Content;         // 地址 base + 25
 
                 // 在UI线程更新数据
                 await _dispatcher.InvokeAsync(() =>

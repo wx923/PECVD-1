@@ -2,6 +2,14 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="page\otherpage\spacedataup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="page\otherpage\spacedataup.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="page\usepage\BoatManagementPage.xaml">
       <SubType>Designer</SubType>
     </Page>
