@@ -126,7 +126,7 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300" ></RowDefinition>
+            <RowDefinition Height="320" ></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <!--上半部分-->
@@ -156,7 +156,7 @@
                         <TextBlock Text="维修门锁2:" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
                         <TextBlock Text="{Binding MotionPlcData.MaintenanceDoor2Lock, Converter={StaticResource BoolToOpenCloseConverter}}" FontSize="12" FontWeight="Bold" Margin="0 0 0 1"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3,10,3,3">
+                    <StackPanel Orientation="Vertical" Margin="3,10,3,3">
                         <Button Command="{Binding ToggleBuzzerCommand}"
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Width="140" Height="30"
@@ -166,6 +166,19 @@
                                 <TextBlock Text="关闭蜂鸣器"/>
                             </StackPanel>
                         </Button>
+                        <Button Margin="0,4,0,0"
+                                Content="空间数据下发"
+                                Click="ToSpaceDataUp">
+                        </Button>
+
+                        <Button Margin="0,4,0,0"
+                                Content="上料"
+                                Command="{Binding MaterialLoadingCommand}"></Button>
+
+
+                        <Button Margin="0,4,0,0"
+                                Content="出料"
+                                Command="{Binding MaterialMovingCommand}"></Button>
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
@@ -177,188 +190,174 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- 左侧桨区卡片 -->
-                    <materialDesign:Card Grid.Column="0" Margin="2">
+                    <materialDesign:Card Grid.Column="0" >
                         <StackPanel>
-                            <TextBlock Text="桨区" FontSize="14" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
-                            <UniformGrid Columns="3" Margin="5">
-                                <!-- 桨区1 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
-                                    <StackPanel Margin="3">
-                                        <TextBlock Text="桨区1" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding PaddleAreas[0].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[0].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[0].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding PaddleAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                                    </StackPanel>
-                                </Border>
-                                <!-- 桨区2 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
-                                    <StackPanel Margin="3">
-                                        <TextBlock Text="桨区2" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding PaddleAreas[1].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[1].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[1].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding PaddleAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                                    </StackPanel>
-                                </Border>
-                                <!-- 桨区3 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
-                                    <StackPanel Margin="3">
-                                        <TextBlock Text="桨区3" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding PaddleAreas[2].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[2].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[2].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding PaddleAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                                    </StackPanel>
-                                </Border>
-                                <!-- 桨区4 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
-                                    <StackPanel Margin="3">
-                                        <TextBlock Text="桨区4" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding PaddleAreas[3].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[3].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[3].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding PaddleAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                                    </StackPanel>
-                                </Border>
-                                <!-- 桨区5 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
-                                    <StackPanel Margin="3">
-                                        <TextBlock Text="桨区5" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding PaddleAreas[4].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[4].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[4].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding PaddleAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                                    </StackPanel>
-                                </Border>
-                                <!-- 桨区6 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
-                                    <StackPanel Margin="3">
-                                        <TextBlock Text="桨区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding PaddleAreas[5].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[5].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[5].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding PaddleAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding PaddleAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                                    </StackPanel>
-                            </Border>
-                            </UniformGrid>
-                        </StackPanel>
-                    </materialDesign:Card>
-
-                    <!-- 右侧暂存区卡片 -->
-                    <materialDesign:Card Grid.Column="1" Margin="2">
-                        <StackPanel>
-                            <TextBlock Text="暂存区" FontSize="14" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
-                            <UniformGrid Columns="3" Margin="5">
+                            <UniformGrid Columns="3" Margin="1">
                                 <!-- 暂存区1 (原小车区) -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
                                     <StackPanel Margin="3">
-                                        <TextBlock Text="暂存区1" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="暂存区1" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
                                         <TextBlock Text="{Binding StorageAreas[0].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[0].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[0].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
                                         <TextBlock Text="{Binding StorageAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding StorageAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[0].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
                                     </StackPanel>
                                 </Border>
                                 <!-- 暂存区2 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
                                     <StackPanel Margin="3">
-                                        <TextBlock Text="暂存区2" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="暂存区2" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
                                         <TextBlock Text="{Binding StorageAreas[1].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[1].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[1].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
                                         <TextBlock Text="{Binding StorageAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding StorageAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[1].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
                                     </StackPanel>
                                 </Border>
                                 <!-- 暂存区3 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
                                     <StackPanel Margin="3">
-                                        <TextBlock Text="暂存区3" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="暂存区3" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
                                         <TextBlock Text="{Binding StorageAreas[2].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[2].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[2].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
                                         <TextBlock Text="{Binding StorageAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
-                                                   TextAlignment="Center" 
-                                                   Margin="0,1" 
-                                                   FontSize="11"
-                                                   Background="{Binding StorageAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[2].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
                                     </StackPanel>
                                 </Border>
                                 <!-- 暂存区4 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
                                     <StackPanel Margin="3">
-                                        <TextBlock Text="暂存区4" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
+                                        <TextBlock Text="暂存区4" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
                                         <TextBlock Text="{Binding StorageAreas[3].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[3].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[3].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
                                         <TextBlock Text="{Binding StorageAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区5 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区5" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[4].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区6 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[5].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 暂存区7 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="暂存区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[6].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[6].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                   TextAlignment="Center" 
+                   Margin="0,1" 
+                   FontSize="11"
+                   Background="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区1 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区1" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[7].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[7].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[7].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区2 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区2" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[8].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[8].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[8].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区3 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区3" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[9].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[9].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                                   TextAlignment="Center" 
+                                                   Margin="0,1" 
+                                                   FontSize="11"
+                                                   Background="{Binding StorageAreas[9].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区4 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
+                                    <StackPanel Margin="3">
+                                        <TextBlock Text="桨区4" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[10].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[10].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
                                                    TextAlignment="Center" 
                                                    Margin="0,1" 
                                                    FontSize="11"
                                                    Background="{Binding StorageAreas[3].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
                                     </StackPanel>
                                 </Border>
-                                <!-- 暂存区5 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                <!-- 桨区5 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
                                     <StackPanel Margin="3">
-                                        <TextBlock Text="暂存区5" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding StorageAreas[4].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[4].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[4].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                        <TextBlock Text="桨区5" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[11].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[11].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
                                                    TextAlignment="Center" 
                                                    Margin="0,1" 
                                                    FontSize="11"
-                                                   Background="{Binding StorageAreas[4].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
-                        </StackPanel>
-                            </Border>
-                                <!-- 暂存区6 -->
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" MinWidth="60">
+                                                   Background="{Binding StorageAreas[11].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <!-- 桨区6 -->
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="2" CornerRadius="3" >
                                     <StackPanel Margin="3">
-                                        <TextBlock Text="暂存区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,2" FontSize="12"/>
-                                        <TextBlock Text="{Binding StorageAreas[5].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[5].CurrentCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[5].TotalCoolingTime}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
-                                        <TextBlock Text="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
+                                        <TextBlock Text="桨区6" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,1" FontSize="12"/>
+                                        <TextBlock Text="{Binding StorageAreas[12].BoatNumber}" TextAlignment="Center" Margin="0,1" FontSize="11"/>
+                                        <TextBlock Text="{Binding StorageAreas[12].Status, Converter={StaticResource BoatStatusToColorConverter}}" 
                                                    TextAlignment="Center" 
                                                    Margin="0,1" 
                                                    FontSize="11"
-                                                   Background="{Binding StorageAreas[5].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                                   Background="{Binding StorageAreas[12].Status, Converter={StaticResource BoatStatusToColorConverter}}"/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                </UniformGrid>
                         </StackPanel>
-                            </Border>
-                            </UniformGrid>
+                    </materialDesign:Card>
+
+                    <!-- 右侧暂存区卡片 -->
+                    <materialDesign:Card Grid.Column="1" Margin="2">
+                        <StackPanel>
+
                         </StackPanel>
                     </materialDesign:Card>
                 </Grid>
@@ -440,7 +439,8 @@
                                 FontSize="14"
                                 Margin="0,2,0,5"
                                 Command="{Binding AutoModeStartCommand}"
-                                IsEnabled="{Binding IsAutoModeSelected}"/>
+                                IsEnabled="{Binding IsAutoModeSelected}"
+                                VerticalAlignment="Center"/>
                         <Button Content="暂停" 
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Height="30"
@@ -448,7 +448,8 @@
                                 FontSize="14"
                                 Margin="0,2,0,5"
                                 Command="{Binding PauseCommand}"
-                                IsEnabled="{Binding IsPauseEnabled}"/>
+                                IsEnabled="{Binding IsPauseEnabled}"
+                                Visibility="Hidden"/>
                         <Button Content="恢复" 
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Height="30"
@@ -456,7 +457,9 @@
                                 FontSize="14"
                                 Margin="0,2,0,5"
                                 Command="{Binding ResumeCommand}"
-                                IsEnabled="{Binding IsResumeEnabled}"/>
+                                IsEnabled="{Binding IsResumeEnabled}"
+                                Visibility="Hidden"
+                                />
                         <Button Content="上一步" 
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Height="30"
@@ -464,7 +467,8 @@
                                 FontSize="14"
                                 Margin="0,2,0,5"
                                 Command="{Binding PreviousStepCommand}"
-                                IsEnabled="{Binding IsStepEnabled}"/>
+                                IsEnabled="{Binding IsStepEnabled}"
+                                Visibility="Hidden"/>
                         <Button Content="下一步" 
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Height="30"
@@ -472,7 +476,9 @@
                                 FontSize="14"
                                 Margin="0,2,0,5"
                                 Command="{Binding NextStepCommand}"
-                                IsEnabled="{Binding IsStepEnabled}"/>
+                                IsEnabled="{Binding IsStepEnabled}"
+                                Visibility="Hidden"
+                                />
                     </StackPanel>
                     
                     <!-- 目标位置选择 -->
@@ -738,7 +744,7 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Robot" Width="25" Height="16" Margin="0,0,4,0" 
                                                    VerticalAlignment="Center"/>
-                            <TextBlock Text="自动模式" FontSize="11" VerticalAlignment="Center"/>
+                            <TextBlock Text="移舟模式" FontSize="11" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}"

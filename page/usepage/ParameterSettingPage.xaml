@@ -437,7 +437,7 @@
                 <!-- 第三列 -->
                 <StackPanel Grid.Column="2" Margin="5">
                     <!-- 清洗设置 -->
-                    <GroupBox Header="���洗设置" Margin="2">
+                    <GroupBox Header="清洗设置" Margin="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
