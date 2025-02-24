@@ -8,6 +8,7 @@ using HslCommunication.ModBus;
 using WpfApp.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace WpfApp4.Services
 {
@@ -24,7 +25,6 @@ namespace WpfApp4.Services
 
         private CancellationTokenSource _cancellationTokenSource;
         private Dictionary<int, ModbusTcpNet> _modbusClients;
-        private Dispatcher _dispatcher;
 
         public ObservableCollection<FurnaceData> Furnaces { get; private set; }
 
@@ -61,7 +61,6 @@ namespace WpfApp4.Services
         /// </summary>
         private FurnaceService()
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
             
             // 初始化炉管数据集合
             Furnaces = new ObservableCollection<FurnaceData>();
@@ -201,7 +200,7 @@ namespace WpfApp4.Services
                 }
 
                 // 在UI线程更新数据
-                await _dispatcher.InvokeAsync(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     var furnace = Furnaces[furnaceIndex];
                     furnace.T1 = data.T1;

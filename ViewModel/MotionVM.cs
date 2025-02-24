@@ -21,7 +21,7 @@ namespace WpfApp4.ViewModel
         private readonly ModbusTcpNet _robotPlc;
         private readonly MotionPlcDataService _motionPlcDataService;
         private readonly FurnacePlcDataService _furnacePlcDataService = FurnacePlcDataService.Instance;
-        private readonly MotionBoatService _boatService = MotionBoatService.Instance;
+        private readonly MongoDbService _mongoDbService=MongoDbService.Instance;
         
         // 获取PLC数据的属性
         public MotionPlcData MotionPlcData => _motionPlcDataService.MotionPlcData;
@@ -99,7 +99,6 @@ namespace WpfApp4.ViewModel
 
             // 初始化区域舟信息集合
             StorageAreas = new ObservableCollection<AreaBoatInfo>();
-            PaddleAreas = new ObservableCollection<AreaBoatInfo>();
 
             // 初始化7个暂存区和6个桨区
             for (int i = 0; i < 13; i++)
@@ -122,28 +121,77 @@ namespace WpfApp4.ViewModel
                 {
                     try
                     {
-                        var boats = _boatService.Boats;
+                        var boats = _mongoDbService.GlobalMotionBoats;
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             // 清空所有区域的舟信息
                             foreach (var area in StorageAreas)
                             {
                                 area.BoatNumber = 0;
-                                area.Status = 2;
+                                area.Status = 0;
                             }
 
                             // 更新区域舟信息
                             foreach (var boat in boats)
                             {
-                                if (boat.Location >= 1 && boat.Location <= 6)  // 暂存区
+                                switch (boat.Location)
                                 {
-                                    var area = StorageAreas[boat.Location - 1];
-                                    UpdateAreaInfo(area, boat);
-                                }
-                                else if (boat.Location >= 7 && boat.Location <= 12)  // 桨区
-                                {
-                                    var area = PaddleAreas[boat.Location - 7];
-                                    UpdateAreaInfo(area, boat);
+                                    case 1:
+                                        StorageAreas[0].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[0].Status = boat.Status;
+                                        break;
+                                    case 2:
+                                        StorageAreas[1].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[1].Status = boat.Status;
+                                        break;
+                                    case 3:
+                                        StorageAreas[2].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[2].Status = boat.Status;
+                                        break;
+                                    case 4:
+                                        StorageAreas[3].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[3].Status = boat.Status;
+                                        break;
+                                    case 5:
+                                        StorageAreas[4].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[4].Status = boat.Status;
+                                        break;
+                                    case 6:
+                                        StorageAreas[5].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[5].Status = boat.Status;
+                                        break;
+                                    case 7:
+                                        StorageAreas[6].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[6].Status = boat.Status;
+                                        break;
+                                    case 8:
+                                        StorageAreas[7].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[7].Status = boat.Status;
+                                        break;
+                                    case 9:
+                                        StorageAreas[8].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[8].Status = boat.Status;
+                                        break;
+                                    case 10:
+                                        StorageAreas[9].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[9].Status = boat.Status;
+                                        break;
+                                    case 11:
+                                        StorageAreas[10].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[10].Status = boat.Status;
+                                        break;
+                                    case 12:
+                                        StorageAreas[11].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[11].Status = boat.Status;
+                                        break;
+                                    case 13:
+                                        StorageAreas[12].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[12].Status = boat.Status;
+                                        break;
+                                    default: 
+                                        EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"找不到需要更新的对象" });
+                                        break;
+
                                 }
                             }
                         });
@@ -156,14 +204,6 @@ namespace WpfApp4.ViewModel
                     await Task.Delay(1000); // 每秒更新一次
                 }
             });
-        }
-
-        private void UpdateAreaInfo(AreaBoatInfo area, MotionBoatModel boat)
-        {
-            area.BoatNumber = boat.BoatNumber;
-            area.CurrentCoolingTime = boat.CurrentCoolingTime;
-            area.TotalCoolingTime = boat.TotalCoolingTime;
-            area.Status = boat.Status;
         }
 
         // 源位置和目标位置

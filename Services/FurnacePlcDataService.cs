@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using WpfApp4.Models;
 using HslCommunication.ModBus;
 using WpfApp.Services;
+using System.Windows;
 
 namespace WpfApp4.Services
 {
@@ -25,7 +26,9 @@ namespace WpfApp4.Services
         private FurnacePlcDataService()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
+            //获取到6个炉管的PLC对象
             _modbusClients = new Dictionary<int, ModbusTcpNet>();
+            //获取到六个炉管PLC数据
             FurnacePlcDataDict = new Dictionary<int, FurnacePlcData>();
 
             // 初始化6个炉管的PLC客户端和数据对象
@@ -110,7 +113,7 @@ namespace WpfApp4.Services
                 data.VerticalLowerLimit = _modbusClients[furnaceIndex].ReadCoil($"{addr++}").Content;      // 地址 10
 
                 // 在UI线程更新数据
-                await _dispatcher.InvokeAsync(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     // 更新桨区舟检测传感器状态
                     FurnacePlcDataDict[furnaceIndex].PaddleBoatSensor = data.PaddleBoatSensor;
