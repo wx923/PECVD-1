@@ -26,6 +26,8 @@ namespace WpfApp4.Services
         private CancellationTokenSource _cancellationTokenSource;
         private Dictionary<int, ModbusTcpNet> _modbusClients;
 
+
+        //创建炉管所需要的数据
         public ObservableCollection<FurnaceData> Furnaces { get; private set; }
 
         private int _selectedFurnaceIndex = 0;

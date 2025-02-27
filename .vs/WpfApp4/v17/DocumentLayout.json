@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\motioncontrolpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\motioncontrolpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\viewmodel\\motionvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:viewmodel\\motionvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\furnaceplcdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\furnaceplcdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\plccommunicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\plccommunicationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\furnaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\furnaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\models\\furnaceplcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:models\\furnaceplcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\models\\furnacedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:models\\furnacedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,52 +38,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "PlcCommunicationService.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\PlcCommunicationService.cs",
               "RelativeDocumentMoniker": "Services\\PlcCommunicationService.cs",
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\PlcCommunicationService.cs",
               "RelativeToolTip": "Services\\PlcCommunicationService.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAYwKkAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T00:51:25.478Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FurnacePlcDataService.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\FurnacePlcDataService.cs",
-              "RelativeDocumentMoniker": "Services\\FurnacePlcDataService.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\FurnacePlcDataService.cs",
-              "RelativeToolTip": "Services\\FurnacePlcDataService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-21T00:31:52.123Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MotionVM.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\MotionVM.cs",
-              "RelativeDocumentMoniker": "ViewModel\\MotionVM.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\MotionVM.cs",
-              "RelativeToolTip": "ViewModel\\MotionVM.cs",
-              "ViewState": "AgIAAA8BAAAAAAAAAAArwO4BAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T08:59:08.877Z",
+              "WhenOpened": "2025-02-27T05:56:54.479Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MotionControlPage.xaml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\MotionControlPage.xaml",
-              "RelativeDocumentMoniker": "page\\usepage\\MotionControlPage.xaml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\MotionControlPage.xaml",
-              "RelativeToolTip": "page\\usepage\\MotionControlPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-19T08:59:19.006Z",
+              "Title": "FurnacePlcDataService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\FurnacePlcDataService.cs",
+              "RelativeDocumentMoniker": "Services\\FurnacePlcDataService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\FurnacePlcDataService.cs",
+              "RelativeToolTip": "Services\\FurnacePlcDataService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-27T05:53:16.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FurnaceService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\FurnaceService.cs",
+              "RelativeDocumentMoniker": "Services\\FurnaceService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\FurnaceService.cs",
+              "RelativeToolTip": "Services\\FurnaceService.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-27T03:17:08.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FurnacePlcData.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\FurnacePlcData.cs",
+              "RelativeDocumentMoniker": "Models\\FurnacePlcData.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\FurnacePlcData.cs",
+              "RelativeToolTip": "Models\\FurnacePlcData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-27T05:49:18.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FurnaceData.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\FurnaceData.cs",
+              "RelativeDocumentMoniker": "Models\\FurnaceData.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\FurnaceData.cs",
+              "RelativeToolTip": "Models\\FurnaceData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-27T05:49:16.128Z",
               "EditorCaption": ""
             }
           ]

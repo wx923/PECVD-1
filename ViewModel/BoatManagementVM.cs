@@ -17,10 +17,10 @@ namespace WpfApp4.ViewModel
     {
         #region 属性
         [ObservableProperty]
-        private ObservableCollection<Boat> _boats;
+        private ObservableCollection<MotionBoatModel> _boats;
 
         [ObservableProperty]
-        private Boat _selectedBoat;
+        private MotionBoatModel _selectedBoat;
 
         [ObservableProperty]
         private ObservableCollection<BoatMonitor> _boatMonitors;
@@ -53,7 +53,7 @@ namespace WpfApp4.ViewModel
 
         private void InitializeCollections()
         {
-            Boats = new ObservableCollection<Boat>();
+            Boats = new ObservableCollection<MotionBoatModel>();
             BoatMonitors = new ObservableCollection<BoatMonitor>();
         }
 
@@ -214,7 +214,7 @@ namespace WpfApp4.ViewModel
                     confirmMessage.AppendLine($"修改舟对象：{modifiedBoats.Count} 个");
                     foreach (var boat in modifiedBoats)
                     {
-                        confirmMessage.AppendLine($"- 监控对象：{boat.MonitorBoatNumber}，位置：{boat.CurrentPosition}");
+                        confirmMessage.AppendLine($"- 监控对象：{boat.MonitorBoatNumber}，位置：{boat.Location}");
                     }
                 }
                 confirmMessage.AppendLine("\n是否确认提交这些更改？");
@@ -262,7 +262,7 @@ namespace WpfApp4.ViewModel
                 // 保存舟对象的修改
                 foreach (var boat in modifiedBoats)
                 {
-                    await MongoDbService.Instance.UpdateBoatAsync(boat);
+                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
                     boat.IsModified = false;  // 重置修改标记
                 }
 
@@ -368,13 +368,12 @@ namespace WpfApp4.ViewModel
         {
             try
             {
-                var newBoat = new Boat
+                var newBoat = new MotionBoatModel
                 {
-                    CurrentPosition = BoatPosition.CarArea,
-                    MonitorBoatNumber = string.Empty
+                    Location = 0,
+                    Status = 1
                 };
 
-                Boats.Add(newBoat);
                 UpdateOperationStatus("已添加新的舟对象，请选择监控对象后点击确认修改", true);
             }
             catch (Exception ex)
@@ -399,7 +398,7 @@ namespace WpfApp4.ViewModel
                 // 保存所有修改
                 foreach (var boat in Boats)
                 {
-                    await MongoDbService.Instance.UpdateBoatAsync(boat);
+                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
                 }
 
                 // 重新加载数据以确保显示最新状态

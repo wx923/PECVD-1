@@ -592,8 +592,8 @@ namespace WpfApp4.Services
 
 
 
-        #region 舟对象
-        //更新舟对象
+        #region 运动舟对象
+        //更新运动舟对象
         public async Task<bool> UpdataMotionBoatAsync(MotionBoatModel motionBoat)
         {
             try

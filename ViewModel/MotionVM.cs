@@ -278,7 +278,7 @@ namespace WpfApp4.ViewModel
         }
 
         // 获取位置代码
-        private byte GetPositionCode(string position)
+        private int GetPositionCode(string position)
         {
             return position switch
             {
@@ -288,12 +288,13 @@ namespace WpfApp4.ViewModel
                 "暂存区4" => 4,
                 "暂存区5" => 5,
                 "暂存区6" => 6,
-                "桨区1" => 7,
-                "桨区2" => 8,
-                "桨区3" => 9,
-                "桨区4" => 10,
-                "桨区5" => 11,
-                "桨区6" => 12,
+                "暂存区7" => 7,
+                "桨区1" => 8,
+                "桨区2" => 9,
+                "桨区3" => 10,
+                "桨区4" => 11,
+                "桨区5" => 12,
+                "桨区6" => 13,
                 _ => throw new ArgumentException($"未知的位置: {position}")
             };
         }
@@ -347,12 +348,23 @@ namespace WpfApp4.ViewModel
                 }
 
                 // 获取源位置和目标位置的代号
-                byte sourceCode = GetPositionCode(SelectedSourcePosition);
-                byte targetCode = GetPositionCode(SelectedTargetPosition);
+                int sourceCode = GetPositionCode(SelectedSourcePosition);
+                int targetCode = GetPositionCode(SelectedTargetPosition);
                 
                 // 如果所有轴都没有在运动，则继续执行启动逻辑
                 EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"开始执行自动运动: 从 {SelectedSourcePosition} 到 {SelectedTargetPosition}" });
-                
+
+                //找出全局舟对象对应的舟对象
+                var boat=_mongoDbService.GlobalMotionBoats.FirstOrDefault(boat => boat.Location==sourceCode);
+                if (boat != null)
+                {
+                    boat.Location=targetCode;
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"没有找到在{SelectedSourcePosition}位置上的舟" });
+                    return;
+                }
                 // 更新按钮状态
                 IsStartEnabled = false;  // 禁用启动按钮
                 IsPauseEnabled = true;   // 启用暂停按钮
@@ -515,6 +527,18 @@ namespace WpfApp4.ViewModel
                     return;
                 }
 
+                //获取对应的区域的舟对象
+                var boat = _mongoDbService.GlobalMotionBoats.FirstOrDefault(boat => boat.Location == int.Parse(furnaceNumber + 7));
+                if (boat != null)
+                {
+                    boat.Status = 3;
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"炉管{furnaceNumber}没有对应的舟对象，无法进入炉内" });
+                    return ;
+                }
+
                 // 获取对应炉管的PLC客户端
                 var tubePlc = PlcCommunicationService.Instance.ModbusTcpClients[(PlcCommunicationService.PlcType)furnaceIndex];
 
@@ -555,6 +579,18 @@ namespace WpfApp4.ViewModel
                 {
                     EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"炉管{furnaceNumber}垂直轴正在运动中，无法移动出炉" });
                     return;
+                }
+
+
+                //获取对应的区域的舟对象
+                var boat = _mongoDbService.GlobalMotionBoats.FirstOrDefault(boat => boat.Location == int.Parse(furnaceNumber + 7));
+                if (boat != null)
+                {
+                    boat.Status = 2;
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"炉管{furnaceNumber}没有对应的舟对象，无法进入炉内" });
                 }
 
                 // 获取对应炉管的PLC客户端
