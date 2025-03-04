@@ -9,6 +9,7 @@ using WpfApp.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using HslCommunication.Profinet.Inovance;
 
 namespace WpfApp4.Services
 {
@@ -23,9 +24,10 @@ namespace WpfApp4.Services
         /// </summary>
         public static FurnaceService Instance => _instance.Value;
 
-        private CancellationTokenSource _cancellationTokenSource;
         private Dictionary<int, ModbusTcpNet> _modbusClients;
 
+        //创建用于任务取消的字典
+        public Dictionary<int, CancellationTokenSource> _cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
 
         //创建炉管所需要的数据
         public ObservableCollection<FurnaceData> Furnaces { get; private set; }
@@ -45,18 +47,6 @@ namespace WpfApp4.Services
                 }
             }
         }
-
-        /// <summary>
-        /// 获取当前选中的炉管数据
-        /// </summary>
-        public FurnaceData CurrentFurnace => Furnaces[SelectedFurnaceIndex];
-
-        // 修改事件定义，使用基础的 EventArgs
-        public event EventHandler ProcessStarted;
-        public event EventHandler ProcessEnded;
-
-        // 使用数组存储上一次的工艺运行状态
-        private bool[] _previousProcessRunStates = new bool[6];
 
         /// <summary>
         /// 私有构造函数，初始化炉管服务
@@ -80,9 +70,6 @@ namespace WpfApp4.Services
 
             // 订阅每个炉管PLC的连接状态改变事件
             PlcCommunicationService.Instance.ConnectionStateChanged += OnPlcConnectionStateChanged;
-
-            // 初始化状态数组（默认值就是false，其实可以不用显式初始化）
-            _previousProcessRunStates = new bool[6];
         }
 
         /// <summary>
@@ -113,20 +100,20 @@ namespace WpfApp4.Services
             }
 
             // 如果已经有该炉管的更新任务在运行，先取消它
-            if (_cancellationTokenSource != null)
+            if (_cancellationTokenSources[furnaceIndex] != null)
             {
-                _cancellationTokenSource.Cancel();
+                _cancellationTokenSources[furnaceIndex].Cancel();
             }
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSources[furnaceIndex] = new CancellationTokenSource();
             
             Task.Run(async () => 
             {
-                while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                while (!_cancellationTokenSources[furnaceIndex].Token.IsCancellationRequested)
                 {
                     try
                     {
                         await UpdateFurnaceDataAsync(furnaceIndex);
-                        await Task.Delay(100, _cancellationTokenSource.Token);
+                        await Task.Delay(100, _cancellationTokenSources[furnaceIndex].Token);
                     }
                     catch (OperationCanceledException)
                     {
@@ -135,10 +122,10 @@ namespace WpfApp4.Services
                     catch (Exception ex)
                     {
                         Console.WriteLine($"炉管{furnaceIndex}数据更新异常: {ex.Message}");
-                        await Task.Delay(1000, _cancellationTokenSource.Token);
+                        await Task.Delay(1000, _cancellationTokenSources[furnaceIndex].Token);
                     }
                 }
-            }, _cancellationTokenSource.Token);
+            }, _cancellationTokenSources[furnaceIndex].Token);
 
             return Task.CompletedTask;
         }
@@ -179,28 +166,6 @@ namespace WpfApp4.Services
                 data.PulseFrequency = modbusClient.ReadFloat($"{offset + 29}").Content;
                 data.PulseVoltage = modbusClient.ReadFloat($"{offset + 30}").Content;
 
-                // 添加工艺运行状态的读取
-                var processStateResult = modbusClient.ReadCoil($"{offset + 60}");
-                if (processStateResult.IsSuccess)
-                {
-                    bool currentProcessRunState = processStateResult.Content;
-                    bool previousProcessRunState = _previousProcessRunStates[furnaceIndex];
-
-                    // 检测上升沿（0->1）
-                    if (currentProcessRunState && !previousProcessRunState)
-                    {
-                        ProcessStarted?.Invoke(this, EventArgs.Empty);
-                    }
-                    // 检测下降沿（1->0）
-                    else if (!currentProcessRunState && previousProcessRunState)
-                    {
-                        ProcessEnded?.Invoke(this, EventArgs.Empty);
-                    }
-
-                    // 更新状态
-                    _previousProcessRunStates[furnaceIndex] = currentProcessRunState;
-                }
-
                 // 在UI线程更新数据
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -235,14 +200,6 @@ namespace WpfApp4.Services
             }
         }
 
-        /// <summary>
-        /// 清理资源，取消数据更新任务并取消事件订阅
-        /// </summary>
-        public void Cleanup()
-        {
-            _cancellationTokenSource?.Cancel();
-            PlcCommunicationService.Instance.ConnectionStateChanged -= OnPlcConnectionStateChanged;
-        }
 
         /// <summary>
         /// 向PLC发送工艺数据
@@ -320,11 +277,19 @@ namespace WpfApp4.Services
             }
         }
 
-        // 添加清空事件的方法
-        public void ClearEvents()
+
+        /// <summary>
+        /// 清理资源，取消数据更新任务并取消事件订阅
+        /// </summary>
+        public void Cleanup()
         {
-            ProcessStarted = null;
-            ProcessEnded = null;
+            foreach (var cts in _cancellationTokenSources.Values)
+            {
+                cts?.Cancel();
+                cts?.Dispose();
+            }
+            PlcCommunicationService.Instance.ConnectionStateChanged -= OnPlcConnectionStateChanged;
         }
+
     }
 } 

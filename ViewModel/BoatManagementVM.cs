@@ -39,13 +39,14 @@ namespace WpfApp4.ViewModel
 
         // 添加工艺文件相关属性
         [ObservableProperty]
-        private ObservableCollection<ProcessFileInfo> _processFiles = new ObservableCollection<ProcessFileInfo>();
+        private ObservableCollection<ProcessFileInfo> _processFiles ;
 
         #endregion
 
         #region 构造函数
         public BoatManagementVM()
         {
+            //初始化两个集合
             InitializeCollections();
             SaveOriginalCollectionNames();  // 保存初始状态
             _ = InitializeAsync();
@@ -55,19 +56,58 @@ namespace WpfApp4.ViewModel
         {
             Boats = new ObservableCollection<MotionBoatModel>();
             BoatMonitors = new ObservableCollection<BoatMonitor>();
+            ProcessFiles = new ObservableCollection<ProcessFileInfo>();
         }
 
+
+        //将全局对象的数据放到对应的对象
         private async Task InitializeAsync()
         {
             await CheckDatabaseConnection();
             if (IsDatabaseConnected)
             {
+                Boats = MongoDbService.Instance.GlobalMotionBoats;
                 BoatMonitors = MongoDbService.Instance.GlobalMonitors;
-                ProcessFiles = new ObservableCollection<ProcessFileInfo>(await MongoDbService.Instance.GetAllProcessFilesAsync());
+                ProcessFiles = MongoDbService.Instance.GlobalProcessFiles;
                 UpdateOperationStatus("数据加载成功", true);
             }
         }
         #endregion
+
+        #region 舟对象操作
+
+        //保存修改过后的中舟操作对象 
+        [RelayCommand]
+        private async Task SaveBoatChanges()
+        {
+            try
+            {
+                // 验证数据
+                var invalidBoats = Boats.Where(b => string.IsNullOrWhiteSpace(b.MonitorBoatNumber)).ToList();
+                if (invalidBoats.Any())
+                {
+                    UpdateOperationStatus("存在未选择监控对象的舟对象", false);
+                    return;
+                }
+
+                // 保存所有修改
+                foreach (var boat in Boats)
+                {
+                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
+                }
+
+                // 重新加载数据以确保显示最新状态
+                await MongoDbService.Instance.LoadAllDataAsync();
+                UpdateOperationStatus("舟象修改已保存", true);
+            }
+            catch (Exception ex)
+            {
+                UpdateOperationStatus($"保存舟对象修改失败: {ex.Message}", false);
+            }
+        }
+
+        #endregion
+
 
         #region 工艺文件操作
         [RelayCommand]
@@ -190,9 +230,8 @@ namespace WpfApp4.ViewModel
             {
                 // 获取所有未提交的行
                 var newRows = BoatMonitors.Where(m => !m.IsSubmitted).ToList();
-                var modifiedBoats = Boats.Where(b => b.IsModified).ToList();
 
-                if (!newRows.Any() && !modifiedBoats.Any())
+                if (!newRows.Any() )
                 {
                     UpdateOperationStatus("没有需要提交的新数据或修改", false);
                     return;
@@ -208,15 +247,7 @@ namespace WpfApp4.ViewModel
                         confirmMessage.AppendLine($"- 舟号：{row.BoatNumber}");
                     }
                 }
-                if (modifiedBoats.Any())
-                {
-                    if (confirmMessage.Length > 0) confirmMessage.AppendLine();
-                    confirmMessage.AppendLine($"修改舟对象：{modifiedBoats.Count} 个");
-                    foreach (var boat in modifiedBoats)
-                    {
-                        confirmMessage.AppendLine($"- 监控对象：{boat.MonitorBoatNumber}，位置：{boat.Location}");
-                    }
-                }
+            
                 confirmMessage.AppendLine("\n是否确认提交这些更改？");
 
                 // 显示确认对话框
@@ -241,6 +272,7 @@ namespace WpfApp4.ViewModel
                     .Select(m => m.BoatNumber)
                     .ToList();
 
+                //提取
                 var duplicateBoatNumbers = newRows
                     .Where(m => existingBoatNumbers.Contains(m.BoatNumber))
                     .Select(m => m.BoatNumber)
@@ -259,12 +291,6 @@ namespace WpfApp4.ViewModel
                     monitor.IsSubmitted = true;  // 更新提交状态
                 }
 
-                // 保存舟对象的修改
-                foreach (var boat in modifiedBoats)
-                {
-                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
-                    boat.IsModified = false;  // 重置修改标记
-                }
 
                 // 重新加载数据以确保显示最新状态
                 await MongoDbService.Instance.LoadAllDataAsync();
@@ -273,11 +299,6 @@ namespace WpfApp4.ViewModel
                 var successMessage = new StringBuilder();
                 if (newRows.Any())
                     successMessage.Append($"成功提交 {newRows.Count} 个新的监控对象");
-                if (modifiedBoats.Any())
-                {
-                    if (successMessage.Length > 0) successMessage.Append("，");
-                    successMessage.Append($"成功保存 {modifiedBoats.Count} 个舟对象的修改");
-                }
                 UpdateOperationStatus(successMessage.ToString(), true);
             }
             catch (Exception ex)
@@ -323,6 +344,7 @@ namespace WpfApp4.ViewModel
         #endregion
 
         #region 状态栏更新
+        //检查数据库连接状态
         private async Task CheckDatabaseConnection()
         {
             try
@@ -382,35 +404,7 @@ namespace WpfApp4.ViewModel
             }
         }
 
-        [RelayCommand]
-        private async Task SaveBoatChanges()
-        {
-            try
-            {
-                // 验证数据
-                var invalidBoats = Boats.Where(b => string.IsNullOrWhiteSpace(b.MonitorBoatNumber)).ToList();
-                if (invalidBoats.Any())
-                {
-                    UpdateOperationStatus("存在未选择监控对象的舟对象", false);
-                    return;
-                }
-
-                // 保存所有修改
-                foreach (var boat in Boats)
-                {
-                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
-                }
-
-                // 重新加载数据以确保显示最新状态
-                await MongoDbService.Instance.LoadAllDataAsync();
-                UpdateOperationStatus("舟象修改已保存", true);
-            }
-            catch (Exception ex)
-            {
-                UpdateOperationStatus($"保存舟对象修改失败: {ex.Message}", false);
-            }
-        }
-
+       
         #region 炉管工艺操作
         public ObservableCollection<FurnaceData> Furnaces => FurnaceService.Instance.Furnaces;
 
@@ -448,24 +442,11 @@ namespace WpfApp4.ViewModel
                     return;
                 }
 
+
                 foreach (var (index, furnace) in modifiedFurnaces)
                 {
                     try
-                    {
-                        // 获取对应炉管的ModbusTcp客户端
-                        var modbusClient = PlcCommunicationService.Instance.ModbusTcpClients[(PlcCommunicationService.PlcType)index];
-                        
-                        // 检查炉管是否在工艺中
-                        var isInProcess = await modbusClient.ReadBoolAsync("1000");  // 假设1000地址存储工艺运行状态
-                        if (isInProcess.Content)
-                        {
-                            MessageBox.Show($"炉管{index + 1}正在运行工艺，无法更新工艺文件！");
-                            continue;
-                        }
-
-                        // 下发工艺文件到PLC
-                        await FurnaceService.Instance.SendProcessDataToPLC(furnace.ProcessCollectionName, index + 1);
-
+                    { 
                         // 更新原始值
                         _originalCollectionNames[index] = furnace.ProcessCollectionName;
                         

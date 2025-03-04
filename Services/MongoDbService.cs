@@ -309,7 +309,7 @@ namespace WpfApp4.Services
         }
         #endregion
 
-        #region Boat Monitor Operations
+        #region 舟监控对象
         // 获取所有舟监控对象
         public async Task<List<BoatMonitor>> GetAllBoatMonitorsAsync()
         {

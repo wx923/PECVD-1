@@ -6,7 +6,7 @@
      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:WpfApp4.page.usepage"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1000"
+      d:DesignHeight="800" d:DesignWidth="1500"
       Title="Page4">
     <Page.Resources>
         <Style x:Key="AlternatingRowStyle" TargetType="Border">
@@ -38,15 +38,15 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="400"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="450"/>
+            <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="670"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="600"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Canvas Background="#FFE5E5E5" Grid.Column="0" Grid.Row="0" Margin="10,10,5,5" Grid.RowSpan="2" >
+        <Canvas Background="#FFE5E5E5" Grid.Column="0" Grid.Row="0" Margin="10,10,5,5" >
             <!-- 文本框 -->
             <!-- 第1条线 -->
             <TextBlock Text="SiH4" Canvas.Top="25" Canvas.Left="0"/>
@@ -76,7 +76,7 @@
                     Background="White" BorderBrush="Gray" BorderThickness="1">
                 <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
-            <TextBlock Canvas.Left="180.222" Canvas.Top="3.01" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="59"><Run Text="MFC"/><Run Language="zh-cn" Text=""/></TextBlock>
+            <TextBlock Canvas.Left="180.222" Canvas.Top="3.01" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="59"><Run Text="MFC1"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="209.722" Canvas.Top="2" Width="108" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Border Canvas.Left="314.683" Canvas.Top="21.12" Width="50" Height="30"
                     Background="White" BorderBrush="Gray" BorderThickness="1">
@@ -100,7 +100,7 @@
                     </TransformGroup>
                 </Line.RenderTransform>
             </Line>
-            <TextBlock Text="SiH4" Canvas.Top="148.513" Canvas.Left="0" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.538,1.578"/>
+            <TextBlock Text="N2" Canvas.Top="148.513" Canvas.Left="0" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.538,1.578"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="125.536" Width="231" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="105.385" Canvas.Left="48.989" RenderTransformOrigin="0.5,0.5" Width="63" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Line.RenderTransform>
@@ -157,8 +157,8 @@
                     </TransformGroup>
                 </Line.RenderTransform>
             </Line>
-            <TextBlock Text="SiH4" Canvas.Top="267.465" Canvas.Left="0" RenderTransformOrigin="0.538,1.578" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBlock Text="SiH4" Canvas.Top="367.638" Canvas.Left="0" RenderTransformOrigin="0.538,1.578" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Text="NH3" Canvas.Top="267.465" Canvas.Left="0" RenderTransformOrigin="0.538,1.578" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Text="N20" Canvas.Top="367.638" Canvas.Left="0" RenderTransformOrigin="0.538,1.578" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="245.585" Width="73" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="171.23" Canvas.Left="-40.013" RenderTransformOrigin="0.5,0.5" Width="97" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Line.RenderTransform>
@@ -237,7 +237,7 @@
                     Background="White" BorderBrush="Gray" BorderThickness="1">
                 <TextBlock Text="关" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
-            <TextBlock Canvas.Left="76.166" Canvas.Top="300.073" RenderTransformOrigin="-0.428,0.138" Width="38" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Text=""/><Run Language="zh-cn" Text="2"/></TextBlock>
+            <TextBlock Canvas.Left="76.166" Canvas.Top="300.073" RenderTransformOrigin="-0.428,0.138" Width="38" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V12"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="295.646" Width="53" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="19.333"/>
             <Border Canvas.Left="178.222" Canvas.Top="360.705" Width="61" Height="25"
                     Background="White" BorderBrush="Gray" BorderThickness="1">
@@ -265,7 +265,7 @@
                     Background="White" BorderBrush="Gray" BorderThickness="1">
                 <TextBlock Text="关" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
-            <TextBlock Canvas.Left="318.683" Canvas.Top="348.518" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="10"/></TextBlock>
+            <TextBlock Canvas.Left="318.683" Canvas.Top="348.518" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V13"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="347.268" Width="91" Canvas.Left="332.683" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Line X1="30" Y1="30" X2="400" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="189.268" Canvas.Left="207.745" RenderTransformOrigin="0.5,0.5" Width="373" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Line.RenderTransform>
@@ -289,9 +289,20 @@
                     </TransformGroup>
                 </Line.RenderTransform>
             </Line>
-            <TextBlock Canvas.Left="512.722" TextWrapping="Wrap" Text="TextBox" Canvas.Top="109.29" Width="61" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Canvas.Left="520.222" Canvas.Top="93.93" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Language="zh-cn" Text="压力计"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="545.877" Canvas.Top="88.036" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border Canvas.Left="513" Canvas.Top="110" Width="70" Height="20" 
+        BorderBrush="Black" BorderThickness="1" 
+        HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBox" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+
+            <Border Canvas.Left="513" Canvas.Top="92" Width="70"  Height="20"
+        BorderBrush="Black" BorderThickness="1" 
+        HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="实际压力值" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="554" Canvas.Top="88" Width="73" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="538.236" Canvas.Top="132.798" Width="91" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Border Canvas.Left="534.455" Canvas.Top="152.04" Width="50" Height="30"
                     Background="White" BorderBrush="Gray" BorderThickness="1">
@@ -346,25 +357,94 @@
                 </Line.RenderTransform>
             </Line>
         </Canvas>
-        <materialDesign:Card Grid.Row="0" Grid.Column="1" Margin="5,10,10,5" Grid.RowSpan="2">
+        <!--工艺运行过程监测  -->
+        <materialDesign:Card Grid.Row="0" Grid.Column="1" Margin="5,10,10,5" >
+
             <StackPanel>
+                <StackPanel Orientation="Vertical" Width="440">
+                    <!--工艺运行-->
+                    <TextBlock Text="工艺运行" Margin="5,5,0,0"/>
+                    <!-- 第一个表格 -->
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5,5,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <!-- 调整行高 -->
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- 表头行 -->
+                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                                <TextBlock Text="工艺文件名" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                                <TextBlock Text="工艺步" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                                <TextBlock Text="工艺类型" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                                <TextBlock Text="工艺步时间" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="4" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                                <TextBlock Text="舟状态" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="5" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                                <TextBlock Text="炉门状态" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- 数据行 -->
+                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="4" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="5" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </StackPanel>
                 <TextBlock Text="温度监控" Margin="5"/>
                 <!-- 四个表格放在同一行 -->
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="350"/>  <!-- 温度监控表格 -->
-                        <ColumnDefinition Width="160"/>  <!-- 左侧列表 -->
-                        <ColumnDefinition Width="130"/>  <!-- 辅热三相电表格 -->
-                        <ColumnDefinition Width="160"/>  <!-- 时间和工艺信息表格 -->
+                        <ColumnDefinition Width="350"/>
+                        <!-- 温度监控表格 -->
+                        <ColumnDefinition Width="180"/>
+                        <!-- 左侧列表 -->
+                        <ColumnDefinition Width="130"/>
                     </Grid.ColumnDefinitions>
-
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"></RowDefinition>
+                    </Grid.RowDefinitions>
                     <!-- 温度监控表格 -->
                     <Border Grid.Column="0" Margin="0,0,5,0" 
-                            BorderBrush="Gray" BorderThickness="1">
+                            BorderBrush="Gray" BorderThickness="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>   <!-- 第一列从50改为70 -->
-                                <ColumnDefinition Width="45"/>   <!-- T1-T6列从40改为45 -->
+                                <ColumnDefinition Width="65"/>
+                                <!-- 第一列从50改为70 -->
+                                <ColumnDefinition Width="50"/>
+                                <!-- T1-T6列从40改为45 -->
                                 <ColumnDefinition Width="45"/>
                                 <ColumnDefinition Width="45"/>
                                 <ColumnDefinition Width="45"/>
@@ -495,97 +575,22 @@
                             </Border>
                         </Grid>
                     </Border>
-
-                    <!-- 左侧列表 -->
-                    <Border Grid.Column="1" Margin="0,0,5,0"
-                            BorderBrush="Gray" BorderThickness="1">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- 左侧标签 -->
-                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="冷却水温度" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="风速" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="TMB伴热温度" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="TMB伴热设定" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="4" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="氮气积累" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="5" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="回压氮气积累" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="6" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="CDA积累" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="7" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="尾气柜氮气" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-
-                            <!-- 右侧数值列 -->
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="4" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="5" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="6" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="7" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </Border>
-
                     <!-- 辅热三相电表格 -->
-                    <Border Grid.Column="2" Margin="0,0,5,0"
-                            BorderBrush="Gray" BorderThickness="1">
+                    <Border Grid.Column="1" Margin="0,0,5,0"
+                            BorderBrush="Gray" BorderThickness="0">
                         <StackPanel>
                             <TextBlock Text="辅热三相电" Margin="5"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="45"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="25"/>
                                 </Grid.RowDefinitions>
 
                                 <!-- 表头 -->
@@ -606,67 +611,75 @@
                                 <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource TableCellStyle}">
                                     <TextBlock Text="I" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <Border Grid.Column="0" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="W" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
+
 
                                 <!-- 数据单元格 -->
-                                <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="3" Grid.Row="2" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="1" Grid.Row="3" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="2" Grid.Row="3" Style="{StaticResource TableCellStyle}"/>
-                                <Border Grid.Column="3" Grid.Row="3" Style="{StaticResource TableCellStyle}"/>
+                                <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                    <TextBlock Text=""></TextBlock>
+                                </Border>
+                                <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                <TextBlock Text=""></TextBlock>
+                                </Border>
+                                <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
+                                    <TextBlock Text=""></TextBlock>
+                                </Border>
+                                <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}">
+                                    <TextBlock Text=""></TextBlock>
+                                </Border>
+                                <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource TableCellStyle}">
+                                    <TextBlock Text="unde"></TextBlock>
+                                </Border>
+                                <Border Grid.Column="3" Grid.Row="2" Style="{StaticResource TableCellStyle}">
+                                    <TextBlock Text="unde"></TextBlock>
+                                </Border>
                             </Grid>
                         </StackPanel>
                     </Border>
-
-                    <!-- 时间和工艺信息表格 -->
-                    <Border Grid.Column="3" Margin="0"
-                            BorderBrush="Gray" BorderThickness="1">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>  <!-- 标签列 -->
-                                <ColumnDefinition Width="*"/>   <!-- 值列 -->
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- 当前时间 -->
-                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="当前时间" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 工艺次数 -->
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="工艺次数" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 设备ID -->
-                            <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="设备ID" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </Border>
+                    <!-- 左侧列表 -->
                 </Grid>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <!--射频显示区域-->
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="3">
+                            <TextBlock Text="射频电压(V)："></TextBlock>
+                            <TextBlock Text="undef"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="3">
+                            <TextBlock Text="射频电流(A)："></TextBlock>
+                            <TextBlock Text="undef"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="3">
+                            <TextBlock Text="射频功率(w)："></TextBlock>
+                            <TextBlock Text="undef"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <!--辅热显示区域-->
+                    <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="辅热开度(%):" Margin="0,5,0,0"></TextBlock>
+                            <TextBlock Text="undef" Margin="15,5,5,0"></TextBlock>
+                            <TextBlock></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="辅热实际温度:" Margin="0,5,0,0"></TextBlock>
+                            <TextBlock Text="undef" Margin="10,5,5,0"></TextBlock>
+                            <TextBlock></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="辅热设置温度:" Margin="0,5,0,0"></TextBlock>
+                            <TextBlock Text="undef" Margin="10,5,5,0"></TextBlock>
+                            <TextBlock></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="辅热丝电流:" Margin="0,5,0,0"></TextBlock>
+                            <TextBlock Text="undef" Margin="20,5,5,0"></TextBlock>
+                            <TextBlock></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </materialDesign:Card>
-        <materialDesign:Card Grid.Row="2" Grid.ColumnSpan="3" Margin="10,5,10,10">
+        <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="2" Margin="10,5,10,10" Visibility="Hidden">
             <StackPanel Orientation="Horizontal" Margin="10">
                 <StackPanel Orientation="Vertical">
                     <!--射屏监控-->
@@ -793,104 +806,7 @@
                         </Grid>
                     </materialDesign:Card>
                 </StackPanel>
-                <StackPanel Orientation="Vertical">
-                    <!--工艺运行-->
-                    <TextBlock Text="工艺运行" Margin="5,5,0,0"/>
-                    <!-- 第一个表格 -->
-                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5,5,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>  <!-- 调整列宽 -->
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>  <!-- 调整行高 -->
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
 
-                            <!-- 表头行 -->
-                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="步倒计时" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="步设定时间" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="总倒计时" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="总设定时间" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="4" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="已送行时间" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 数据行 -->
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="4" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </Border>
-
-                    <!-- 第二个表格 -->
-                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5,5,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>  <!-- 调整列宽 -->
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>  <!-- 调整行高 -->
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- 表头行 -->
-                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="当前工艺" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="当前步" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="总步数" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="当前舟号" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 数据行 -->
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </Border>
-                </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <!--过程运行-->
                     <TextBlock Text="过程运行" Margin="5,5,0,0"/>
@@ -898,9 +814,9 @@
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="5,5,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>  
-                                <ColumnDefinition Width="100"/>  
-                                <ColumnDefinition Width="100"/> 
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="25"/>
@@ -935,9 +851,12 @@
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="5,5,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90"/>  <!-- 从70改为90 -->
-                                <ColumnDefinition Width="90"/>  <!-- 从70改为90 -->
-                                <ColumnDefinition Width="90"/>  <!-- 从70改为90 -->
+                                <ColumnDefinition Width="90"/>
+                                <!-- 从70改为90 -->
+                                <ColumnDefinition Width="90"/>
+                                <!-- 从70改为90 -->
+                                <ColumnDefinition Width="90"/>
+                                <!-- 从70改为90 -->
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="25"/>
@@ -968,6 +887,41 @@
                         </Grid>
                     </Border>
                 </StackPanel>
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="0" Grid.Column="2" Margin="0,5,5,5" Background="LightSteelBlue">
+            <StackPanel VerticalAlignment="Top" Margin="8,15,8,8">
+                <!-- 自定义按钮样式 -->
+                <StackPanel.Resources>
+                    <Style x:Key="ControlButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Margin" Value="0,8,0,8"/>
+                        <Setter Property="Padding" Value="10,8"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="#FF333333"/>
+                        <Setter Property="BorderBrush" Value="#FFD0D0D0"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="3"/>
+                        <Setter Property="Height" Value="35"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE3F2FD"/>
+                                <Setter Property="BorderBrush" Value="#FF64B5F6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Content="开始工艺" 
+                        Style="{StaticResource ControlButtonStyle}"/>
+                <Button Content="暂停工艺" 
+                        Style="{StaticResource ControlButtonStyle}"/>
+                <Button Content="恢复工艺" 
+                        Style="{StaticResource ControlButtonStyle}"/>
+                <Button Content="跳步工艺" 
+                        Style="{StaticResource ControlButtonStyle}"/>
+                <Button Content="终止工艺" 
+                        Style="{StaticResource ControlButtonStyle}"/>
             </StackPanel>
         </materialDesign:Card>
     </Grid>

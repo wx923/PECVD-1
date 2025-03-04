@@ -65,7 +65,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="750"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="650"/>
             <ColumnDefinition Width="130"/>
         </Grid.ColumnDefinitions>
         <!--管道图形-->
@@ -90,7 +90,7 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="69.794" Canvas.Top="23.25"/>
             <TextBox Canvas.Left="178.222" TextWrapping="Wrap" Text="TextBox" Canvas.Top="18.25" Width="61" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25"/>
-            <TextBlock Canvas.Left="180.222" Canvas.Top="3.01" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="59"><Run Text="MFC"/><Run Language="zh-cn" Text=""/></TextBlock>
+            <TextBlock Canvas.Left="180.222" Canvas.Top="3.01" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="59"><Run Text="MFC1"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="209.722" Canvas.Top="2" Width="108" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="314.683" Canvas.Top="21.12"/>
@@ -219,7 +219,7 @@
             </Line>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="71.627" Canvas.Top="313.98"/>
-            <TextBlock Canvas.Left="76.166" Canvas.Top="300.073" RenderTransformOrigin="-0.428,0.138" Width="38" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Text=""/><Run Language="zh-cn" Text="2"/></TextBlock>
+            <TextBlock Canvas.Left="75" Canvas.Top="299" RenderTransformOrigin="-0.428,0.138" Width="38" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="V12"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="295.646" Width="53" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="19.333"/>
             <TextBox Canvas.Left="178.222" TextWrapping="Wrap" Text="TextBox" Canvas.Top="360.705" Width="61" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBlock Canvas.Left="180.222" Canvas.Top="345.465" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="MFC"/><Run Language="zh-cn" Text="4"/></TextBlock>
@@ -238,7 +238,7 @@
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="345.465" Width="107" Canvas.Left="208.106" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="313.145" Canvas.Top="363.821"/>
-            <TextBlock Canvas.Left="318.683" Canvas.Top="348.518" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="10"/></TextBlock>
+            <TextBlock Canvas.Left="318.683" Canvas.Top="348.518" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V13"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="347.268" Width="91" Canvas.Left="332.683" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Line X1="30" Y1="30" X2="400" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="189.268" Canvas.Left="207.745" RenderTransformOrigin="0.5,0.5" Width="373" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Line.RenderTransform>
@@ -317,120 +317,135 @@
         <materialDesign:Card Grid.Row="0" Grid.Column="1" Margin="5,5,5,5">
             <StackPanel>
                 <TextBlock Text="温区设定" Margin="5,10,5,15" FontSize="16" FontWeight="Bold"/>
-                
-                <!-- 设定温度表格 -->
-                <TextBlock Text="设定温度" Margin="5,0,5,5"/>
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <!-- 设定温度表格 -->
+                    <StackPanel>
+                        <TextBlock Text="设定温度" Margin="5,0,5,5"/>
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition  Width="50"/>
+                            </Grid.ColumnDefinitions>
 
-                    <!-- 表头 -->
-                    <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区1" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="1" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区2" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="2" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区3" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="3" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区4" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="4" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区5" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="5" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区6" Padding="5" TextAlignment="Center"/>
-                    </Border>
+                            <!-- 表头 -->
+                            <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区1" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区2" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区3" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区4" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="4" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区5" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="5" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区6" Padding="5" TextAlignment="Center"/>
+                            </Border>
 
-                    <!-- 数值单元格 -->
-                    <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="1,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="2" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="3" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="4" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="5" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                </Grid>
+                            <!-- 数值单元格 -->
+                            <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="1,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="4" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="5" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel>
+                        <!-- 待机温度表格 -->
+                        <TextBlock Text="待机温度" Margin="5,0,5,5"/>
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition  Width="50"/>
+                            </Grid.ColumnDefinitions>
 
-                <!-- 待机温度表格 -->
-                <TextBlock Text="待机温度" Margin="5,15,5,5"/>
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                            <!-- 表头 -->
+                            <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区1" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区2" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区3" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区4" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="4" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区5" Padding="5" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="5" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
+                                <TextBlock Text="温区6" Padding="5" TextAlignment="Center"/>
+                            </Border>
 
-                    <!-- 表头 -->
-                    <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区1" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="1" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区2" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="2" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区3" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="3" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区4" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="4" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区5" Padding="5" TextAlignment="Center"/>
-                    </Border>
-                    <Border Grid.Column="5" Grid.Row="0" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="#FFE5E5E5">
-                        <TextBlock Text="温区6" Padding="5" TextAlignment="Center"/>
-                    </Border>
-
-                    <!-- 数值单元格 -->
-                    <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="1,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="2" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="3" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="4" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                    <Border Grid.Column="5" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
-                        <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
-                    </Border>
-                </Grid>
+                            <!-- 数值单元格 -->
+                            <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="1,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="4" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                            <Border Grid.Column="5" Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,1,1">
+                                <TextBox Text="0" Padding="5" TextAlignment="Center" BorderThickness="0"/>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <!--电源设置-->
+                    <StackPanel >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="脉冲功率:" VerticalAlignment="Center"></TextBlock>
+                            <Border BorderBrush="Gray" BorderThickness="1">
+                                <TextBox Text="" Width="60"></TextBox>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.RowSpan="2" Grid.Column="2" Margin="0,5,5,5" Background="LightSteelBlue">
