@@ -324,8 +324,11 @@
             </Border>
             <TextBlock Canvas.Left="576.236" Canvas.Top="269.336" RenderTransformOrigin="-0.428,0.138" Width="27" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Language="zh-cn" Text="9"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="522.223" Canvas.Top="265.273" Width="44" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Rectangle Height="14" Canvas.Left="518.455" Stroke="Black" Canvas.Top="289.193" Width="35" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBlock Canvas.Left="524.457" Canvas.Top="274.448" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Canvas.Left="501" Canvas.Top="285" Width="50" Height="30"
+                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Text="11.11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Canvas.Left="513" Canvas.Top="271" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -334,9 +337,9 @@
                         <TranslateTransform X="-0.054"/>
                     </TransformGroup>
                 </TextBlock.RenderTransform><Run Language="zh-cn" Text="蝶阀"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="458.394" Canvas.Top="265.273" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Rectangle Height="14" Canvas.Left="445.342" Stroke="Black" Canvas.Top="289.457" Width="43" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Canvas.Left="440" Canvas.Top="272" RenderTransformOrigin="-0.428,0.138" Width="56" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="441" Canvas.Top="265" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Rectangle Height="25" Canvas.Left="430" Stroke="Black" Canvas.Top="286" Width="39" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Canvas.Left="442" Canvas.Top="269" RenderTransformOrigin="-0.428,0.138" Width="18" HorizontalAlignment="Left" VerticalAlignment="Center" Text="泵">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -344,9 +347,9 @@
                         <RotateTransform/>
                         <TranslateTransform X="-0.054"/>
                     </TransformGroup>
-                </TextBlock.RenderTransform><Run Language="zh-cn" Text="泵后压力"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="468.833" Canvas.Top="195.568" Width="68" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="241.986" Canvas.Left="422.36" RenderTransformOrigin="0.5,0.5" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top">
+                </TextBlock.RenderTransform></TextBlock>
+            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="453" Canvas.Top="196" Width="84" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="242" Canvas.Left="406" RenderTransformOrigin="0.5,0.5" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Line.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -618,7 +621,7 @@
                                     <TextBlock Text=""></TextBlock>
                                 </Border>
                                 <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text=""></TextBlock>
+                                    <TextBlock Text=""></TextBlock>
                                 </Border>
                                 <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
                                     <TextBlock Text=""></TextBlock>

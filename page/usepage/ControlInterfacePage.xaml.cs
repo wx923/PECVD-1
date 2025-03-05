@@ -12,5 +12,6 @@ namespace WpfApp4.page.usepage
         {
             InitializeComponent();
         }
+
     }
 }
