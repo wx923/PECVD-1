@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace WpfApp4.Models
 {
@@ -167,33 +169,56 @@ namespace WpfApp4.Models
 
         [ObservableProperty]
         public int auxiliaryHeatingValveOpening;
+
+
+        // 辅热实际温度
+        [ObservableProperty]
+        private double auxiliaryHeatingActualTemperature;
+
+        // 辅热设置温度
+        [ObservableProperty]
+        private double auxiliaryHeatingSetTemperature;
+
+        // 辅热丝电流
+        [ObservableProperty]
+        private double auxiliaryHeatingWireCurrent;
     }
 
-
-    class GlobalMonitoringStatusModel
+    public partial class GlobalMonitoringStatusModel : ObservableObject
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
         // 工艺文件名
         [ObservableProperty]
-        public string _processFileName;
+        public string processFileName;
 
         // 工艺当前步
         [ObservableProperty]
-        public int _processCurrentStep;
+        public int processCurrentStep;
 
         // 工艺类型
         [ObservableProperty]
-        public string _processType;
+        public string processType;
 
         // 工艺步时间
         [ObservableProperty]
-        public string _processStepTime;
+        public string processStepTime;
 
         // 舟状态
         [ObservableProperty]
-        public string _boatStatus;
+        public string boatStatus;
 
         // 炉门状态
         [ObservableProperty]
-        public string _furnaceDoorStatus;
+        public string furnaceDoorStatus;
+
+        //用于判断当前炉管是否在工作
+        [ObservableProperty]
+        public bool isWork;
+
+        //设置炉管编号
+        [ObservableProperty]
+        public int fnum;
     }
 }

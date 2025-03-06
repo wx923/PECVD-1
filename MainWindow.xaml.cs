@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using WpfApp4.page.usepage;
-using WpfApp4.page.usepage;
+using WpfApp4.Services;
 
 namespace WpfApp4
 {
@@ -21,7 +21,6 @@ namespace WpfApp4
         public MainWindow()
         {
             InitializeComponent();
-            
             // 默认导航到 HomePage
             MainFrame.Navigate(new HomePage());
             LastButtonUI = BtnHome;

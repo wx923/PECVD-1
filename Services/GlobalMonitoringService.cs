@@ -22,7 +22,7 @@ namespace WpfApp4.Services
         public static GlobalMonitoringService Instance=_instance.Value;
 
         //创建全局的六炉管全局监控数组
-        ObservableCollection<GlobalMonitoringDataModel> GlobalMonitoringAllData = new ObservableCollection<GlobalMonitoringDataModel>();
+        public ObservableCollection<GlobalMonitoringDataModel> GlobalMonitoringAllData = new ObservableCollection<GlobalMonitoringDataModel>();
 
         //六个炉管的PLC对象
         Dictionary<int,ModbusTcpNet> _modbusClients=new Dictionary<int, ModbusTcpNet>();
@@ -39,7 +39,7 @@ namespace WpfApp4.Services
             for (int i = 0; i < 6; i++)
             {
                 _modbusClients[i] = PlcCommunicationService.Instance.ModbusTcpClients[(PlcCommunicationService.PlcType)i];
-                GlobalMonitoringAllData[i] = new GlobalMonitoringDataModel();
+                GlobalMonitoringAllData.Add(new GlobalMonitoringDataModel());
             }
 
             //当PLC连接了之后才能进行数据更新操作
@@ -158,19 +158,89 @@ namespace WpfApp4.Services
             data.RfPower = client.ReadFloat($"{addr++}").Content;
 
             data.AuxiliaryHeatingValveOpening = client.ReadInt16($"{addr++}").Content;
-
-        // 每隔一段时间更新一次数据
-        await Task.Delay(1000); // 每秒更新一次
-
-
-
-
-             Application.Current.Dispatcher.Invoke(() =>
+            data.AuxiliaryHeatingActualTemperature = client.ReadInt16($"{addr++}").Content;
+            data.AuxiliaryHeatingSetTemperature = client.ReadInt16($"{addr++}").Content;
+            data.AuxiliaryHeatingWireCurrent = client.ReadInt16($"{addr++}").Content;
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 GlobalMonitoringAllData[furnaceIndex].ValveV1 = data.ValveV1;
                 GlobalMonitoringAllData[furnaceIndex].ValveV2 = data.ValveV2;
-                
+                GlobalMonitoringAllData[furnaceIndex].ValveV3 = data.ValveV3;
+                GlobalMonitoringAllData[furnaceIndex].ValveV4 = data.ValveV4;
+                GlobalMonitoringAllData[furnaceIndex].ValveV5 = data.ValveV5;
+                GlobalMonitoringAllData[furnaceIndex].ValveV6 = data.ValveV6;
+                GlobalMonitoringAllData[furnaceIndex].ValveV7 = data.ValveV7;
+                GlobalMonitoringAllData[furnaceIndex].ValveV8 = data.ValveV8;
+                GlobalMonitoringAllData[furnaceIndex].ValveV9 = data.ValveV9;
+                GlobalMonitoringAllData[furnaceIndex].ValveV10 = data.ValveV10;
+                GlobalMonitoringAllData[furnaceIndex].ValveV11 = data.ValveV11;
+                GlobalMonitoringAllData[furnaceIndex].ValveV12 = data.ValveV12;
+                GlobalMonitoringAllData[furnaceIndex].ValveV13 = data.ValveV13;
+                GlobalMonitoringAllData[furnaceIndex].ValveV20 = data.ValveV20;
+
+
+                GlobalMonitoringAllData[furnaceIndex].Mfc1Setpoint = data.Mfc1Setpoint;
+                GlobalMonitoringAllData[furnaceIndex].Mfc2Setpoint = data.Mfc2Setpoint;
+                GlobalMonitoringAllData[furnaceIndex].Mfc3Setpoint = data.Mfc3Setpoint;
+                GlobalMonitoringAllData[furnaceIndex].Mfc4Setpoint = data.Mfc4Setpoint;
+
+                GlobalMonitoringAllData[furnaceIndex].Mfc1ActualValue = data.Mfc1ActualValue;
+                GlobalMonitoringAllData[furnaceIndex].Mfc2ActualValue = data.Mfc2ActualValue;
+                GlobalMonitoringAllData[furnaceIndex].Mfc3ActualValue = data.Mfc3ActualValue;
+                GlobalMonitoringAllData[furnaceIndex].Mfc4ActualValue = data.Mfc4ActualValue;
+
+
+                GlobalMonitoringAllData[furnaceIndex].VacuumGaugeActualPressure = data.Mfc4ActualValue;
+                GlobalMonitoringAllData[furnaceIndex].VacuumGaugeSetPressure = data.Mfc4ActualValue;
+
+
+                GlobalMonitoringAllData[furnaceIndex].ButterflyValveOpening = data.ButterflyValveOpening;
+
+                GlobalMonitoringAllData[furnaceIndex].SetpointTemperatureT1 = data.SetpointTemperatureT1;
+                GlobalMonitoringAllData[furnaceIndex].SetpointTemperatureT2 = data.SetpointTemperatureT2;
+                GlobalMonitoringAllData[furnaceIndex].SetpointTemperatureT3 = data.SetpointTemperatureT3;
+                GlobalMonitoringAllData[furnaceIndex].SetpointTemperatureT4 = data.SetpointTemperatureT4;
+                GlobalMonitoringAllData[furnaceIndex].SetpointTemperatureT5 = data.SetpointTemperatureT5;
+                GlobalMonitoringAllData[furnaceIndex].SetpointTemperatureT6 = data.SetpointTemperatureT6;
+
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleInternalT1 = data.ThermocoupleInternalT1;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleInternalT2 = data.ThermocoupleInternalT2;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleInternalT3 = data.ThermocoupleInternalT3;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleInternalT4 = data.ThermocoupleInternalT4;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleInternalT5 = data.ThermocoupleInternalT5;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleInternalT6 = data.ThermocoupleInternalT6;
+
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleExternalT1 = data.ThermocoupleExternalT1;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleExternalT2 = data.ThermocoupleExternalT2;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleExternalT3 = data.ThermocoupleExternalT3;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleExternalT4 = data.ThermocoupleExternalT4;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleExternalT5 = data.ThermocoupleExternalT5;
+                GlobalMonitoringAllData[furnaceIndex].ThermocoupleExternalT6 = data.ThermocoupleExternalT6;
+
+
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingACurrent = data.AuxiliaryHeatingACurrent;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingAVoltage = data.AuxiliaryHeatingAVoltage;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingBCurrent = data.AuxiliaryHeatingBCurrent;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingBVoltage = data.AuxiliaryHeatingBVoltage;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingCCurrent = data.AuxiliaryHeatingCCurrent;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingCVoltage = data.AuxiliaryHeatingCVoltage;
+
+
+                GlobalMonitoringAllData[furnaceIndex].RfVoltage = data.RfVoltage;
+                GlobalMonitoringAllData[furnaceIndex].RfCurrent = data.RfCurrent;
+                GlobalMonitoringAllData[furnaceIndex].RfPower = data.RfPower;
+
+
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingValveOpening = data.AuxiliaryHeatingValveOpening;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingActualTemperature = data.AuxiliaryHeatingActualTemperature;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingSetTemperature = data.AuxiliaryHeatingSetTemperature;
+                GlobalMonitoringAllData[furnaceIndex].AuxiliaryHeatingWireCurrent = data.AuxiliaryHeatingWireCurrent;
             });
+
+            // 每隔一段时间更新一次数据
+            await Task.Delay(1000); // 每秒更新一次
+
+
         }
     }
 }

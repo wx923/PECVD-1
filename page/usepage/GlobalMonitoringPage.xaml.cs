@@ -11,8 +11,9 @@ namespace WpfApp4.page.usepage
     {
         public GlobalMonitoringPage(int tubeNumber)
         {
-            this.DataContext = new GlobalMonitoringVM(tubeNumber);
+
             InitializeComponent();
+            this.DataContext = new GlobalMonitoringVM(tubeNumber);
         }
     }
 }
