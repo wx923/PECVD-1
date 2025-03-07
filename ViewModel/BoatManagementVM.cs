@@ -419,13 +419,15 @@ namespace WpfApp4.ViewModel
                 _originalCollectionNames[i] = Furnaces[i].ProcessCollectionName;
             }
         }
-
+        
+        //炉管更新代码用于更新6个炉管所要执行的工艺文件
         [RelayCommand]
         private async Task UpdateFurnaceProcess()
         {
             try
             {
                 var modifiedFurnaces = new List<(int Index, FurnaceData Furnace)>();
+                var processFlowSteps = MongoDbService.Instance.GlobalProcessFlowSteps;
                 
                 // 检查每个炉管是否有修改
                 for (int i = 0; i < 6; i++)
@@ -449,8 +451,22 @@ namespace WpfApp4.ViewModel
                     { 
                         // 更新原始值
                         _originalCollectionNames[index] = furnace.ProcessCollectionName;
-                        
-                        UpdateOperationStatus($"炉管{index + 1}工艺更新成功", false);
+                        var pSteps= processFlowSteps.FirstOrDefault(x => x.Fnum == index);
+                        if (pSteps!=null)
+                        {
+                            if (pSteps.IsWork == false)
+                            {
+                                pSteps.ProcessFileName = furnace.ProcessCollectionName;
+                               await MongoDbService.Instance.UpdataProcessFlowStepAsync(pSteps);
+                                UpdateOperationStatus($"炉管{index + 1}工艺更新成功", true);
+                            }
+                            else
+                            {
+                                UpdateOperationStatus($"炉管正在工作不能设置工艺文件", false);
+                                continue ;
+                            }
+                        }
+                        UpdateOperationStatus($"炉管{index + 1}工艺更新成功", true);
                     }
                     catch (Exception ex)
                     {

@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\boatmanagementpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\boatmanagementpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\viewmodel\\boatmanagementvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:viewmodel\\boatmanagementvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\viewmodel\\globalmonitoringvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:viewmodel\\globalmonitoringvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\globalmonitoringservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\globalmonitoringservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\globalmonitoringpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\globalmonitoringpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\models\\globalmonitoringmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:models\\globalmonitoringmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\models\\processexcelmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:models\\processexcelmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\globalmonitoringpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\globalmonitoringpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\globalmonitoringservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\globalmonitoringservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,33 +46,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProcessExcelModel.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\ProcessExcelModel.cs",
-              "RelativeDocumentMoniker": "Models\\ProcessExcelModel.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\ProcessExcelModel.cs",
-              "RelativeToolTip": "Models\\ProcessExcelModel.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAADwvwsAAAACAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "BoatManagementVM.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\BoatManagementVM.cs",
+              "RelativeDocumentMoniker": "ViewModel\\BoatManagementVM.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\BoatManagementVM.cs",
+              "RelativeToolTip": "ViewModel\\BoatManagementVM.cs",
+              "ViewState": "AgIAALIBAAAAAAAAAAAuwNEBAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T09:20:40.077Z",
+              "WhenOpened": "2025-03-07T00:49:33.209Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "BoatManagementPage.xaml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\BoatManagementPage.xaml",
+              "RelativeDocumentMoniker": "page\\usepage\\BoatManagementPage.xaml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\BoatManagementPage.xaml",
+              "RelativeToolTip": "page\\usepage\\BoatManagementPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-07T00:49:27.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MongoDbService.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MongoDbService.cs",
               "RelativeDocumentMoniker": "Services\\MongoDbService.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MongoDbService.cs",
-              "RelativeToolTip": "Services\\MongoDbService.cs",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAuwKsAAAAgAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\MongoDbService.cs*",
+              "RelativeToolTip": "Services\\MongoDbService.cs*",
+              "ViewState": "AgIAAJAAAAAAAAAAAAASwKwAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T06:24:15.21Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "GlobalMonitoringPage.xaml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\GlobalMonitoringPage.xaml",
               "RelativeDocumentMoniker": "page\\usepage\\GlobalMonitoringPage.xaml",
@@ -80,39 +96,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "GlobalMonitoringVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\GlobalMonitoringVM.cs",
               "RelativeDocumentMoniker": "ViewModel\\GlobalMonitoringVM.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\GlobalMonitoringVM.cs*",
-              "RelativeToolTip": "ViewModel\\GlobalMonitoringVM.cs*",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAABFAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\GlobalMonitoringVM.cs",
+              "RelativeToolTip": "ViewModel\\GlobalMonitoringVM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T05:20:44.499Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "GlobalMonitoringService.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\GlobalMonitoringService.cs",
               "RelativeDocumentMoniker": "Services\\GlobalMonitoringService.cs",
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\GlobalMonitoringService.cs",
               "RelativeToolTip": "Services\\GlobalMonitoringService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAwOYAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAwBEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T03:40:44.164Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "GlobalMonitoringModel.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\GlobalMonitoringModel.cs",
               "RelativeDocumentMoniker": "Models\\GlobalMonitoringModel.cs",
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\GlobalMonitoringModel.cs",
               "RelativeToolTip": "Models\\GlobalMonitoringModel.cs",
-              "ViewState": "AgIAALoAAAAAAAAAAAAxwMAAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAMgAAAAAAAAAAAAIwNcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T05:33:22.377Z",
               "EditorCaption": ""

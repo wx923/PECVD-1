@@ -22,6 +22,8 @@ namespace WpfApp4
         {
             InitializeComponent();
             // 默认导航到 HomePage
+            _=MongoDbService.Instance;
+            _ = GlobalMonitoringService.Instance;
             MainFrame.Navigate(new HomePage());
             LastButtonUI = BtnHome;
             LastButtonUI.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");

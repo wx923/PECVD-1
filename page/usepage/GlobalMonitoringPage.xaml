@@ -367,14 +367,14 @@
         <materialDesign:Card Grid.Row="0" Grid.Column="1" Margin="5,10,10,5" >
 
             <StackPanel>
-                <StackPanel Orientation="Vertical" Width="440">
+                <StackPanel Orientation="Vertical" Width="470">
                     <!--工艺运行-->
                     <TextBlock Text="工艺运行" Margin="5,5,0,0"/>
                     <!-- 第一个表格 -->
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="5,5,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="180"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="70"/>
@@ -920,6 +920,7 @@
                 </StackPanel.Resources>
 
                 <Button Content="开始工艺" 
+                        Command=""
                         Style="{StaticResource ControlButtonStyle}"/>
                 <Button Content="暂停工艺" 
                         Style="{StaticResource ControlButtonStyle}"/>

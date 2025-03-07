@@ -184,41 +184,52 @@ namespace WpfApp4.Models
         private double auxiliaryHeatingWireCurrent;
     }
 
+    [BsonIgnoreExtraElements]
     public partial class GlobalMonitoringStatusModel : ObservableObject
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string _id { get; set; }
         // 工艺文件名
         [ObservableProperty]
-        public string processFileName;
+        public string _processFileName;
 
         // 工艺当前步
         [ObservableProperty]
-        public int processCurrentStep;
+        public int _processCurrentStep;
 
         // 工艺类型
         [ObservableProperty]
-        public string processType;
+        public string _processType;
 
         // 工艺步时间
         [ObservableProperty]
-        public string processStepTime;
+        public string _processStepTime;
 
         // 舟状态
         [ObservableProperty]
-        public string boatStatus;
+        public string _boatStatus;
 
         // 炉门状态
         [ObservableProperty]
-        public string furnaceDoorStatus;
+        public string _furnaceDoorStatus;
 
         //用于判断当前炉管是否在工作
         [ObservableProperty]
-        public bool isWork;
+        public bool _isWork;
 
         //设置炉管编号
         [ObservableProperty]
-        public int fnum;
+        public int _fnum;
+
+        public GlobalMonitoringStatusModel()
+        {
+            _id = ObjectId.GenerateNewId().ToString();
+            _processFileName = "无工艺文件";
+            _processStepTime = "0";
+            _processType = "无";
+            _processCurrentStep = 0;
+            _isWork = false;
+        }
     }
 }

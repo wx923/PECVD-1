@@ -20,7 +20,7 @@ namespace WpfApp4.Services
         public static MongoDbService Instance => _instance.Value;
 
         //代表数据库
-        private readonly IMongoDatabase _database;
+        public readonly IMongoDatabase _database;
 
         //代表数据库里面的集合
         private readonly IMongoCollection<Boat> _boats;
@@ -165,15 +165,13 @@ namespace WpfApp4.Services
                         for (int i = 0; i < 6; i++){
                         var flowStep = new GlobalMonitoringStatusModel
                         {
-                            ProcessFileName = "无工艺文件",
-                            ProcessStepTime = "0",
-                            ProcessType = "无",
-                            ProcessCurrentStep = 0,
                             Fnum = i,
-                            IsWork = false
                         };
-                        GlobalProcessFlowSteps.Add(flowStep);
+
                         await UpdataProcessFlowStepAsync(flowStep);
+                        var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq(x => x.Fnum,i);
+                        var a = _processFlowStepsCollection.Find(filter).FirstOrDefault();
+                        GlobalProcessFlowSteps.Add(flowStep);
                     }
                 }
                 else {
@@ -701,16 +699,16 @@ namespace WpfApp4.Services
         //创建六个对象
 
         //数据更新操作
-        private async Task<bool> UpdataProcessFlowStepAsync(GlobalMonitoringStatusModel flowStep)
+        public async Task<bool> UpdataProcessFlowStepAsync(GlobalMonitoringStatusModel flowStep)
         {
             try
             {
-                var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq("Num", flowStep.Fnum);
+                var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq("Fnum", flowStep.Fnum);
                 var existing = await _processFlowStepsCollection.Find(filter).FirstOrDefaultAsync();
 
                 if (existing !=null)
                 {
-                   var result = await _processFlowStepsCollection.ReplaceOneAsync(filter, existing);
+                   var result = await _processFlowStepsCollection.ReplaceOneAsync(filter, flowStep);
                    return result.ModifiedCount > 0;
                 }
                 else
