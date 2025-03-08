@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MongoDB.Driver;
@@ -24,12 +28,57 @@ namespace WpfApp4.ViewModel
         //配方文件结构
         public Dictionary<int, ProcessExcelModel> _processExcels;
 
+        //用于倒计时的秒数
+        [ObservableProperty]
+        public int _countdownValue;
+
+        //设置定时器用于显示页面数据
+        private DispatcherTimer _timer;
         public GlobalMonitoringVM(int turbNumtubeNumber) {
             _progressMonitor = MongoDbService.Instance.GlobalProcessFlowSteps.FirstOrDefault(x => x.Fnum == (turbNumtubeNumber - 1));
             _dataCollection = GlobalMonitoringService.Instance.GlobalMonitoringAllData[turbNumtubeNumber - 1];
+            _processExcels = new Dictionary<int, ProcessExcelModel>();
+            //设置定时器触发事件为1s
+            _timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            _timer.Tick += Timer_Tick;
         }
 
+        #region 辅助函数
 
+        private Task WaitForCountdown()
+        {
+            if (CountdownValue <= 0) return Task.CompletedTask; // 如果倒计时已为 0，直接完成
+
+            var tcs = new TaskCompletionSource<bool>();
+            EventHandler handler = null;
+            handler = (s, e) =>
+            {
+                if (CountdownValue <= 0)
+                {
+                    _timer.Stop();
+                    _timer.Tick -= handler;
+                    tcs.SetResult(true);
+                }
+            };
+            _timer.Tick += handler;
+            if (!_timer.IsEnabled) _timer.Start(); // 确保定时器启动
+            return tcs.Task;
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (CountdownValue > 0)
+            {
+                CountdownValue--;
+            }
+            else
+            {
+                _timer.Stop(); // 每步结束后停止定时器
+            }
+        }
+        #endregion
 
 
         #region 开始工艺
@@ -40,6 +89,7 @@ namespace WpfApp4.ViewModel
             var list = await MongoDbService.Instance._database.GetCollection<ProcessExcelModel>(_progressMonitor.ProcessFileName)
                 .Find(ProcessExcelModel => true)
                 .ToListAsync();
+
 
             // 将列表转换为字典（假设ProcessExcelModel有一个Id属性）
             int index = 0; // 初始化索引变量
@@ -52,53 +102,51 @@ namespace WpfApp4.ViewModel
             //判断是否能够开始工艺
             for (var i= 0; i < _processExcels.Count; i++)
             {
-                switch (_processExcels[i].Id)
+                //修改工艺步对象信息
+                ProgressMonitor.ProcessCurrentStep = _processExcels[i].Step;
+                ProgressMonitor.ProcessType = _processExcels[i].Name;
+                CountdownValue = _processExcels[i].Time;
+                switch (_processExcels[i].Name)
                 {
                     case "装片":
-                         LoadSampleAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        ProgressMonitor.BoatStatus = "进舟运动中";
+                        await LoadSampleAsync();
                         break;
                     case "升温":
-                         HeatUpAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        ProgressMonitor.BoatStatus = "无运动";
+                        await HeatUpAsync();
                         break;
                     case "慢抽真空":
-                         SlowPumpDownAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await SlowPumpDownAsync();
                         break;
                     case "抽真空":
-                         PumpDownAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await PumpDownAsync();
                         break;
                     case "检漏":
-                         DetectAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await DetectAsync();
                         break;
                     case "调压":
-                         AdjustPressureAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await AdjustPressureAsync();
                         break;
                     case "淀积":
-                         DepositAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await DepositAsync();
                         break;
                     case "清洗":
-                         CleanAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await CleanAsync();
                         break;
                     case "充氮":
-                         FillWithNitrogenAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        await FillWithNitrogenAsync();
                         break;
                     case "卸片":
-                         UnloadSampleAsync();
-                        await Task.Delay(_processExcels[i].Time);
+                        ProgressMonitor.BoatStatus = "进舟运动中";
+                        await UnloadSampleAsync();
                         break;
                     default:
-                        
+                        Console.WriteLine($"未知步骤: {_processExcels[i].Name}");
                         break;
-
                 }
+                // 等待倒计时结束
+                await WaitForCountdown();
             }
             //开始执行工艺
             
@@ -132,13 +180,10 @@ namespace WpfApp4.ViewModel
         private async Task AdjustPressureAsync()
         {
             //实现调压
-
-            throw new NotImplementedException();
         }
         private async Task FillWithNitrogenAsync()
         {
             //实现充氮
-            throw new NotImplementedException();
         }
 
         private async Task DepositAsync()

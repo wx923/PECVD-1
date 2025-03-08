@@ -418,7 +418,7 @@
                                 <TextBlock Text="{Binding ProgressMonitor.ProcessType}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding ProgressMonitor.ProcessType}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding CountdownValue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border Grid.Column="4" Grid.Row="1" Style="{StaticResource TableCellStyle}">
                                 <TextBlock Text="{Binding ProgressMonitor.BoatStatus}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -920,7 +920,7 @@
                 </StackPanel.Resources>
 
                 <Button Content="开始工艺" 
-                        Command=""
+                        Command="{Binding StartProcessCommand}"
                         Style="{StaticResource ControlButtonStyle}"/>
                 <Button Content="暂停工艺" 
                         Style="{StaticResource ControlButtonStyle}"/>

@@ -14,107 +14,68 @@ namespace WpfApp4.Models
         [ObservableProperty]
         private string fileId = string.Empty;
 
-        // 时间参数
         [ObservableProperty]
-        private int time;  // 工艺步骤时间
-
-        // 温度设定值 T1-T9
-        [ObservableProperty]
-        private int t1;
+        private int step; // 步数
 
         [ObservableProperty]
-        private int t2;
+        private string name; // 名称
 
         [ObservableProperty]
-        private int t3;
+        private int time; // 时间（s）
 
         [ObservableProperty]
-        private int t4;
+        private int t1; // T1
 
         [ObservableProperty]
-        private int t5;
+        private int t2; // T2
 
         [ObservableProperty]
-        private int t6;
+        private int t3; // T3
 
         [ObservableProperty]
-        private int t7;
+        private int t4; // T4
 
         [ObservableProperty]
-        private int t8;
+        private int t5; // T5
 
         [ObservableProperty]
-        private int t9;
-
-        // 气体流量设定值
-        [ObservableProperty]
-        private int n2;
+        private int t6; // T6
 
         [ObservableProperty]
-        private int siH4;
+        private int n2; // N2
 
         [ObservableProperty]
-        private int n2O;
+        private int sih4; // SiH4
 
         [ObservableProperty]
-        private int h2;
+        private int n2o; // N2O
 
         [ObservableProperty]
-        private int ph3;
-
-        // 压力设定值
-        [ObservableProperty]
-        private int pressure;
-
-        // 功率设定值
-        [ObservableProperty]
-        private int power1;
+        private int nh3; // NH3
 
         [ObservableProperty]
-        private int power2;
-
-        // 运动参数
-        [ObservableProperty]
-        private int boatDirection;  // 进出舟方向（0不动，1:出舟, 2:进舟）
+        private int pressureValue; // 压力值
 
         [ObservableProperty]
-        private int moveSpeed;  // 平移速度
+        private int power; // 电源功率
 
         [ObservableProperty]
-        private int upDownSpeed;  // 上下速度
-
-        // 加热参数
-        [ObservableProperty]
-        private int heatTime;  // 预热时间
+        private int pulseOn; // 脉冲开
 
         [ObservableProperty]
-        private int heatTemp;  // 预热温度
-
-        // 脉冲参数
-        [ObservableProperty]
-        private int pulseOn1;  // 脉冲开启时间1
+        private int pulseOff; // 脉冲关
 
         [ObservableProperty]
-        private int pulseOff1;  // 脉冲关闭时间1
+        private int moveSpeed; // 进舟速度
 
         [ObservableProperty]
-        private int pulseOn2;  // 脉冲开启时间2
+        private int retreatSpeed; // 退舟速度
 
         [ObservableProperty]
-        private int pulseOff2;  // 脉冲关闭时间2
-
-        // 电流电压参考值和限制值
-        [ObservableProperty]
-        private int currentReference;  // 电流参考值(A)
+        private int verticalSpeed; // 垂直速度
 
         [ObservableProperty]
-        private int currentLimit;  // 电流卡控值(A)
-
-        [ObservableProperty]
-        private int voltageReference;  // 电压参考值(V)
-
-        [ObservableProperty]
-        private int voltageLimit;  // 电压卡控值(V)
+        private int auxiliaryHeatTemperature; // 辅热温度
     }
 
     public partial class ProcessFileInfo : ObservableObject

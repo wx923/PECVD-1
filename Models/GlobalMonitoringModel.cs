@@ -204,7 +204,7 @@ namespace WpfApp4.Models
 
         // 工艺步时间
         [ObservableProperty]
-        public string _processStepTime;
+        public int _processStepTime;
 
         // 舟状态
         [ObservableProperty]
@@ -226,7 +226,7 @@ namespace WpfApp4.Models
         {
             _id = ObjectId.GenerateNewId().ToString();
             _processFileName = "无工艺文件";
-            _processStepTime = "0";
+            _processStepTime = 0;
             _processType = "无";
             _processCurrentStep = 0;
             _isWork = false;
