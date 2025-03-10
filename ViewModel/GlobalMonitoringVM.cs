@@ -34,10 +34,13 @@ namespace WpfApp4.ViewModel
 
         //设置定时器用于显示页面数据
         private DispatcherTimer _timer;
-        public GlobalMonitoringVM(int turbNumtubeNumber) {
-            _progressMonitor = MongoDbService.Instance.GlobalProcessFlowSteps.FirstOrDefault(x => x.Fnum == (turbNumtubeNumber - 1));
-            _dataCollection = GlobalMonitoringService.Instance.GlobalMonitoringAllData[turbNumtubeNumber - 1];
+
+        int _turbNum = 0;
+        public GlobalMonitoringVM(int turbNum) {
+            _progressMonitor = MongoDbService.Instance.GlobalProcessFlowSteps.FirstOrDefault(x => x.Fnum == (turbNum - 1));
+            _dataCollection = GlobalMonitoringService.Instance.GlobalMonitoringAllData[turbNum - 1];
             _processExcels = new Dictionary<int, ProcessExcelModel>();
+            _turbNum=turbNum;
             //设置定时器触发事件为1s
             _timer = new DispatcherTimer
             {
@@ -100,6 +103,14 @@ namespace WpfApp4.ViewModel
             }
 
             //判断是否能够开始工艺
+
+
+            //开始工艺数据采集
+
+            // 启动当前炉管的 PLC 数据采集
+            GlobalMonitoringService.Instance.StartPlcDataCollection(_turbNum);
+
+            //开始工艺循环
             for (var i= 0; i < _processExcels.Count; i++)
             {
                 //修改工艺步对象信息
@@ -148,9 +159,11 @@ namespace WpfApp4.ViewModel
                 // 等待倒计时结束
                 await WaitForCountdown();
             }
-            //开始执行工艺
-            
-        
+            //停止当前炉管的 PLC 数据采集并导出
+            GlobalMonitoringService.Instance.StopPlcDataCollection(_turbNum);
+            await GlobalMonitoringService.Instance.ExportPlcDataToExcelAsync(_turbNum);
+
+
         }
 
         private async Task LoadSampleAsync()

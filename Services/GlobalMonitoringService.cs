@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using HslCommunication.ModBus;
 using HslCommunication.Profinet.Inovance;
 using NPOI.SS.Formula.Functions;
+using OfficeOpenXml;
 using WpfApp.Services;
 using WpfApp4.Models;
 using WpfApp4.Services;
@@ -31,7 +35,9 @@ namespace WpfApp4.Services
         //创建六个任务管理字典
         Dictionary<int,CancellationTokenSource> _cancellationTokenSources=new Dictionary<int,CancellationTokenSource>();
 
-
+        //六个炉管的监控数据采集对象
+        public ObservableCollection<RegularCollectDataModel>[] _plcDataExcelLists=new ObservableCollection<RegularCollectDataModel>[6];
+        private DispatcherTimer[] _plcExcelTimers = new DispatcherTimer[6];
         //任务管理
         GlobalMonitoringService()
         {
@@ -40,11 +46,22 @@ namespace WpfApp4.Services
             {
                 _modbusClients[i] = PlcCommunicationService.Instance.ModbusTcpClients[(PlcCommunicationService.PlcType)i];
                 GlobalMonitoringAllData.Add(new GlobalMonitoringDataModel());
+
+                _plcDataExcelLists[i]=new ObservableCollection<RegularCollectDataModel>();
+                _plcExcelTimers[i] = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromSeconds(3),
+                    Tag=i
+                };
+                _plcExcelTimers[i].Tick += PlcTimer_Tick;
             }
 
             //当PLC连接了之后才能进行数据更新操作
             PlcCommunicationService.Instance.ConnectionStateChanged += OnPlcConnectionStatusChanged;
         }
+
+
+        #region 辅助函数
         //当连接了之后开始进行相应的PLC操作
         private void OnPlcConnectionStatusChanged(object? sender, (PlcCommunicationService.PlcType PlcType, bool IsConnected) e)
         {
@@ -55,16 +72,20 @@ namespace WpfApp4.Services
             }
         }
 
+        #endregion
 
+
+
+        #region 通过PLC获取六个炉管工艺工程监控数据
         //开始进行数据更新操作
         private object StartDataUpdate(int furnaceIndex)
         {
-           if(_cancellationTokenSources.TryGetValue(furnaceIndex, out var cts))
+            if (_cancellationTokenSources.TryGetValue(furnaceIndex, out var cts))
             {
                 cts.Cancel();
                 cts.Dispose();
             }
-           cts=new CancellationTokenSource();
+            cts = new CancellationTokenSource();
             _cancellationTokenSources.Add(furnaceIndex, cts);
 
             //创建进程开始进行数据的获取
@@ -72,7 +93,7 @@ namespace WpfApp4.Services
             {
                 while (!_cancellationTokenSources[furnaceIndex].Token.IsCancellationRequested)
                 {
-                    try 
+                    try
                     {
                         await UpdatePlcDataAsync(furnaceIndex);
                     }
@@ -93,10 +114,10 @@ namespace WpfApp4.Services
 
             var data = new GlobalMonitoringDataModel();
             int addr = 1;//从基础地址开始设定
-            var client=_modbusClients[furnaceIndex];
-                         // 读取阀门状态（假设为线圈数据）
-            data.ValveV1 = client.ReadCoil($"{addr++}").Content ;
-            data.ValveV2 = client.ReadCoil($"{addr++}").Content ;
+            var client = _modbusClients[furnaceIndex];
+            // 读取阀门状态（假设为线圈数据）
+            data.ValveV1 = client.ReadCoil($"{addr++}").Content;
+            data.ValveV2 = client.ReadCoil($"{addr++}").Content;
             data.ValveV3 = client.ReadCoil($"{addr++}").Content;
             data.ValveV4 = client.ReadCoil($"{addr++}").Content;
             data.ValveV5 = client.ReadCoil($"{addr++}").Content;
@@ -242,5 +263,154 @@ namespace WpfApp4.Services
 
 
         }
+        #endregion
+
+        #region 通过PLC获取六个炉管的工艺监控数据 
+        //定时器回调函数
+        private async void PlcTimer_Tick(object? sender, EventArgs e)
+        {
+            var timer = (DispatcherTimer)sender;
+            int tag = (int)timer.Tag;
+            var data = await ReadPlcDataAsync(tag);
+            _plcDataExcelLists[tag].Add(data);
+        }
+
+        //读取plc的数据
+        private async Task<RegularCollectDataModel> ReadPlcDataAsync(int tag)
+        {
+            //通过modbusTCP进行采集
+            return new RegularCollectDataModel();
+        }
+
+
+        //开始工艺监控数据采集
+        internal void StartPlcDataCollection(int tubeNumber)
+        {
+            if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
+            _plcDataExcelLists[tubeNumber].Clear();
+            if (!_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Start();
+        }
+
+        //暂停工艺监控数据采集
+        internal void StopPlcDataCollection(int tubeNumber)
+        {
+            if(tubeNumber<0||tubeNumber>=6) throw  new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
+            if (_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Stop();
+        }
+
+        public ObservableCollection<RegularCollectDataModel> GetPlcDataList(int tubeNumber)
+        {
+            if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber));
+            return _plcDataExcelLists[tubeNumber];
+        }
+
+        internal async Task ExportPlcDataToExcelAsync(int tubeNum)
+        {
+            if(tubeNum < 0 || tubeNum >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNum));
+            //配置eeplus许可
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            //打开excle文件
+            using (var package=new ExcelPackage()) {
+                var worksheet = package.Workbook.Worksheets.Add($"Tube {tubeNum + 1} 监控数据");
+                // 设置中文表头
+                worksheet.Cells[1, 1].Value = "时间戳";
+                worksheet.Cells[1, 2].Value = "工艺时间";
+                worksheet.Cells[1, 3].Value = "剩余时间";
+                worksheet.Cells[1, 4].Value = "步号";
+                worksheet.Cells[1, 5].Value = "工艺类型";
+                worksheet.Cells[1, 6].Value = "舟号";
+                worksheet.Cells[1, 7].Value = "停止原因";
+                worksheet.Cells[1, 8].Value = "设定温度区1";
+                worksheet.Cells[1, 9].Value = "设定温度区2";
+                worksheet.Cells[1, 10].Value = "设定温度区3";
+                worksheet.Cells[1, 11].Value = "设定温度区4";
+                worksheet.Cells[1, 12].Value = "设定温度区5";
+                worksheet.Cells[1, 13].Value = "设定温度区6";
+                worksheet.Cells[1, 14].Value = "实际温度设定1";
+                worksheet.Cells[1, 15].Value = "实际温度设定2";
+                worksheet.Cells[1, 16].Value = "实际温度设定3";
+                worksheet.Cells[1, 17].Value = "实际温度设定4";
+                worksheet.Cells[1, 18].Value = "实际温度设定5";
+                worksheet.Cells[1, 19].Value = "实际温度设定6";
+                worksheet.Cells[1, 20].Value = "SetMFC1";
+                worksheet.Cells[1, 21].Value = "SetMFC2";
+                worksheet.Cells[1, 22].Value = "SetMFC3";
+                worksheet.Cells[1, 23].Value = "SetMFC4";
+                worksheet.Cells[1, 24].Value = "RealMFC1";
+                worksheet.Cells[1, 25].Value = "RealMFC2";
+                worksheet.Cells[1, 26].Value = "RealMFC3";
+                worksheet.Cells[1, 27].Value = "RealMFC4";
+                worksheet.Cells[1, 28].Value = "射频功率设定";
+                worksheet.Cells[1, 29].Value = "射频功率实际";
+                worksheet.Cells[1, 30].Value = "射频电流";
+                worksheet.Cells[1, 31].Value = "射频电压";
+                worksheet.Cells[1, 32].Value = "占空比";
+                worksheet.Cells[1, 33].Value = "蝶阀角度";
+                worksheet.Cells[1, 34].Value = "腔体压力设定";
+                worksheet.Cells[1, 35].Value = "腔体压力实际";
+                worksheet.Cells[1, 36].Value = "辅热实际功率";
+                worksheet.Cells[1, 37].Value = "辅热实际温度";
+                worksheet.Cells[1, 38].Value = "辅热设定温度";
+                worksheet.Cells[1, 39].Value = "辅热A相电流";
+                worksheet.Cells[1, 40].Value = "辅热B相电流";
+                worksheet.Cells[1, 41].Value = "辅热C相电流";
+
+                // 写入数据
+                var dataList = _plcDataExcelLists[tubeNum];
+                for (int i = 0; i < dataList.Count; i++)
+                {
+                    var row = i + 2;
+                    worksheet.Cells[row, 1].Value = dataList[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                    worksheet.Cells[row, 2].Value = dataList[i].ProcessTime.ToString(@"hh\:mm\:ss");
+                    worksheet.Cells[row, 3].Value = dataList[i].RemainingTime.ToString(@"hh\:mm\:ss");
+                    worksheet.Cells[row, 4].Value = dataList[i].StepNumber;
+                    worksheet.Cells[row, 5].Value = dataList[i].ProcessType;
+                    worksheet.Cells[row, 6].Value = dataList[i].BoatNumber;
+                    worksheet.Cells[row, 7].Value = dataList[i].StopReason;
+                    worksheet.Cells[row, 8].Value = dataList[i].SetTempZone1;
+                    worksheet.Cells[row, 9].Value = dataList[i].SetTempZone2;
+                    worksheet.Cells[row, 10].Value = dataList[i].SetTempZone3;
+                    worksheet.Cells[row, 11].Value = dataList[i].SetTempZone4;
+                    worksheet.Cells[row, 12].Value = dataList[i].SetTempZone5;
+                    worksheet.Cells[row, 13].Value = dataList[i].SetTempZone6;
+                    worksheet.Cells[row, 14].Value = dataList[i].RealTempZone1;
+                    worksheet.Cells[row, 15].Value = dataList[i].RealTempZone2;
+                    worksheet.Cells[row, 16].Value = dataList[i].RealTempZone3;
+                    worksheet.Cells[row, 17].Value = dataList[i].RealTempZone4;
+                    worksheet.Cells[row, 18].Value = dataList[i].RealTempZone5;
+                    worksheet.Cells[row, 19].Value = dataList[i].RealTempZone6;
+                    worksheet.Cells[row, 20].Value = dataList[i].SetMFC1;
+                    worksheet.Cells[row, 21].Value = dataList[i].SetMFC2;
+                    worksheet.Cells[row, 22].Value = dataList[i].SetMFC3;
+                    worksheet.Cells[row, 23].Value = dataList[i].SetMFC4;
+                    worksheet.Cells[row, 24].Value = dataList[i].RealMFC1;
+                    worksheet.Cells[row, 25].Value = dataList[i].RealMFC2;
+                    worksheet.Cells[row, 26].Value = dataList[i].RealMFC3;
+                    worksheet.Cells[row, 27].Value = dataList[i].RealMFC4;
+                    worksheet.Cells[row, 28].Value = dataList[i].RfPowerSet;
+                    worksheet.Cells[row, 29].Value = dataList[i].RfPowerActual;
+                    worksheet.Cells[row, 30].Value = dataList[i].RfCurrent;
+                    worksheet.Cells[row, 31].Value = dataList[i].RfVoltage;
+                    worksheet.Cells[row, 32].Value = dataList[i].DutyCycle;
+                    worksheet.Cells[row, 33].Value = dataList[i].ButterflyValveAngle;
+                    worksheet.Cells[row, 34].Value = dataList[i].ChamberPressureSet;
+                    worksheet.Cells[row, 35].Value = dataList[i].ChamberPressureActual;
+                    worksheet.Cells[row, 36].Value = dataList[i].AuxHeatPowerActual;
+                    worksheet.Cells[row, 37].Value = dataList[i].AuxHeatTempActual;
+                    worksheet.Cells[row, 38].Value = dataList[i].AuxHeatTempSet;
+                    worksheet.Cells[row, 39].Value = dataList[i].AuxHeatCurrentA;
+                    worksheet.Cells[row, 40].Value = dataList[i].AuxHeatCurrentB;
+                    worksheet.Cells[row, 41].Value = dataList[i].AuxHeatCurrentC;
+                }
+
+                //找到保存文件的excel目录地址
+                string folderPath = @"D:\ProcessMonitoringExport";
+                if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+                string filePath = Path.Combine(folderPath, $"Tube{tubeNum + 1}_监控数据_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx");
+                await Task.Run(() => package.SaveAs(new FileInfo(filePath)));
+            }
+        }
+        #endregion
     }
 }

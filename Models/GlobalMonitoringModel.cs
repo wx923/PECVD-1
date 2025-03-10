@@ -232,4 +232,183 @@ namespace WpfApp4.Models
             _isWork = false;
         }
     }
+
+
+    //工艺定时采集数据数据结构
+        public partial class RegularCollectDataModel : ObservableObject
+        {
+            [ObservableProperty]
+            private DateTime _timestamp; // 数据采集时间戳
+
+            [ObservableProperty]
+            private TimeSpan _processTime; // 工艺时间
+
+            [ObservableProperty]
+            private TimeSpan _remainingTime; // 剩余时间
+
+            [ObservableProperty]
+            private int _stepNumber; // 步号
+
+            [ObservableProperty]
+            private string _processType; // 工艺类型
+
+            [ObservableProperty]
+            private string _boatNumber; // 舟号
+
+            [ObservableProperty]
+            private string _stopReason; // 停止原因
+
+            // 设定温度区 1-6
+            [ObservableProperty]
+            private double _setTempZone1;
+
+            [ObservableProperty]
+            private double _setTempZone2;
+
+            [ObservableProperty]
+            private double _setTempZone3;
+
+            [ObservableProperty]
+            private double _setTempZone4;
+
+            [ObservableProperty]
+            private double _setTempZone5;
+
+            [ObservableProperty]
+            private double _setTempZone6;
+
+            // 实际温度区 1-6
+            [ObservableProperty]
+            private double _realTempZone1;
+
+            [ObservableProperty]
+            private double _realTempZone2;
+
+            [ObservableProperty]
+            private double _realTempZone3;
+
+            [ObservableProperty]
+            private double _realTempZone4;
+
+            [ObservableProperty]
+            private double _realTempZone5;
+
+            [ObservableProperty]
+            private double _realTempZone6;
+
+            // MFC 设定值和实际值
+            [ObservableProperty]
+            private double _setMFC1;
+
+            [ObservableProperty]
+            private double _setMFC2;
+
+            [ObservableProperty]
+            private double _setMFC3;
+
+            [ObservableProperty]
+            private double _setMFC4;
+
+            [ObservableProperty]
+            private double _realMFC1;
+
+            [ObservableProperty]
+            private double _realMFC2;
+
+            [ObservableProperty]
+            private double _realMFC3;
+
+            [ObservableProperty]
+            private double _realMFC4;
+
+            // 射频相关
+            [ObservableProperty]
+            private double _rfPowerSet; // 射频功率设定
+
+            [ObservableProperty]
+            private double _rfPowerActual; // 射频功率实际
+
+            [ObservableProperty]
+            private double _rfCurrent; // 射频电流
+
+            [ObservableProperty]
+            private double _rfVoltage; // 射频电压
+
+            [ObservableProperty]
+            private double _dutyCycle; // 占空比
+
+            [ObservableProperty]
+            private double _butterflyValveAngle; // 蝶阀角度
+
+            // 腔体压力
+            [ObservableProperty]
+            private double _chamberPressureSet; // 腔体压力设定
+
+            [ObservableProperty]
+            private double _chamberPressureActual; // 腔体压力实际
+
+            // 辅热相关
+            [ObservableProperty]
+            private double _auxHeatPowerActual; // 辅热实际功率
+
+            [ObservableProperty]
+            private double _auxHeatTempActual; // 辅热实际温度
+
+            [ObservableProperty]
+            private double _auxHeatTempSet; // 辅热设定温度
+
+            [ObservableProperty]
+            private double _auxHeatCurrentA; // 辅热A相电流
+
+            [ObservableProperty]
+            private double _auxHeatCurrentB; // 辅热B相电流
+
+            [ObservableProperty]
+            private double _auxHeatCurrentC; // 辅热C相电流
+
+       public RegularCollectDataModel()
+        {
+            Timestamp = DateTime.Now;
+            ProcessTime = TimeSpan.FromMinutes(60); // 工艺时间 60 分钟
+            RemainingTime = TimeSpan.FromMinutes(30); // 剩余时间 30 分钟
+            StepNumber = 1; // 步号
+            ProcessType = "升温"; // 工艺类型
+            BoatNumber = "Boat 1"; // 舟号
+            StopReason = "正常"; // 停止原因
+            SetTempZone1 = 400; // 设定温度区
+            SetTempZone2 = 410;
+            SetTempZone3 = 420;
+            SetTempZone4 = 430;
+            SetTempZone5 = 440;
+            SetTempZone6 = 450;
+            RealTempZone1 = 395; // 实际温度区
+            RealTempZone2 = 405;
+            RealTempZone3 = 415;
+            RealTempZone4 = 425;
+            RealTempZone5 = 435;
+            RealTempZone6 = 445;
+            SetMFC1 = 30; // MFC 设定值
+            SetMFC2 = 30;
+            SetMFC3 = 30;
+            SetMFC4 = 30;
+            RealMFC1 = 29; // MFC 实际值
+            RealMFC2 = 29;
+            RealMFC3 = 29;
+            RealMFC4 = 29;
+            RfPowerSet = 100; // 射频功率设定
+            RfPowerActual = 98; // 射频功率实际
+            RfCurrent = 5.0; // 射频电流
+            RfVoltage = 50.0; // 射频电压
+            DutyCycle = 50.0; // 占空比
+            ButterflyValveAngle = 45.0; // 蝶阀角度
+            ChamberPressureSet = 40.0; // 腔体压力设定
+            ChamberPressureActual = 39.5; // 腔体压力实际
+            AuxHeatPowerActual = 60; // 辅热实际功率
+            AuxHeatTempActual = 250; // 辅热实际温度
+            AuxHeatTempSet = 260; // 辅热设定温度
+            AuxHeatCurrentA = 15.0; // 辅热 A 相电流
+            AuxHeatCurrentB = 15.0; // 辅热 B 相电流
+            AuxHeatCurrentC = 15.0; // 辅热 C 相电流
+        }
+    }
 }

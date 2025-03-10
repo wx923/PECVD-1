@@ -42,8 +42,7 @@
               "RelativeToolTip": "Models\\ProcessExcelModel.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T07:14:54.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T07:14:54.058Z"
             },
             {
               "$type": "Document",
@@ -55,8 +54,7 @@
               "RelativeToolTip": "Models\\GlobalMonitoringModel.cs",
               "ViewState": "AgIAAM8AAAAAAAAAAAAswOQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T07:05:42.85Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T07:05:42.85Z"
             },
             {
               "$type": "Document",
@@ -67,8 +65,7 @@
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\GlobalMonitoringPage.xaml",
               "RelativeToolTip": "page\\usepage\\GlobalMonitoringPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-08T07:05:27.357Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T07:05:27.357Z"
             },
             {
               "$type": "Document",
@@ -78,7 +75,7 @@
               "RelativeDocumentMoniker": "ViewModel\\GlobalMonitoringVM.cs",
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\GlobalMonitoringVM.cs*",
               "RelativeToolTip": "ViewModel\\GlobalMonitoringVM.cs*",
-              "ViewState": "AgIAAHwAAAAAAAAAAAAtwJEAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T06:58:40.152Z",
               "EditorCaption": ""
