@@ -39,6 +39,9 @@ namespace WpfApp4.Services
         public ObservableCollection<RegularCollectDataModel>[] _plcDataExcelLists=new ObservableCollection<RegularCollectDataModel>[6];
         private DispatcherTimer[] _plcExcelTimers = new DispatcherTimer[6];
         //任务管理
+
+        // 每个炉管的暂停状态
+        private bool[] _isPaused = new bool[6]; 
         GlobalMonitoringService()
         {
             // 初始化6个炉管的PLC客户端和数据对象
@@ -54,6 +57,7 @@ namespace WpfApp4.Services
                     Tag=i
                 };
                 _plcExcelTimers[i].Tick += PlcTimer_Tick;
+                _isPaused[i] = false; // 初始化为未暂停
             }
 
             //当PLC连接了之后才能进行数据更新操作
@@ -288,14 +292,32 @@ namespace WpfApp4.Services
         {
             if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
             _plcDataExcelLists[tubeNumber].Clear();
+            _isPaused[tubeNumber] = false; // 启动时确保未暂停
             if (!_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Start();
         }
 
-        //暂停工艺监控数据采集
+        //停止PLC数据采集
         internal void StopPlcDataCollection(int tubeNumber)
         {
-            if(tubeNumber<0||tubeNumber>=6) throw  new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
+            if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
             if (_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Stop();
+            _isPaused[tubeNumber] = false; // 停止时重置暂停状态
+        }
+
+        //暂停PLC数据采集
+        internal void PausePlcDataCollection(int tubeNumber)
+        {
+            if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
+            _isPaused[tubeNumber] = true; // 设置暂停状态
+            if (_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Stop(); // 暂停定时器
+        }
+
+        //恢复plc数据采集
+        internal void ResumePlcDataCollection(int tubeNumber)
+        {
+            if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
+            _isPaused[tubeNumber] = false; // 恢复状态
+            if (!_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Start(); // 恢复定时器
         }
 
         public ObservableCollection<RegularCollectDataModel> GetPlcDataList(int tubeNumber)
