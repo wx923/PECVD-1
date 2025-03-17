@@ -288,10 +288,12 @@ namespace WpfApp4.Services
 
 
         //开始工艺监控数据采集
-        internal void StartPlcDataCollection(int tubeNumber)
+        internal void StartPlcDataCollection(int tubeNumber, bool resetCollection = true)
         {
             if (tubeNumber < 0 || tubeNumber >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNumber), "炉管编号必须在 0-5 之间");
-            _plcDataExcelLists[tubeNumber].Clear();
+            if (resetCollection) {
+                _plcDataExcelLists[tubeNumber].Clear();
+            }
             _isPaused[tubeNumber] = false; // 启动时确保未暂停
             if (!_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Start();
         }

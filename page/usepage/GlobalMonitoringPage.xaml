@@ -929,9 +929,11 @@
                         Style="{StaticResource ControlButtonStyle}"
                         Command="{Binding ResumeProcessCommand}"/>
                 <Button Content="跳步工艺" 
-                        Style="{StaticResource ControlButtonStyle}"/>
+                        Style="{StaticResource ControlButtonStyle}"
+                        Command="{Binding SkipStepCommand}"/>
                 <Button Content="终止工艺" 
-                        Style="{StaticResource ControlButtonStyle}"/>
+                        Style="{StaticResource ControlButtonStyle}"
+                        Command="{Binding TerminateProcessCommand}"/>
             </StackPanel>
         </materialDesign:Card>
     </Grid>

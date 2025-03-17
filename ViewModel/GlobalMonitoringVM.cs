@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,9 @@ namespace WpfApp4.ViewModel
         [ObservableProperty]
         public bool _isPaused;
 
+        public CancellationTokenSource _countdownCancellation;    
+
+
         int _turbNum = 0;
         public GlobalMonitoringVM(int turbNum) {
             _progressMonitor = MongoDbService.Instance.GlobalProcessFlowSteps.FirstOrDefault(x => x.Fnum == (turbNum - 1));
@@ -54,6 +58,7 @@ namespace WpfApp4.ViewModel
             };
             _isProcessRunning = false;
             _isPaused=false;
+            _countdownCancellation=new CancellationTokenSource();
         }
 
         #region 辅助函数
@@ -64,9 +69,16 @@ namespace WpfApp4.ViewModel
 
             var tcs = new TaskCompletionSource<bool>();
             EventHandler handler = null;
-
+            var token=_countdownCancellation.Token;
             handler = (s, e) =>
             {
+                if (token.IsCancellationRequested)
+                {
+                    _timer.Stop();
+                    _timer.Tick -= handler;
+                    tcs.TrySetCanceled();
+                    return;
+                }
                 if (_isPaused)
                 {
                     // 暂停时不减少 CountdownValue，保持等待
@@ -86,7 +98,7 @@ namespace WpfApp4.ViewModel
                     tcs.SetResult(true); // 倒计时完成
                 }
             };
-
+            _timer.Tick -=handler;
             _timer.Tick += handler;
             if (!_timer.IsEnabled) _timer.Start(); // 确保定时器启动
 
@@ -97,7 +109,7 @@ namespace WpfApp4.ViewModel
                 {
                     _timer.Tick -= handler;
                 }
-            });
+            },TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return tcs.Task;
         }
@@ -109,7 +121,8 @@ namespace WpfApp4.ViewModel
         #region 开始工艺
         [RelayCommand(CanExecute =nameof(CanStartProcess))]
         public async Task StartProcess() {
-            try {
+            try
+            {
                 //开始运行条件判断
                 if (_isProcessRunning) return; // 如果已经在运行，直接返回
 
@@ -136,7 +149,7 @@ namespace WpfApp4.ViewModel
                 //开始工艺数据采集
 
                 // 启动当前炉管的 PLC 数据采集
-                GlobalMonitoringService.Instance.StartPlcDataCollection(_turbNum);
+                GlobalMonitoringService.Instance.StartPlcDataCollection(_turbNum, true);
 
                 //开始工艺循环
                 for (var i = 0; i < _processExcels.Count; i++)
@@ -192,13 +205,16 @@ namespace WpfApp4.ViewModel
                 GlobalMonitoringService.Instance.StopPlcDataCollection(_turbNum);
                 await GlobalMonitoringService.Instance.ExportPlcDataToExcelAsync(_turbNum);
             }
+            catch (TaskCanceledException)
+            {
+
+            }
             finally
             {
                 _isProcessRunning = false;
                 _isPaused = false;
                 if (_timer.IsEnabled) _timer.Stop(); // 确保结束时停止定时器
             }
-            
 
         }
         //判断能够开始工艺的条件
@@ -286,5 +302,139 @@ namespace WpfApp4.ViewModel
 
         #endregion
 
+
+        #region 跳步工艺
+
+        [RelayCommand]
+        public async void SkipStep()
+        {
+
+            try
+            { //什么条件下才允许跳步
+
+
+                //完成暂停工艺以及相关数据恢复
+                PauseProcess();
+                _countdownCancellation.Cancel();
+                _countdownCancellation.Dispose();
+                _countdownCancellation = new CancellationTokenSource();
+
+                //提示输入框
+
+                string input = Microsoft.VisualBasic.Interaction.InputBox("请输入要跳转的步骤编号 (1-" + (_processExcels.Count ) + "):",
+                    "跳步操作",
+                    ProgressMonitor.ProcessCurrentStep.ToString());
+                if (string.IsNullOrEmpty(input)) return;
+
+                if (int.TryParse(input, out int target) && target > 0 && target <= _processExcels.Count)
+                {
+                    int targetStep = target - 1;
+                    ProgressMonitor.ProcessCurrentStep = targetStep;
+                    ProgressMonitor.ProcessType = _processExcels[targetStep].Name;
+                    CountdownValue = _processExcels[targetStep].Time;
+
+                    _isPaused = false;
+                    _isProcessRunning = true;
+
+                    //开始工作循环
+                    for (var i = targetStep; i < _processExcels.Count; i++)
+                    {
+                        ProgressMonitor.ProcessCurrentStep = _processExcels[i].Step;
+                        ProgressMonitor.ProcessType = _processExcels[i].Name;
+                        CountdownValue = _processExcels[i].Time;
+
+                        switch (_processExcels[i].Name)
+                        {
+                            case "装片":
+                                ProgressMonitor.BoatStatus = "进舟运动中";
+                                await LoadSampleAsync();
+                                break;
+                            case "升温":
+                                ProgressMonitor.BoatStatus = "无运动";
+                                await HeatUpAsync();
+                                break;
+                            case "慢抽真空":
+                                await SlowPumpDownAsync();
+                                break;
+                            case "抽真空":
+                                await PumpDownAsync();
+                                break;
+                            case "检漏":
+                                await DetectAsync();
+                                break;
+                            case "调压":
+                                await AdjustPressureAsync();
+                                break;
+                            case "淀积":
+                                await DepositAsync();
+                                break;
+                            case "清洗":
+                                await CleanAsync();
+                                break;
+                            case "充氮":
+                                await FillWithNitrogenAsync();
+                                break;
+                            case "卸片":
+                                ProgressMonitor.BoatStatus = "进舟运动中";
+                                await UnloadSampleAsync();
+                                break;
+                            default:
+                                Console.WriteLine($"未知步骤: {_processExcels[i].Name}");
+                                break;
+                        }
+                        await WaitForCountdown();
+
+                    }
+                    //生成工艺文件
+                    GlobalMonitoringService.Instance.StopPlcDataCollection(_turbNum);
+                    await GlobalMonitoringService.Instance.ExportPlcDataToExcelAsync(_turbNum);
+                }
+                else
+                {
+                    MessageBox.Show("输入的步骤编号无效，请输入 1 到 " + (_processExcels.Count ) + " 之间的数字",
+                    "错误",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                    ResumeProcess();
+                }
+            }
+            catch (TaskCanceledException)
+            {
+
+            }
+            finally
+            {
+                _isPaused = false;
+                _isProcessRunning = false;
+                if(_timer.IsEnabled) _timer.Stop();
+                _countdownCancellation.Cancel();
+                _countdownCancellation.Dispose();
+                _countdownCancellation = new CancellationTokenSource();
+            }
+        }
+        #endregion
+
+        #region 终止工艺
+        [RelayCommand]
+        public async void TerminateProcess()
+        {
+            //终止工艺执行条件
+            if (!_isProcessRunning) return;
+            PauseProcess();
+            //暂停工艺信息的采集
+            GlobalMonitoringService.Instance.StopPlcDataCollection(_turbNum);
+
+            //执行相关信息的下发
+
+            //状态改变
+            _isProcessRunning= false;
+            _isPaused = false;
+            _countdownCancellation.Cancel();
+            _countdownCancellation.Dispose();
+            _countdownCancellation = new CancellationTokenSource();
+            if(_timer.IsEnabled)_timer.Stop();
+            await GlobalMonitoringService.Instance.ExportPlcDataToExcelAsync(_turbNum);
+        }
+        #endregion
     }
 }
