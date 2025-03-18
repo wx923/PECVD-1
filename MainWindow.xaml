@@ -137,11 +137,11 @@
                 <Button x:Name="BtnHome" Content="主页" Style="{StaticResource TopNavigationButtonStyle}"  Click="NavigateToHomePage"/>
                 <Button x:Name="BtnMotionControl" Content="运动控制" Style="{StaticResource TopNavigationButtonStyle}"  Click="NavigateToMotionControlPage" />
                 <Button x:Name="BtnParameterSetting" Content="参数设定" Style="{StaticResource TopNavigationButtonStyle}"  Click="NavigateToParameterSettingPage" Cursor="Hand"/>
-                <Button x:Name="BtnControlInterface" Content="控制界面" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToControlInterfacePage"/>
-                <Button x:Name="BtnGlobalMonitoring" Content="全局监控" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToGlobalMonitoringPage"/>
+                <Button x:Name="BtnControlInterface" Content="炉管控制" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToControlInterfacePage"/>
+                <Button x:Name="BtnGlobalMonitoring" Content="工艺过程" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToGlobalMonitoringPage"/>
                 <Button x:Name="BtnProcessMonitoring" Content="工艺监控" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToProcessMonitoringPage"/>
                 <Button x:Name="BtnMonitoringAlarm" Content="监控报警" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToMonitoringAlarmPage"/>
-                <Button x:Name="BtnProcessManagement" Content="工艺管理" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToProcessManagementPage"/>
+                <Button x:Name="BtnProcessManagement" Content="配方管理" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToProcessManagementPage"/>
                 <Button x:Name="BtnBoatManagement" Content="舟管理" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToBoatManagementPage"/>
 
             </StackPanel>

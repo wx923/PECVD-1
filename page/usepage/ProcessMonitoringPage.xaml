@@ -46,28 +46,61 @@
                  Grid.Row="1"
                  ItemsSource="{Binding MonitoringData}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="时间" Binding="{Binding Time}" Width="80"/>
-                <DataGridTextColumn Header="内温1" Binding="{Binding T1}" Width="80"/>
-                <DataGridTextColumn Header="内温2" Binding="{Binding T2}" Width="80"/>
-                <DataGridTextColumn Header="内温3" Binding="{Binding T3}" Width="80"/>
-                <DataGridTextColumn Header="内温4" Binding="{Binding T4}" Width="80"/>
-                <DataGridTextColumn Header="内温5" Binding="{Binding T5}" Width="80"/>
-                <DataGridTextColumn Header="内温6" Binding="{Binding T6}" Width="80"/>
-                <DataGridTextColumn Header="内温7" Binding="{Binding T7}" Width="80"/>
-                <DataGridTextColumn Header="内温8" Binding="{Binding T8}" Width="80"/>
-                <DataGridTextColumn Header="内温9" Binding="{Binding T9}" Width="80"/>
-                <DataGridTextColumn Header="SiH4" Binding="{Binding SiH4}" Width="80"/>
-                <DataGridTextColumn Header="N2" Binding="{Binding N2}" Width="80"/>
-                <DataGridTextColumn Header="N2O" Binding="{Binding N2O}" Width="80"/>
-                <DataGridTextColumn Header="H2" Binding="{Binding H2}" Width="80"/>
-                <DataGridTextColumn Header="PH3" Binding="{Binding Ph3}" Width="80"/>
-                <DataGridTextColumn Header="压力" Binding="{Binding Pressure}" Width="80"/>
-                <DataGridTextColumn Header="功率1" Binding="{Binding Power1}" Width="80"/>
-                <DataGridTextColumn Header="功率2" Binding="{Binding Power2}" Width="80"/>
-                <DataGridTextColumn Header="电流" Binding="{Binding CurrentReference}" Width="80"/>
-                <DataGridTextColumn Header="电压" Binding="{Binding VoltageReference}" Width="80"/>
-                <DataGridTextColumn Header="脉冲频率" Binding="{Binding PulseFrequency}" Width="80"/>
-                <DataGridTextColumn Header="脉冲电压" Binding="{Binding PulseVoltage}" Width="80"/>
+                <DataGridTextColumn Header="数据采集时间" Binding="{Binding Timestamp}" Width="100" />
+                <DataGridTextColumn Header="工艺时间" Binding="{Binding ProcessTime}" Width="100" />
+                <DataGridTextColumn Header="剩余时间" Binding="{Binding RemainingTime}" Width="100" />
+                <DataGridTextColumn Header="步号" Binding="{Binding StepNumber}" Width="100" />
+                <DataGridTextColumn Header="工艺类型" Binding="{Binding ProcessType}" Width="100" />
+                <DataGridTextColumn Header="舟号" Binding="{Binding BoatNumber}" Width="100" />
+                <DataGridTextColumn Header="停止原因" Binding="{Binding StopReason}" Width="100" />
+
+                <!-- 设定温度区 1-6 -->
+                <DataGridTextColumn Header="设定温度区1" Binding="{Binding SetTempZone1}" Width="100" />
+                <DataGridTextColumn Header="设定温度区2" Binding="{Binding SetTempZone2}" Width="100" />
+                <DataGridTextColumn Header="设定温度区3" Binding="{Binding SetTempZone3}" Width="100" />
+                <DataGridTextColumn Header="设定温度区4" Binding="{Binding SetTempZone4}" Width="100" />
+                <DataGridTextColumn Header="设定温度区5" Binding="{Binding SetTempZone5}" Width="100" />
+                <DataGridTextColumn Header="设定温度区6" Binding="{Binding SetTempZone6}" Width="100" />
+
+                <!-- 实际温度区 1-6 -->
+                <DataGridTextColumn Header="实际温度区1" Binding="{Binding RealTempZone1}" Width="100" />
+                <DataGridTextColumn Header="实际温度区2" Binding="{Binding RealTempZone2}" Width="100" />
+                <DataGridTextColumn Header="实际温度区3" Binding="{Binding RealTempZone3}" Width="100" />
+                <DataGridTextColumn Header="实际温度区4" Binding="{Binding RealTempZone4}" Width="100" />
+                <DataGridTextColumn Header="实际温度区5" Binding="{Binding RealTempZone5}" Width="100" />
+                <DataGridTextColumn Header="实际温度区6" Binding="{Binding RealTempZone6}" Width="100" />
+
+                <!-- MFC 设定值和实际值 -->
+                <DataGridTextColumn Header="MFC1设定" Binding="{Binding SetMFC1}" Width="100" />
+                <DataGridTextColumn Header="MFC2设定" Binding="{Binding SetMFC2}" Width="100" />
+                <DataGridTextColumn Header="MFC3设定" Binding="{Binding SetMFC3}" Width="100" />
+                <DataGridTextColumn Header="MFC4设定" Binding="{Binding SetMFC4}" Width="100" />
+                <DataGridTextColumn Header="MFC1实际" Binding="{Binding RealMFC1}" Width="100" />
+                <DataGridTextColumn Header="MFC2实际" Binding="{Binding RealMFC2}" Width="100" />
+                <DataGridTextColumn Header="MFC3实际" Binding="{Binding RealMFC3}" Width="100" />
+                <DataGridTextColumn Header="MFC4实际" Binding="{Binding RealMFC4}" Width="100" />
+
+                <!-- 射频相关 -->
+                <DataGridTextColumn Header="射频功率设定" Binding="{Binding RfPowerSet}" Width="100" />
+                <DataGridTextColumn Header="射频功率实际" Binding="{Binding RfPowerActual}" Width="100" />
+                <DataGridTextColumn Header="射频电流" Binding="{Binding RfCurrent}" Width="100" />
+                <DataGridTextColumn Header="射频电压" Binding="{Binding RfVoltage}" Width="100" />
+                <DataGridTextColumn Header="占空比" Binding="{Binding DutyCycle}" Width="100" />
+
+                <!-- 蝶阀角度 -->
+                <DataGridTextColumn Header="蝶阀角度" Binding="{Binding ButterflyValveAngle}" Width="100" />
+
+                <!-- 腔体压力 -->
+                <DataGridTextColumn Header="腔体压力设定" Binding="{Binding ChamberPressureSet}" Width="100" />
+                <DataGridTextColumn Header="腔体压力实际" Binding="{Binding ChamberPressureActual}" Width="100" />
+
+                <!-- 辅热相关 -->
+                <DataGridTextColumn Header="辅热实际功率" Binding="{Binding AuxHeatPowerActual}" Width="100" />
+                <DataGridTextColumn Header="辅热实际温度" Binding="{Binding AuxHeatTempActual}" Width="100" />
+                <DataGridTextColumn Header="辅热设定温度" Binding="{Binding AuxHeatTempSet}" Width="100" />
+                <DataGridTextColumn Header="辅热A相电流" Binding="{Binding AuxHeatCurrentA}" Width="100" />
+                <DataGridTextColumn Header="辅热B相电流" Binding="{Binding AuxHeatCurrentB}" Width="100" />
+                <DataGridTextColumn Header="辅热C相电流" Binding="{Binding AuxHeatCurrentC}" Width="100" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

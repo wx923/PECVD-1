@@ -20,7 +20,7 @@ namespace WpfApp4.Services
         public static MongoDbService Instance => _instance.Value;
 
         //代表数据库
-        private readonly IMongoDatabase _database;
+        public readonly IMongoDatabase _database;
 
         //代表数据库里面的集合
         private readonly IMongoCollection<Boat> _boats;
@@ -30,6 +30,9 @@ namespace WpfApp4.Services
         private readonly IMongoCollection<FurnaceData> _furnaceCollection;
         private readonly IMongoCollection<Position> _positions;
         private readonly IMongoCollection<MotionBoatModel> _motionBoatModel;
+        private readonly IMongoCollection<GlobalMonitoringStatusModel> _processFlowStepsCollection;
+
+
         // 全局数据集合
         public ObservableCollection<Boat> GlobalBoats { get; private set; }
         public ObservableCollection<BoatMonitor> GlobalMonitors { get; private set; }
@@ -39,6 +42,8 @@ namespace WpfApp4.Services
 
         public ObservableCollection<MotionBoatModel> GlobalMotionBoats { get; private set; }
 
+        public ObservableCollection<GlobalMonitoringStatusModel> GlobalProcessFlowSteps { get; private set; }
+
         private MongoDbService()
         {
             // 初始化全局集合
@@ -47,6 +52,7 @@ namespace WpfApp4.Services
             GlobalProcessFiles = new ObservableCollection<ProcessFileInfo>();
             GlobalPositions = new ObservableCollection<Position>();
             GlobalMotionBoats = new ObservableCollection<MotionBoatModel>();
+            GlobalProcessFlowSteps = new ObservableCollection<GlobalMonitoringStatusModel>();
             try
             {
                 var settings = MongoClientSettings.FromConnectionString("mongodb://localhost:27017");
@@ -81,6 +87,10 @@ namespace WpfApp4.Services
                 {
                     _database.CreateCollection("MotionBoats");
                 }
+                if (!collections.Contains("ProcessFlowStep"))
+                {
+                    _database.CreateCollection("ProcessFlowStep");
+                }
 
                 //获取集合
                 _boats = _database.GetCollection<Boat>("Boats");
@@ -90,6 +100,7 @@ namespace WpfApp4.Services
                 _furnaceCollection = _database.GetCollection<FurnaceData>("FurnaceData");
                 _positions = _database.GetCollection<Position>("Positions");
                 _motionBoatModel = _database.GetCollection<MotionBoatModel>("MotionBoats");
+                _processFlowStepsCollection = _database.GetCollection<GlobalMonitoringStatusModel>("ProcessFlowStep");
                 // 初始化完成后加载数据
                 _ = LoadAllDataAsync();
             }
@@ -110,12 +121,15 @@ namespace WpfApp4.Services
                 GlobalProcessFiles.Clear();
                 GlobalPositions.Clear();
                 GlobalMotionBoats.Clear();
+                GlobalProcessFlowSteps.Clear();
+
                 // 从数据库加载数据
                 var boats = await _boats.Find(_ => true).ToListAsync();
                 var monitors = await _monitors.Find(_ => true).ToListAsync();
                 var processFiles = await _processFileCollection.Find(_ => true).ToListAsync();
                 var positions= await _positions.Find(_ => true).ToListAsync();
                 var motionBoats=await _motionBoatModel.Find(_ => true).ToListAsync();
+                var processFlowSteps = await _processFlowStepsCollection.Find(_ => true).ToListAsync();
                 // 更新集合并添加属性变更事件
                 foreach (var boat in boats)
                 {
@@ -145,12 +159,36 @@ namespace WpfApp4.Services
                     motionBoat.PropertyChanged += OnMotionBoatPropertyChanged;
                     GlobalMotionBoats.Add(motionBoat);
                 }
+                //如果对象为空的话，创建六个炉管的对象
+                if (!processFlowSteps.Any()) 
+                {
+                        for (int i = 0; i < 6; i++){
+                        var flowStep = new GlobalMonitoringStatusModel
+                        {
+                            Fnum = i,
+                        };
+
+                        await UpdataProcessFlowStepAsync(flowStep);
+                        var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq(x => x.Fnum,i);
+                        var a = _processFlowStepsCollection.Find(filter).FirstOrDefault();
+                        GlobalProcessFlowSteps.Add(flowStep);
+                    }
+                }
+                else {
+                    foreach (var flowStep in processFlowSteps)
+                    {
+                        flowStep.PropertyChanged += OnProcessFlowStepChanged;
+                        GlobalProcessFlowSteps.Add(flowStep);
+                    }
+                }
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"加载数据失败: {ex.Message}");
             }
         }
+
 
 
         #region 属性变更事件处理
@@ -229,6 +267,20 @@ namespace WpfApp4.Services
                 }
             }
         }
+
+
+
+        private async void OnProcessFlowStepChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            try 
+            { if (sender is GlobalMonitoringStatusModel flowStep)
+                    await UpdataProcessFlowStepAsync(flowStep);
+            }
+            catch (Exception ex) {
+                MessageBox.Show($"更新工艺过程数据失败:{ex.Message}");
+            }
+        }
+
         #endregion
 
         #region Boat Operations
@@ -309,7 +361,7 @@ namespace WpfApp4.Services
         }
         #endregion
 
-        #region Boat Monitor Operations
+        #region 舟监控对象
         // 获取所有舟监控对象
         public async Task<List<BoatMonitor>> GetAllBoatMonitorsAsync()
         {
@@ -592,8 +644,8 @@ namespace WpfApp4.Services
 
 
 
-        #region 舟对象
-        //更新舟对象
+        #region 运动舟对象
+        //更新运动舟对象
         public async Task<bool> UpdataMotionBoatAsync(MotionBoatModel motionBoat)
         {
             try
@@ -641,6 +693,36 @@ namespace WpfApp4.Services
             }
         }
 
+        #endregion
+
+        #region 工艺过程数据
+        //创建六个对象
+
+        //数据更新操作
+        public async Task<bool> UpdataProcessFlowStepAsync(GlobalMonitoringStatusModel flowStep)
+        {
+            try
+            {
+                var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq("Fnum", flowStep.Fnum);
+                var existing = await _processFlowStepsCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (existing !=null)
+                {
+                   var result = await _processFlowStepsCollection.ReplaceOneAsync(filter, flowStep);
+                   return result.ModifiedCount > 0;
+                }
+                else
+                {
+                    await _processFlowStepsCollection.InsertOneAsync(flowStep);
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"更新舟对象失败:{ex.Message}");
+                return false;
+            }
+        }
         #endregion
     }
 

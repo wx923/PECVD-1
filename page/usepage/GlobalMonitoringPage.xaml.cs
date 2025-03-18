@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using WpfApp4.ViewModel;
+
 
 namespace WpfApp4.page.usepage
 {
@@ -9,7 +11,9 @@ namespace WpfApp4.page.usepage
     {
         public GlobalMonitoringPage(int tubeNumber)
         {
+
             InitializeComponent();
+            this.DataContext = new GlobalMonitoringVM(tubeNumber);
         }
     }
 }
