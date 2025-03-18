@@ -133,7 +133,11 @@ namespace WpfApp4.ViewModel
                 var list = await MongoDbService.Instance._database.GetCollection<ProcessExcelModel>(_progressMonitor.ProcessFileName)
                     .Find(ProcessExcelModel => true)
                     .ToListAsync();
-
+                if (!list.Any())
+                {
+                    _isProcessRunning = false;
+                    return;
+                }
 
                 // 将列表转换为字典（假设ProcessExcelModel有一个Id属性）
                 int index = 0; // 初始化索引变量

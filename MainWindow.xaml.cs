@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -17,6 +18,7 @@ namespace WpfApp4
         //用于按钮状态切换
         private Button LastButtonUI;
         private int CurrentTubeNumber = 1; // 当前选中的炉管号
+        private Dictionary<(Type PageType,int TubeNumber),Page> _pageCache = new Dictionary<(Type, int), Page>();
 
         public MainWindow()
         {
@@ -26,7 +28,7 @@ namespace WpfApp4
             _ = GlobalMonitoringService.Instance;
 
             // 默认导航到 HomePage（不依赖炉管，使用 TubeNumber = 0）
-            MainFrame.Navigate(new HomePage());
+            MainFrame.Navigate(GetOrCreatePage(typeof(HomePage), 0));
             LastButtonUI = BtnHome;
             LastButtonUI.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
             
@@ -65,44 +67,33 @@ namespace WpfApp4
             }
         }
 
+
+        /// <summary>
+        /// 刷新当前页面的mainFrame的区域显示
+        /// </summary>
         private void RefreshCurrentPage()
         {
-            // 获取当前页面
-            if (MainFrame.Content is Page currentPage)
+            if(MainFrame.Content  is Page currentPage)
             {
-                // 根据当前页面类型重新导航
-                if (currentPage is ParameterSettingPage)
-                {
-                    MainFrame.Navigate(new ParameterSettingPage(CurrentTubeNumber));
-                    LastButtonUI = BtnParameterSetting;
-                }
-                else if (currentPage is ControlInterfacePage)
-                {
-                    MainFrame.Navigate(new ControlInterfacePage(CurrentTubeNumber));
-                    LastButtonUI = BtnControlInterface;
-                }
-                else if (currentPage is GlobalMonitoringPage)
-                {
-                    MainFrame.Navigate(new GlobalMonitoringPage(CurrentTubeNumber));
-                    LastButtonUI = BtnGlobalMonitoring;
-                }
-                else if (currentPage is ProcessMonitoringPage)
-                {
-                    MainFrame.Navigate(new ProcessMonitoringPage(CurrentTubeNumber));
-                    LastButtonUI = BtnProcessMonitoring;
-                }
-                else if (currentPage is MonitoringAlarmPage)
-                {
-                    MainFrame.Navigate(new MonitoringAlarmPage(CurrentTubeNumber));
-                    LastButtonUI = BtnMonitoringAlarm;
-                }
-
-                // 更新按钮样式
-                if (LastButtonUI != null)
-                {
-                    LastButtonUI.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
-                }
+                Type pageType=currentPage.GetType();
+                MainFrame.Navigate(GetOrCreatePage(pageType, CurrentTubeNumber));
             }
+        }
+
+        private void NavigateToPage(Type pageType, int tubeNumber, Button button)
+        {
+            //对于部分页面需要进行炉管选择才能进行跳转
+            if(pageType != typeof(HomePage) && pageType != typeof(MotionControlPage) &&
+            pageType != typeof(BoatManagementPage) && pageType != typeof(ProcessManagementPage))
+            {
+                if (!CheckTubeSelected())return;
+                
+            }
+
+            MainFrame.Navigate(GetOrCreatePage(pageType, tubeNumber));
+            LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
+            LastButtonUI = button;
+            button.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
         }
 
         // 检查是否选择了炉管
@@ -123,92 +114,81 @@ namespace WpfApp4
         }
 
         //使用页面路由跳转
+        // 导航方法调用统一入口
         private void NavigateToParameterSettingPage(object sender, RoutedEventArgs e)
         {
-            if (CheckTubeSelected())
-            {
-                MainFrame.Navigate(new ParameterSettingPage(CurrentTubeNumber));
-                LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-                LastButtonUI = BtnParameterSetting;
-                BtnParameterSetting.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
-            }
+            NavigateToPage(typeof(ParameterSettingPage), CurrentTubeNumber, BtnParameterSetting);
         }
 
         private void NavigateToMotionControlPage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new MotionControlPage());
-            LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-            LastButtonUI = BtnMotionControl;
-            BtnMotionControl.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
+            NavigateToPage(typeof(MotionControlPage), 0, BtnMotionControl);
         }
 
         private void NavigateToControlInterfacePage(object sender, RoutedEventArgs e)
         {
-            if (CheckTubeSelected())
-            {
-                MainFrame.Navigate(new ControlInterfacePage(CurrentTubeNumber));
-                LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-                LastButtonUI = BtnControlInterface;
-                BtnControlInterface.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
-            }
+            NavigateToPage(typeof(ControlInterfacePage), CurrentTubeNumber, BtnControlInterface);
         }
 
         private void NavigateToGlobalMonitoringPage(object sender, RoutedEventArgs e)
         {
-            if (CheckTubeSelected())
-            {
-                MainFrame.Navigate(new GlobalMonitoringPage(CurrentTubeNumber));
-                LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-                LastButtonUI = BtnGlobalMonitoring;
-                BtnGlobalMonitoring.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
-            }
+            NavigateToPage(typeof(GlobalMonitoringPage), CurrentTubeNumber, BtnGlobalMonitoring);
         }
 
         private void NavigateToProcessMonitoringPage(object sender, RoutedEventArgs e)
         {
-            if (CheckTubeSelected())
-            {
-                MainFrame.Navigate(new ProcessMonitoringPage(CurrentTubeNumber));
-                LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-                LastButtonUI = BtnProcessMonitoring;
-                BtnProcessMonitoring.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
-            }
+            NavigateToPage(typeof(ProcessMonitoringPage), CurrentTubeNumber, BtnProcessMonitoring);
         }
 
         private void NavigateToMonitoringAlarmPage(object sender, RoutedEventArgs e)
         {
-            if (CheckTubeSelected())
-            {
-                MainFrame.Navigate(new MonitoringAlarmPage(CurrentTubeNumber));
-                LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-                LastButtonUI = BtnMonitoringAlarm;
-                BtnMonitoringAlarm.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
-            }
+            NavigateToPage(typeof(MonitoringAlarmPage), CurrentTubeNumber, BtnMonitoringAlarm);
         }
 
         private void NavigateToHomePage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new HomePage());
-            LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-            LastButtonUI = BtnHome;
-            BtnHome.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
+            NavigateToPage(typeof(HomePage), 0, BtnHome);
         }
-
 
         private void NavigateToBoatManagementPage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new BoatManagementPage());
-            LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-            LastButtonUI = BtnBoatManagement;
-            BtnBoatManagement.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
+            NavigateToPage(typeof(BoatManagementPage), 0, BtnBoatManagement);
         }
 
         private void NavigateToProcessManagementPage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new ProcessManagementPage());
-            LastButtonUI.Style = (Style)FindResource("TopNavigationButtonStyle");
-            LastButtonUI = BtnProcessManagement;
-            BtnProcessManagement.Style = (Style)FindResource("TopNavigationSelectedButtonStyle");
+            NavigateToPage(typeof(ProcessManagementPage), 0, BtnProcessManagement);
+        }
+
+
+        //从字典中获取页面
+        private Page GetOrCreatePage(Type pageType,int tubeNumber)
+        {
+            var key = (pageType, tubeNumber);
+            if(!_pageCache.TryGetValue(key,out Page page))
+            {
+                if (pageType == typeof(ParameterSettingPage))
+                    page = new ParameterSettingPage(tubeNumber);
+                else if (pageType == typeof(ControlInterfacePage))
+                    page = new ControlInterfacePage(tubeNumber);
+                else if (pageType == typeof(GlobalMonitoringPage))
+                    page = new GlobalMonitoringPage(tubeNumber);
+                else if (pageType == typeof(ProcessMonitoringPage))
+                    page = new ProcessMonitoringPage(tubeNumber);
+                else if (pageType == typeof(MonitoringAlarmPage))
+                    page = new MonitoringAlarmPage(tubeNumber);
+                else if (pageType == typeof(MotionControlPage))
+                    page = new MotionControlPage();
+                else if (pageType == typeof(HomePage))
+                    page = new HomePage();
+                else if (pageType == typeof(BoatManagementPage))
+                    page = new BoatManagementPage();
+                else if (pageType == typeof(ProcessManagementPage))
+                    page = new ProcessManagementPage();
+
+                _pageCache[key] = page;
+            }
+            return page;
         }
     }
 }
