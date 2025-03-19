@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using HslCommunication.ModBus;
 using HslCommunication.Profinet.Inovance;
 using NPOI.SS.Formula.Functions;
@@ -19,7 +20,7 @@ using WpfApp4.Services;
 
 namespace WpfApp4.Services
 {
-    class GlobalMonitoringService
+    public partial class  GlobalMonitoringService: ObservableObject
     {
         //创建全局单例服务
         private static readonly Lazy<GlobalMonitoringService> _instance=new Lazy<GlobalMonitoringService> (new GlobalMonitoringService());
@@ -41,7 +42,11 @@ namespace WpfApp4.Services
         //任务管理
 
         // 每个炉管的暂停状态
-        private bool[] _isPaused = new bool[6]; 
+        private bool[] _isPaused = new bool[6];
+
+        //管理六个炉管的是否在工艺
+        [ObservableProperty]
+        public bool[] _furStates = new bool[6];
         GlobalMonitoringService()
         {
             // 初始化6个炉管的PLC客户端和数据对象
@@ -58,6 +63,7 @@ namespace WpfApp4.Services
                 };
                 _plcExcelTimers[i].Tick += PlcTimer_Tick;
                 _isPaused[i] = false; // 初始化为未暂停
+                FurStates[i]=false; //初始化为炉管未工艺的状态
             }
 
             //当PLC连接了之后才能进行数据更新操作
@@ -91,7 +97,7 @@ namespace WpfApp4.Services
             }
             cts = new CancellationTokenSource();
             _cancellationTokenSources.Add(furnaceIndex, cts);
-
+            FurStates[furnaceIndex] = true;
             //创建进程开始进行数据的获取
             Task.Run(async () =>
             {
@@ -331,6 +337,7 @@ namespace WpfApp4.Services
         internal async Task ExportPlcDataToExcelAsync(int tubeNum)
         {
             if(tubeNum < 0 || tubeNum >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNum));
+            FurStates[tubeNum] = false;
             //配置eeplus许可
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 

@@ -9,7 +9,7 @@ using MongoDB.Bson;
 
 namespace WpfApp4.Models
 {
-    partial class GlobalMonitoringDataModel : ObservableObject
+   public partial class GlobalMonitoringDataModel : ObservableObject
     {
         [ObservableProperty]
         public bool valveV1;
