@@ -46,7 +46,7 @@ namespace WpfApp4.Services
 
         //管理六个炉管的是否在工艺
         [ObservableProperty]
-        public bool[] _furStates = new bool[6];
+        private ObservableCollection<bool> _furStates = new ObservableCollection<bool>(Enumerable.Repeat(false, 6));
         GlobalMonitoringService()
         {
             // 初始化6个炉管的PLC客户端和数据对象
@@ -97,7 +97,6 @@ namespace WpfApp4.Services
             }
             cts = new CancellationTokenSource();
             _cancellationTokenSources.Add(furnaceIndex, cts);
-            FurStates[furnaceIndex] = true;
             //创建进程开始进行数据的获取
             Task.Run(async () =>
             {
@@ -301,6 +300,8 @@ namespace WpfApp4.Services
                 _plcDataExcelLists[tubeNumber].Clear();
             }
             _isPaused[tubeNumber] = false; // 启动时确保未暂停
+            FurStates[tubeNumber] = true;
+            OnPropertyChanged(nameof(FurStates));
             if (!_plcExcelTimers[tubeNumber].IsEnabled) _plcExcelTimers[tubeNumber].Start();
         }
 
@@ -338,6 +339,7 @@ namespace WpfApp4.Services
         {
             if(tubeNum < 0 || tubeNum >= 6) throw new ArgumentOutOfRangeException(nameof(tubeNum));
             FurStates[tubeNum] = false;
+            OnPropertyChanged(nameof(FurStates));
             //配置eeplus许可
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 

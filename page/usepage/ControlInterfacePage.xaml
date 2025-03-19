@@ -611,9 +611,6 @@
                 <Button Content="设计MFC4值" 
                         Style="{StaticResource ControlButtonStyle}"
                         Command="{Binding SetMfc4ValueCommand}"/>
-                <Button Content="设置流量计值" 
-                        Style="{StaticResource ControlButtonStyle}"
-                        Command="{Binding SetFlowMeterValueCommand}"/>
                 <Button Content="设置压力计值" 
                         Style="{StaticResource ControlButtonStyle}"
                         Command="{Binding SetPressureGaugeValueCommand}"/>
@@ -779,6 +776,7 @@
                                 Content="清洗炉管" Background="LightSkyBlue" 
                                 Margin="0,5" Height="30" Width="120" FontSize="12"
                                 Command="{Binding CleanFurnaceTubeCommand}"/>
+                        <TextBlock Text="{Binding IsLocked}"></TextBlock>
                     </StackPanel>
                 </StackPanel>
             </materialDesign:Card>

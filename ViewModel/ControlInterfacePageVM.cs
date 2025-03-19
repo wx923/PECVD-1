@@ -150,6 +150,13 @@ namespace WpfApp4.ViewModel
             currentTubeNum = tubeNum;
             IsLocked = GlobalMonitoringService.Instance.FurStates[currentTubeNum];
             _modbusTcp = PlcCommunicationService.Instance.ModbusTcpClients[(PlcCommunicationService.PlcType)currentTubeNum];
+            GlobalMonitoringService.Instance.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(GlobalMonitoringService.FurStates))
+                {
+                    IsLocked = GlobalMonitoringService.Instance.FurStates[currentTubeNum];
+                }
+            };
         }
 
         #region 命令
@@ -238,46 +245,174 @@ namespace WpfApp4.ViewModel
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetMfc1Value()
+        private async void SetMfc1Value()
         {
             // 实现设定 MFC1 值的逻辑
+            if (IsLocked)
+            {
+                MessageBox.Show("当前炉管正在工艺，无法进行手动控制", "失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (Mfc1Value < 0 || Mfc1Value > 100000)
+            {
+                MessageBox.Show($"MFC1 值 {Mfc1Value} 超出范围（0-100000）！", "输入值错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            //下发ModbusTCP数据
+            try
+            {
+                await _modbusTcp.WriteAsync("200", (float)Mfc1Value);
+                MessageBox.Show("MFC1 数据下发成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"MFC1 数据下发失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // 为所有命令添加 CanExecute
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetMfc2Value()
+        private async void SetMfc2Value()
         {
             // 实现设定 MFC2 值的逻辑
+            if (IsLocked)
+            {
+                MessageBox.Show("当前炉管正在工艺，无法进行手动控制", "失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (Mfc2Value < 0 || Mfc2Value > 100000)
+            {
+                MessageBox.Show($"MFC2 值 {Mfc2Value} 超出范围（0-100000）！", "输入值错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            //下发ModbusTCP数据
+            try
+            {
+                await _modbusTcp.WriteAsync("200", (float)Mfc2Value);
+                MessageBox.Show("MFC2 数据下发成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"MFC2 数据下发失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetMfc3Value()
+        private async void SetMfc3Value()
         {
             // 实现设定 MFC3 值的逻辑
+            if (IsLocked)
+            {
+                MessageBox.Show("当前炉管正在工艺，无法进行手动控制", "失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (Mfc3Value < 0 || Mfc3Value > 100000)
+            {
+                MessageBox.Show($"MFC3 值 {Mfc3Value} 超出范围（0-100000）！", "输入值错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            //下发ModbusTCP数据
+            try
+            {
+                await _modbusTcp.WriteAsync("200", (float)Mfc3Value);
+                MessageBox.Show("MFC3 数据下发成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"MFC3 数据下发失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetMfc4Value()
+        private async void SetMfc4Value()
         {
             // 实现设定 MFC4 值的逻辑
+            if (IsLocked)
+            {
+                MessageBox.Show("当前炉管正在工艺，无法进行手动控制", "失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (Mfc4Value < 0 || Mfc4Value > 100000)
+            {
+                MessageBox.Show($"MFC4 值 {Mfc4Value} 超出范围（0-100000）！", "输入值错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            //下发ModbusTCP数据
+            try
+            {
+                await _modbusTcp.WriteAsync("200", (float)Mfc4Value);
+                MessageBox.Show("MFC1 数据下发成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"MFC1 数据下发失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetFlowMeterValue()
-        {
-            // 实现设定流量计值的逻辑
-        }
-
-        [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetPressureGaugeValue()
+        private async void SetPressureGaugeValue()
         {
             // 实现设定压力计值的逻辑
+            if (IsLocked)
+            {
+                MessageBox.Show("当前炉管正在工艺，无法进行手动控制", "失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // 检查压力值是否在真空到大气压范围内（0 到 101325 Pa）
+            const double atmosphericPressure = 101325.0; // 大气压，单位：Pa
+            if (PressureGaugeValue < 0 || PressureGaugeValue > atmosphericPressure)
+            {
+                MessageBox.Show($"压力值 {PressureGaugeValue} Pa 超出范围（0 到 {atmosphericPressure} Pa）！",
+                               "输入值错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                // 通过 Modbus TCP 下发数据，假设写入寄存器地址 200
+                await _modbusTcp.WriteAsync("200", (float)PressureGaugeValue); // 根据实际需求调整类型和地址
+                MessageBox.Show("压力数据下发成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"压力数据下发失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
-        private void SetButterflyValveAngle()
+        private async void SetButterflyValveAngle()
         {
             // 实现设定蝶阀角度的逻辑
+            if (IsLocked)
+            {
+                MessageBox.Show("当前炉管正在工艺，无法进行手动控制", "失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // 检查蝶阀角度是否在 0-90 度范围内
+            const double maxAngle = 100.0; // 最大角度
+            if (ButterflyValveAngle < 0 || ButterflyValveAngle > maxAngle)
+            {
+                MessageBox.Show($"蝶阀角度 {ButterflyValveAngle}° 超出范围（0 到 {maxAngle}°）！",
+                               "输入值错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                // 通过 Modbus TCP 下发数据，假设写入寄存器地址 200
+                await _modbusTcp.WriteAsync("200", (float)ButterflyValveAngle); // 根据实际需求调整类型和地址
+                MessageBox.Show("蝶阀角度数据下发成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"蝶阀角度数据下发失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteWhenUnlocked))]
