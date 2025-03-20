@@ -39,8 +39,7 @@
               "ViewState": "AgIAAHcAAAAAAAAAAAAiwBgBAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-19T01:00:57.529Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -56,8 +55,7 @@
               "RelativeToolTip": "Services\\PlcCommunicationService.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAADwv6IAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T02:49:10.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-19T02:49:10.907Z"
             },
             {
               "$type": "Document",
@@ -67,7 +65,7 @@
               "RelativeDocumentMoniker": "ViewModel\\ControlInterfacePageVM.cs",
               "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\ControlInterfacePageVM.cs",
               "RelativeToolTip": "ViewModel\\ControlInterfacePageVM.cs",
-              "ViewState": "AgIAAHQBAAAAAAAAAAAgwIMBAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAABIEAAAAAAAAAAAWwCgEAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-19T00:46:22.944Z",
               "EditorCaption": ""

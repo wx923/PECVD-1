@@ -94,7 +94,8 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="69.794" Canvas.Top="23.25"
                           IsChecked="{Binding IsValve1On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                          Command="{Binding ToggleValve1Command}"/>
             <TextBox Canvas.Left="178.222" TextWrapping="Wrap" 
                      Text="{Binding Mfc1Value, UpdateSourceTrigger=PropertyChanged}" 
                      Canvas.Top="18.25" Width="61" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25"
@@ -104,13 +105,15 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="314.683" Canvas.Top="21.12"
                           IsChecked="{Binding IsValve2On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve2Command}" />
             <TextBlock Canvas.Left="326.106" Canvas.Top="5.88" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Language="zh-cn" Text="2"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="56.25" Width="60" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="77.05"/>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="69.794" Canvas.Top="76.5"
                           IsChecked="{Binding IsValve3On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve3Command}"/>
             <TextBlock Text="V3" Canvas.Left="81.217" Canvas.Top="61.26"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="56.25" Width="60" Canvas.Left="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="103.565" Canvas.Left="-39.564" RenderTransformOrigin="0.5,0.5" Width="101" HorizontalAlignment="Center" VerticalAlignment="Top">
@@ -156,12 +159,14 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="313.146" Canvas.Top="177.339"
                           IsChecked="{Binding IsValve6On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve6Command}"/>
             <TextBlock Canvas.Left="324.568" Canvas.Top="162.099" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="6"/></TextBlock>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="314.684" Canvas.Top="116.79"
                           IsChecked="{Binding IsValve5On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve5Command}"/>
             <TextBlock Canvas.Left="326.106" Canvas.Top="101.55" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24"><Run Language="zh-cn" Text="V5"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="208.722" Canvas.Top="97.487" Width="107" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="333.683" Canvas.Top="2" Width="99" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -194,12 +199,14 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="69.794" Canvas.Top="210.142"
                           IsChecked="{Binding IsValve4On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve4Command}"/>
             <TextBlock Canvas.Left="81.217" Canvas.Top="194.902" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="4"/></TextBlock>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="69.794" Canvas.Top="264.888"
                           IsChecked="{Binding IsValve7On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve7Command}"/>
             <TextBlock Canvas.Left="81.217" Canvas.Top="249.648" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="38"><Run Text="V"/><Run Language="zh-cn" Text="7"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="246.917" Width="90" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="87.46"/>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="193.003" Width="60" Canvas.Left="89.285" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -222,7 +229,8 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="313.146" Canvas.Top="263.941"
                           IsChecked="{Binding IsValve10On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve10Command}"/>
             <TextBlock Canvas.Left="318.684" Canvas.Top="248.638" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="34">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
@@ -239,7 +247,8 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="72.462" Canvas.Top="364.768"
                           IsChecked="{Binding IsValve11On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve11Command}"/>
             <TextBlock Canvas.Left="75" Canvas.Top="349.528" RenderTransformOrigin="-0.428,0.138" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="11"/></TextBlock>
             <Line X1="30" Y1="30" X2="200" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="224.146" Canvas.Left="-79.573" RenderTransformOrigin="0.5,0.5" Width="234" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Line.RenderTransform>
@@ -254,7 +263,8 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="71.627" Canvas.Top="313.98"
                           IsChecked="{Binding IsValve12On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve12Command}"/>
             <TextBlock Canvas.Left="75" Canvas.Top="299" RenderTransformOrigin="-0.428,0.138" Width="38" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="V12"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="295.646" Width="53" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="19.333"/>
             <TextBox Canvas.Left="178.222" TextWrapping="Wrap" 
@@ -278,7 +288,8 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="313.145" Canvas.Top="363.821"
                           IsChecked="{Binding IsValve13On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve13Command}"/>
             <TextBlock Canvas.Left="318.683" Canvas.Top="348.518" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V13"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="347.268" Width="91" Canvas.Left="332.683" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <!-- 其他管道 -->
@@ -314,7 +325,8 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="534.455" Canvas.Top="152.04"
                           IsChecked="{Binding IsValve8On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve8Command}"/>
             <TextBlock Canvas.Left="545.877" Canvas.Top="136.8" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="27"><Run Text="V"/><Run Language="zh-cn" Text="8"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="452.898" Canvas.Top="132.798" Width="82" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock Canvas.Left="439.333" Canvas.Top="153.111" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Language="zh-cn" Text="排气"/></TextBlock>
@@ -322,13 +334,15 @@
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="536.456" Canvas.Top="213.195"
                           IsChecked="{Binding IsValve20On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve20Command}"/>
             <TextBlock Canvas.Left="547.878" Canvas.Top="197.955" RenderTransformOrigin="-0.428,0.138" Width="27" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Language="zh-cn" Text="20"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="590" Canvas.Top="265" Width="43" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <ToggleButton Style="{StaticResource ValveToggleButtonStyle}"
                           Canvas.Left="570" Canvas.Top="283" HorizontalAlignment="Center" VerticalAlignment="Top"
                           IsChecked="{Binding IsValve9On}"
-                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"/>
+                          IsEnabled="{Binding IsLocked, Converter={StaticResource BooleanNegationConverter}}"
+                           Command="{Binding ToggleValve9Command}"/>
             <TextBlock Canvas.Left="588" Canvas.Top="268" RenderTransformOrigin="-0.428,0.138" Width="27" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="9"/></TextBlock>
             <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="527" Canvas.Top="267" Width="44" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock Canvas.Left="497" Canvas.Top="268" RenderTransformOrigin="-0.428,0.138" Width="65" HorizontalAlignment="Left" VerticalAlignment="Center">
