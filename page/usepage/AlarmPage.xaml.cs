@@ -11,9 +11,9 @@ namespace WpfApp4.page.usepage
     /// Page8.xaml 的交互逻辑
     /// </summary>
 
-    public partial class MonitoringAlarmPage : Page
+    public partial class AlarmPage : Page
     {
-        public MonitoringAlarmPage(int tubeNumber)
+        public AlarmPage(int tubeNumber)
         {
             Console.WriteLine("123123");
             InitializeComponent();

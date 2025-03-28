@@ -142,7 +142,7 @@ namespace WpfApp4
 
         private void NavigateToMonitoringAlarmPage(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(typeof(MonitoringAlarmPage), CurrentTubeNumber, BtnMonitoringAlarm);
+            NavigateToPage(typeof(AlarmPage), CurrentTubeNumber, BtnMonitoringAlarm);
         }
 
         private void NavigateToHomePage(object sender, RoutedEventArgs e)
@@ -175,8 +175,8 @@ namespace WpfApp4
                     page = new GlobalMonitoringPage(tubeNumber);
                 else if (pageType == typeof(ProcessMonitoringPage))
                     page = new ProcessMonitoringPage(tubeNumber);
-                else if (pageType == typeof(MonitoringAlarmPage))
-                    page = new MonitoringAlarmPage(tubeNumber);
+                else if (pageType == typeof(AlarmPage))
+                    page = new AlarmPage(tubeNumber);
                 else if (pageType == typeof(MotionControlPage))
                     page = new MotionControlPage();
                 else if (pageType == typeof(HomePage))
