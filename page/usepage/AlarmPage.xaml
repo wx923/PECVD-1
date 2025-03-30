@@ -5,11 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp4.page.usepage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:viewmodel="clr-namespace:WpfApp4.ViewModel"
+      xmlns:converters="clr-namespace:WpfApp4.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="700"
+      d:DesignHeight="800" d:DesignWidth="1200"
       Title="Page8">
     <Page.Resources>
-        <local:MyConvert x:Key="Convert"></local:MyConvert>
+        <converters:BoolToAlarmColorConverter x:Key="BoolToAlarmColorConverter"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -28,7 +29,6 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <materialDesign:Card Grid.Column="0">
-                    <!-- 左侧选项卡标签 -->
                     <TabControl Grid.Column="0" TabStripPlacement="Top">
                         <!-- 第一个选项卡：温度 -->
                         <TabItem Header="温度">
@@ -41,150 +41,174 @@
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="控制温度极限超温" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"></Ellipse>
+                                        <Ellipse Fill="{Binding CurrentAlarm.ControlTemperatureLimitOverheat, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
-
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Profile 热偶极限超温" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.ProfileThermocoupleLimitOverheat, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-1" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile1, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-2" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile2, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-3" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile3, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-4" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile4, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-5" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile5, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-6" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile6, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-7" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile7, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-8" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile8, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="profile-9" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Profile9, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-1" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike1, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-2" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike2, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-3" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike3, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-4" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike4, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-5" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike5, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-6" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike6, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-7" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike7, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-8" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike8, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="spike-9" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Spike9, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="固态继电器超温报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.SolidStateRelayOverheat, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="变压器超温报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.TransformerOverheat, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="辅助加热报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.AuxiliaryHeating, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="辅助超温报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.AuxiliaryOverheat, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                             </ListBox>
                         </TabItem>
+
                         <!-- 第二个选项卡：流量/水流 -->
                         <TabItem Header="流量/水流">
                             <ListBox Margin="10" VerticalAlignment="Top">
@@ -196,49 +220,57 @@
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="水流报警（前法兰）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.WaterFlowFrontFlange, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="水流报警（后法兰）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.WaterFlowRearFlange, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="水温报警（前法兰）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.WaterTempFrontFlange, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="水温报警（后法兰）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.WaterTempRearFlange, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="N2流量计报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.N2FlowMeter, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="SIH4流量计报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Sih4FlowMeter, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="NH3流量计报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Nh3FlowMeter, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="N2O流量计报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.N2oFlowMeter, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                             </ListBox>
@@ -255,49 +287,57 @@
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="前极限位报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.FrontLimitPosition, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="后极限位报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.RearLimitPosition, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="上极限位位报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.UpperLimitPosition, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="下极限位报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.LowerLimitPosition, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="舟同步报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.BoatSynchronization, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="压强超差报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.PressureDeviation, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="伺服异常" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.ServoAnomaly, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="伺服通讯" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.ServoCommunication, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                             </ListBox>
@@ -314,79 +354,92 @@
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="N2 压力报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.N2Pressure, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="风压检测（炉口）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.AirPressureFurnaceMouth, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="风压检测（炉室）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.AirPressureFurnaceChamber, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="CDA 报警（机柜）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.CdaCabinet, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="CDA 报警（马达）" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.CdaMotor, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="motion stop 报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.MotionStop, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="射频短路" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.RfShortCircuit, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="设备断电报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.EquipmentPowerFailure, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="射频异常" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.RfAnomaly, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="射频温差报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.RfTempDifference, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="SIH4泄漏报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Sih4Leak, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="NH3泄漏报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.Nh3Leak, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                                 <ListBoxItem IsEnabled="False" Height="38" Opacity="1">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="N2O泄漏报警" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Ellipse Fill="Green" StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
+                                        <Ellipse Fill="{Binding CurrentAlarm.N2oLeak, Converter={StaticResource BoolToAlarmColorConverter}}" 
+                                         StrokeThickness="1" Stroke="Black" Width="20" Height="20" Margin="20,0,0,0"/>
                                     </StackPanel>
                                 </ListBoxItem>
                             </ListBox>
@@ -407,7 +460,7 @@
                         <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Margin="4,0"
-                            ToolTip="清除运行日志">
+                            ToolTip="清除运行日志" Command="{Binding ClearOperationLogsCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Delete" Margin="0,0,4,0"/>
                                 <TextBlock Text="清除运行日志"/>
@@ -416,7 +469,7 @@
                         <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Margin="4,0"
-                            ToolTip="清除报警日志">
+                            ToolTip="清除报警日志" Command="{Binding ClearAlarmLogsCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Delete" Margin="0,0,4,0"/>
                                 <TextBlock Text="清除报警日志"/>
@@ -426,32 +479,43 @@
                 </Grid>
                 
                 <TextBlock Text="操作日志" Margin="5" FontSize="16"/>
-                <DataGrid Height="350" 
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          CanUserAddRows="False"
-                          CanUserDeleteRows="False"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"
-                          Margin="5">
+                <DataGrid Height="250" 
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Margin="5"
+                      Grid.Row="1"
+                      ItemsSource="{Binding OperationLogs}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="时间" Width="150"/>
-                        <DataGridTextColumn Header="事件" Width="*"/>
+                        <DataGridTextColumn Header="时间" Width="150" 
+                                      Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
+                        <DataGridTextColumn Header="事件" Width="*"
+                                      Binding="{Binding Details}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                
+
                 <TextBlock Text="报警日志" Margin="5,10,5,5" FontSize="16"/>
-                <DataGrid Height="350" 
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          CanUserAddRows="False"
-                          CanUserDeleteRows="False"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"
-                          Margin="5">
+                <!-- 报警日志 DataGrid -->
+                <DataGrid Height="300" 
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Margin="5"
+                      Grid.Row="3"
+                      ItemsSource="{Binding AlarmLogs}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="时间" Width="150"/>
-                        <DataGridTextColumn Header="报警类型" Width="100"/>
-                        <DataGridTextColumn Header="报警信息" Width="*"/>
-                        <DataGridTextColumn Header="状态" Width="80"/>
+                        <DataGridTextColumn Header="时间" Width="170"
+                                      Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
+                        <DataGridTextColumn Header="报警类型" Width="90"
+                                      Binding="{Binding Level}"/>
+                        <DataGridTextColumn Header="报警信息" Width="*"
+                                      Binding="{Binding Message}"/>
+                        <DataGridTextColumn Header="来源" Width="80"
+                                      Binding="{Binding Source}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

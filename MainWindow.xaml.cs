@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using WpfApp4.page.usepage;
 using WpfApp4.Services;
+using WpfApp4.Services.WpfApp4.Services;
 
 namespace WpfApp4
 {
@@ -26,6 +27,7 @@ namespace WpfApp4
 
             _=MongoDbService.Instance;
             _ = GlobalMonitoringService.Instance;
+            _ = AlarmService.Instance;
 
             // 默认导航到 HomePage（不依赖炉管，使用 TubeNumber = 0）
             MainFrame.Navigate(GetOrCreatePage(typeof(HomePage), 0));
