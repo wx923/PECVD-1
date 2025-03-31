@@ -1,59 +1,63 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WpfApp4.Models;
+using WpfApp4.Services.WpfApp4.Services;
 
 namespace WpfApp4.ViewModel
 {
 
-    public class AlermVm : INotifyPropertyChanged
+    public partial class AlermVm :ObservableObject
     {
-        public bool _isok;
-        private bool _isAutoMode;
-        public event PropertyChangedEventHandler PropertyChanged;
-        public AlermVm()
+        private readonly int _tubeNumber;
+
+        // 当前炉管的报警状态
+        [ObservableProperty]
+        private AlarmInfo _currentAlarm;
+
+        // 当前炉管的报警日志
+        [ObservableProperty]
+        private ObservableCollection<AlarmLog> _alarmLogs;
+
+        //当前操作日志
+        [ObservableProperty]
+        private ObservableCollection<OperationLog> _operationLogs;
+        public AlermVm(int tubeNumber)
         {
-            _isok = false;
-            ClearRunningLogCommand = new RelayCommand(ExecuteClearRunningLog);
-            ClearAlarmLogCommand = new RelayCommand(ExecuteClearAlarmLog);
+           _tubeNumber = tubeNumber;
+            // 从 AlarmService 单例中获取数据
+            CurrentAlarm = AlarmService.Instance._alarmStates[tubeNumber] ?? new AlarmInfo();
+            AlarmLogs = AlarmService.Instance.AlarmLogs[tubeNumber];
+            OperationLogs = AlarmService.Instance.OperationLogs[tubeNumber];
         }
-        public bool isok
+
+        [RelayCommand]
+        private void ClearOperationLogs()
         {
-            get { return _isok; }
-            set
+            OperationLogs.Clear();
+            // 可选：记录清除操作
+            OperationLogs.Add(new OperationLog
             {
-                if (_isok != value)
-                {
-                    _isok = value;
-                    OnPropertyChanged(nameof(isok));
-                }
-            }
+                Timestamp = DateTime.Now,
+                UserName = "User",
+                Details = $"炉管 {_tubeNumber + 1} 操作日志已清除"
+            });
         }
-        public bool IsAutoMode
+
+        [RelayCommand]
+        private void ClearAlarmLogs()
         {
-            get => _isAutoMode;
-            set
+            AlarmLogs.Clear();
+            // 可选：记录清除操作到操作日志
+            OperationLogs.Add(new OperationLog
             {
-                _isAutoMode = value;
-                OnPropertyChanged(nameof(IsAutoMode));
-            }
-        }
-
-        public ICommand ClearRunningLogCommand { get; }
-        public ICommand ClearAlarmLogCommand { get; }
-
-        private void ExecuteClearRunningLog()
-        {
-            // 实现清除运行日志的逻辑
-        }
-
-        private void ExecuteClearAlarmLog()
-        {
-            // 实现清除报警日志的逻辑
-        }
-
-        protected internal virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                Timestamp = DateTime.Now,
+                UserName = "User",
+                Details = $"炉管 {_tubeNumber + 1} 报警日志已清除"
+            });
         }
 
     }

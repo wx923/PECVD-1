@@ -34,8 +34,10 @@ public class PlcCommunicationService
         Motion = 6
     }
 
-    // 修改为公共属性
+    // 六个炉管的PLC连接对象
     public Dictionary<PlcType, ModbusTcpNet> ModbusTcpClients { get; private set; }
+
+    //六个炉管的PLC连接状态
     public Dictionary<PlcType, bool> ConnectionStates { get; private set; }
     private readonly object _lock = new();
 

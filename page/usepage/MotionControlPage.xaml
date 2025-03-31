@@ -130,6 +130,7 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <!--上半部分-->
+        
         <Grid Grid.Row="0"  Margin="20,10,20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" ></ColumnDefinition>

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using WpfApp4.page.usepage;
 using WpfApp4.Services;
+using WpfApp4.Services.WpfApp4.Services;
 
 namespace WpfApp4
 {
@@ -26,6 +27,7 @@ namespace WpfApp4
 
             _=MongoDbService.Instance;
             _ = GlobalMonitoringService.Instance;
+            _ = AlarmService.Instance;
 
             // 默认导航到 HomePage（不依赖炉管，使用 TubeNumber = 0）
             MainFrame.Navigate(GetOrCreatePage(typeof(HomePage), 0));
@@ -142,7 +144,7 @@ namespace WpfApp4
 
         private void NavigateToMonitoringAlarmPage(object sender, RoutedEventArgs e)
         {
-            NavigateToPage(typeof(MonitoringAlarmPage), CurrentTubeNumber, BtnMonitoringAlarm);
+            NavigateToPage(typeof(AlarmPage), CurrentTubeNumber, BtnMonitoringAlarm);
         }
 
         private void NavigateToHomePage(object sender, RoutedEventArgs e)
@@ -175,8 +177,8 @@ namespace WpfApp4
                     page = new GlobalMonitoringPage(tubeNumber);
                 else if (pageType == typeof(ProcessMonitoringPage))
                     page = new ProcessMonitoringPage(tubeNumber);
-                else if (pageType == typeof(MonitoringAlarmPage))
-                    page = new MonitoringAlarmPage(tubeNumber);
+                else if (pageType == typeof(AlarmPage))
+                    page = new AlarmPage(tubeNumber);
                 else if (pageType == typeof(MotionControlPage))
                     page = new MotionControlPage();
                 else if (pageType == typeof(HomePage))

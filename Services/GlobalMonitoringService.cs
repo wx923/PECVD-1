@@ -117,7 +117,7 @@ namespace WpfApp4.Services
         }
 
 
-        //获取数据操作
+        //获取PLC数据操作
         private async Task UpdatePlcDataAsync(int furnaceIndex)
         {
 
