@@ -2,10 +2,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WpfApp4.Models
 {
+
+    //用于处于移动状态下的舟对象
     public partial class MotionBoatModel : ObservableObject
     {
         /// <summary>
-        /// 舟编号
+        /// 舟号
         /// </summary>
         [ObservableProperty]
         public int _boatNumber;
@@ -13,7 +15,7 @@ namespace WpfApp4.Models
         /// <summary>
         /// 舟所在位置
         /// 1: 小车区
-        /// 2-7: 暂存区1-6
+        /// 2-7: 暂存区1-7
         /// 8-13: 桨区1-6
         /// </summary>
         [ObservableProperty]
@@ -42,6 +44,13 @@ namespace WpfApp4.Models
         /// </summary>
         [ObservableProperty]
         public int _totalCoolingTime;
+
+        //用于判定是否修改
+        public bool IsModified { get; set; }
+
+        [ObservableProperty]
+        //用于绑定舟监控对象
+        public string _monitorBoatNumber;
     }
 
     /// <summary>

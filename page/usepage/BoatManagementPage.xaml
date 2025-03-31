@@ -84,6 +84,7 @@
                             Content="新增舟对象" 
                             Command="{Binding AddNewBoatCommand}"
                             Style="{StaticResource MaterialDesignRaisedButton}"
+                            Visibility="Hidden"
                             Margin="5"/>
 
                     <Button Grid.Column="2" 
@@ -105,7 +106,7 @@
                           CanUserAddRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="当前位置" 
-                                          Binding="{Binding CurrentPosition}"
+                                          Binding="{Binding Location}"
                                           IsReadOnly="True"/>
 
                         <!-- 舟监控对象选择列 -->
@@ -133,7 +134,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="舟监控对象列表" 
+                    <TextBlock Text="舟号列表" 
                              Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                              Margin="10"/>
 

@@ -8,6 +8,9 @@ using HslCommunication.ModBus;
 using WpfApp.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using HslCommunication.Profinet.Inovance;
+using System.Text;
 
 namespace WpfApp4.Services
 {
@@ -22,10 +25,12 @@ namespace WpfApp4.Services
         /// </summary>
         public static FurnaceService Instance => _instance.Value;
 
-        private CancellationTokenSource _cancellationTokenSource;
         private Dictionary<int, ModbusTcpNet> _modbusClients;
-        private Dispatcher _dispatcher;
 
+        //创建用于任务取消的字典
+        public Dictionary<int, CancellationTokenSource> _cancellationTokenSources = new Dictionary<int, CancellationTokenSource>();
+
+        //创建炉管所需要的数据
         public ObservableCollection<FurnaceData> Furnaces { get; private set; }
 
         private int _selectedFurnaceIndex = 0;
@@ -45,23 +50,10 @@ namespace WpfApp4.Services
         }
 
         /// <summary>
-        /// 获取当前选中的炉管数据
-        /// </summary>
-        public FurnaceData CurrentFurnace => Furnaces[SelectedFurnaceIndex];
-
-        // 修改事件定义，使用基础的 EventArgs
-        public event EventHandler ProcessStarted;
-        public event EventHandler ProcessEnded;
-
-        // 使用数组存储上一次的工艺运行状态
-        private bool[] _previousProcessRunStates = new bool[6];
-
-        /// <summary>
         /// 私有构造函数，初始化炉管服务
         /// </summary>
         private FurnaceService()
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
             
             // 初始化炉管数据集合
             Furnaces = new ObservableCollection<FurnaceData>();
@@ -79,9 +71,6 @@ namespace WpfApp4.Services
 
             // 订阅每个炉管PLC的连接状态改变事件
             PlcCommunicationService.Instance.ConnectionStateChanged += OnPlcConnectionStateChanged;
-
-            // 初始化状态数组（默认值就是false，其实可以不用显式初始化）
-            _previousProcessRunStates = new bool[6];
         }
 
         /// <summary>
@@ -112,20 +101,20 @@ namespace WpfApp4.Services
             }
 
             // 如果已经有该炉管的更新任务在运行，先取消它
-            if (_cancellationTokenSource != null)
+            if (_cancellationTokenSources[furnaceIndex] != null)
             {
-                _cancellationTokenSource.Cancel();
+                _cancellationTokenSources[furnaceIndex].Cancel();
             }
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSources[furnaceIndex] = new CancellationTokenSource();
             
             Task.Run(async () => 
             {
-                while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                while (!_cancellationTokenSources[furnaceIndex].Token.IsCancellationRequested)
                 {
                     try
                     {
                         await UpdateFurnaceDataAsync(furnaceIndex);
-                        await Task.Delay(100, _cancellationTokenSource.Token);
+                        await Task.Delay(100, _cancellationTokenSources[furnaceIndex].Token);
                     }
                     catch (OperationCanceledException)
                     {
@@ -134,10 +123,10 @@ namespace WpfApp4.Services
                     catch (Exception ex)
                     {
                         Console.WriteLine($"炉管{furnaceIndex}数据更新异常: {ex.Message}");
-                        await Task.Delay(1000, _cancellationTokenSource.Token);
+                        await Task.Delay(1000, _cancellationTokenSources[furnaceIndex].Token);
                     }
                 }
-            }, _cancellationTokenSource.Token);
+            }, _cancellationTokenSources[furnaceIndex].Token);
 
             return Task.CompletedTask;
         }
@@ -156,75 +145,86 @@ namespace WpfApp4.Services
                 var modbusClient = _modbusClients[furnaceIndex];
 
                 // 读取所有测量数据并映射到ProcessExcelModel的属性
-                data.T1 = (int)modbusClient.ReadFloat($"{offset + 1}").Content;
-                data.T2 = (int)modbusClient.ReadFloat($"{offset + 2}").Content;
-                data.T3 = (int)modbusClient.ReadFloat($"{offset + 3}").Content;
-                data.T4 = (int)modbusClient.ReadFloat($"{offset + 4}").Content;
-                data.T5 = (int)modbusClient.ReadFloat($"{offset + 5}").Content;
-                data.T6 = (int)modbusClient.ReadFloat($"{offset + 6}").Content;
-                data.T7 = (int)modbusClient.ReadFloat($"{offset + 7}").Content;
-                data.T8 = (int)modbusClient.ReadFloat($"{offset + 8}").Content;
-                data.T9 = (int)modbusClient.ReadFloat($"{offset + 9}").Content;
-                data.SiH4 = (int)modbusClient.ReadFloat($"{offset + 10}").Content;
-                data.N2 = (int)modbusClient.ReadFloat($"{offset + 11}").Content;
-                data.N2O = (int)modbusClient.ReadFloat($"{offset + 12}").Content;
-                data.H2 = (int)modbusClient.ReadFloat($"{offset + 13}").Content;
-                data.Ph3 = (int)modbusClient.ReadFloat($"{offset + 14}").Content;
-                data.Pressure = (int)modbusClient.ReadFloat($"{offset + 15}").Content;
-                data.Power1 = (int)modbusClient.ReadFloat($"{offset + 16}").Content;
-                data.Power2 = (int)modbusClient.ReadFloat($"{offset + 17}").Content;
-                data.CurrentReference = (int)modbusClient.ReadFloat($"{offset + 27}").Content;
-                data.VoltageReference = (int)modbusClient.ReadFloat($"{offset + 28}").Content;
-                data.PulseFrequency = modbusClient.ReadFloat($"{offset + 29}").Content;
-                data.PulseVoltage = modbusClient.ReadFloat($"{offset + 30}").Content;
+                data.Step = (int)modbusClient.ReadFloat($"{offset + 0}").Content; // 步数
+                data.Name = modbusClient.ReadString($"{offset + 1}", 10, Encoding.UTF8).Content; // 名称，假设是字符串类型
+                data.Time = (int)modbusClient.ReadFloat($"{offset + 2}").Content; // 时间（s）
 
-                // 添加工艺运行状态的读取
-                var processStateResult = modbusClient.ReadCoil($"{offset + 60}");
-                if (processStateResult.IsSuccess)
-                {
-                    bool currentProcessRunState = processStateResult.Content;
-                    bool previousProcessRunState = _previousProcessRunStates[furnaceIndex];
+                // 温度参数 T1-T6
+                data.T1 = (int)modbusClient.ReadFloat($"{offset + 3}").Content;
+                data.T2 = (int)modbusClient.ReadFloat($"{offset + 4}").Content;
+                data.T3 = (int)modbusClient.ReadFloat($"{offset + 5}").Content;
+                data.T4 = (int)modbusClient.ReadFloat($"{offset + 6}").Content;
+                data.T5 = (int)modbusClient.ReadFloat($"{offset + 7}").Content;
+                data.T6 = (int)modbusClient.ReadFloat($"{offset + 8}").Content;
 
-                    // 检测上升沿（0->1）
-                    if (currentProcessRunState && !previousProcessRunState)
-                    {
-                        ProcessStarted?.Invoke(this, EventArgs.Empty);
-                    }
-                    // 检测下降沿（1->0）
-                    else if (!currentProcessRunState && previousProcessRunState)
-                    {
-                        ProcessEnded?.Invoke(this, EventArgs.Empty);
-                    }
+                // 气体参数
+                data.N2 = (int)modbusClient.ReadFloat($"{offset + 9}").Content;
+                data.Sih4 = (int)modbusClient.ReadFloat($"{offset + 10}").Content;
+                data.N2o = (int)modbusClient.ReadFloat($"{offset + 11}").Content;
+                data.Nh3 = (int)modbusClient.ReadFloat($"{offset + 12}").Content; // 注意字段名称为NH3
 
-                    // 更新状态
-                    _previousProcessRunStates[furnaceIndex] = currentProcessRunState;
-                }
+                // 压力参数
+                data.PressureValue = (int)modbusClient.ReadFloat($"{offset + 13}").Content;
+
+                // 功率参数
+                data.Power = (int)modbusClient.ReadFloat($"{offset + 14}").Content;
+
+                // 脉冲参数
+                data.PulseOn = (int)modbusClient.ReadFloat($"{offset + 15}").Content;
+                data.PulseOff = (int)modbusClient.ReadFloat($"{offset + 16}").Content;
+
+                // 运动参数
+                data.MoveSpeed = (int)modbusClient.ReadFloat($"{offset + 17}").Content;
+                data.RetreatSpeed = (int)modbusClient.ReadFloat($"{offset + 18}").Content;
+
+                // 辅热参数
+                data.AuxiliaryHeatTemperature = (int)modbusClient.ReadFloat($"{offset + 19}").Content;
+
+                // 垂直速度
+                data.VerticalSpeed = (int)modbusClient.ReadFloat($"{offset + 20}").Content;
+
 
                 // 在UI线程更新数据
-                await _dispatcher.InvokeAsync(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     var furnace = Furnaces[furnaceIndex];
+                    furnace.Step = data.Step; // 步数
+                    furnace.Name = data.Name; // 名称
+                    furnace.Time = data.Time; // 时间（s）
+
+                    // 温度参数 T1-T6
                     furnace.T1 = data.T1;
                     furnace.T2 = data.T2;
                     furnace.T3 = data.T3;
                     furnace.T4 = data.T4;
                     furnace.T5 = data.T5;
                     furnace.T6 = data.T6;
-                    furnace.T7 = data.T7;
-                    furnace.T8 = data.T8;
-                    furnace.T9 = data.T9;
-                    furnace.SiH4 = data.SiH4;
+
+                    // 气体参数
                     furnace.N2 = data.N2;
-                    furnace.N2O = data.N2O;
-                    furnace.H2 = data.H2;
-                    furnace.Ph3 = data.Ph3;
-                    furnace.Pressure = data.Pressure;
-                    furnace.Power1 = data.Power1;
-                    furnace.Power2 = data.Power2;
-                    furnace.CurrentReference = data.CurrentReference;
-                    furnace.VoltageReference = data.VoltageReference;
-                    furnace.PulseFrequency = data.PulseFrequency;
-                    furnace.PulseVoltage = data.PulseVoltage;
+                    furnace.Sih4 = data.Sih4;
+                    furnace.N2o = data.N2o;
+                    furnace.Nh3 = data.Nh3;
+
+                    // 压力值
+                    furnace.PressureValue = data.PressureValue;
+
+                    // 功率参数
+                    furnace.Power = data.Power;
+
+                    // 脉冲参数
+                    furnace.PulseOn = data.PulseOn;
+                    furnace.PulseOff = data.PulseOff;
+
+                    // 运动参数
+                    furnace.MoveSpeed = data.MoveSpeed;
+                    furnace.RetreatSpeed = data.RetreatSpeed;
+
+                    // 辅热参数
+                    furnace.AuxiliaryHeatTemperature = data.AuxiliaryHeatTemperature;
+
+                    // 垂直速度
+                    furnace.VerticalSpeed = data.VerticalSpeed;
                 });
             }
             catch (Exception ex)
@@ -234,14 +234,6 @@ namespace WpfApp4.Services
             }
         }
 
-        /// <summary>
-        /// 清理资源，取消数据更新任务并取消事件订阅
-        /// </summary>
-        public void Cleanup()
-        {
-            _cancellationTokenSource?.Cancel();
-            PlcCommunicationService.Instance.ConnectionStateChanged -= OnPlcConnectionStateChanged;
-        }
 
         /// <summary>
         /// 向PLC发送工艺数据
@@ -275,36 +267,43 @@ namespace WpfApp4.Services
                     int baseAddress = i * 50;  // 每个工艺步骤占用50个地址空间
 
                     // 写入工艺参数
-                    await modbusClient.WriteAsync($"{baseAddress + 0}", step.Time);
-                    await modbusClient.WriteAsync($"{baseAddress + 1}", step.T1);
-                    await modbusClient.WriteAsync($"{baseAddress + 2}", step.T2);
-                    await modbusClient.WriteAsync($"{baseAddress + 3}", step.T3);
-                    await modbusClient.WriteAsync($"{baseAddress + 4}", step.T4);
-                    await modbusClient.WriteAsync($"{baseAddress + 5}", step.T5);
-                    await modbusClient.WriteAsync($"{baseAddress + 6}", step.T6);
-                    await modbusClient.WriteAsync($"{baseAddress + 7}", step.T7);
-                    await modbusClient.WriteAsync($"{baseAddress + 8}", step.T8);
-                    await modbusClient.WriteAsync($"{baseAddress + 9}", step.T9);
-                    await modbusClient.WriteAsync($"{baseAddress + 10}", step.SiH4);
-                    await modbusClient.WriteAsync($"{baseAddress + 11}", step.N2);
-                    await modbusClient.WriteAsync($"{baseAddress + 12}", step.N2O);
-                    await modbusClient.WriteAsync($"{baseAddress + 13}", step.H2);
-                    await modbusClient.WriteAsync($"{baseAddress + 14}", step.Ph3);
-                    await modbusClient.WriteAsync($"{baseAddress + 15}", step.Pressure);
-                    await modbusClient.WriteAsync($"{baseAddress + 16}", step.Power1);
-                    await modbusClient.WriteAsync($"{baseAddress + 17}", step.Power2);
-                    await modbusClient.WriteAsync($"{baseAddress + 18}", step.MoveSpeed);
-                    await modbusClient.WriteAsync($"{baseAddress + 19}", step.UpDownSpeed);
-                    await modbusClient.WriteAsync($"{baseAddress + 20}", step.HeatTime);
-                    await modbusClient.WriteAsync($"{baseAddress + 21}", step.HeatTemp);
-                    await modbusClient.WriteAsync($"{baseAddress + 22}", step.PulseOn1);
-                    await modbusClient.WriteAsync($"{baseAddress + 23}", step.PulseOff1);
-                    await modbusClient.WriteAsync($"{baseAddress + 24}", step.PulseOn2);
-                    await modbusClient.WriteAsync($"{baseAddress + 25}", step.PulseOff2);
-                    await modbusClient.WriteAsync($"{baseAddress + 26}", step.CurrentReference);
-                    await modbusClient.WriteAsync($"{baseAddress + 27}", step.CurrentLimit);
-                    await modbusClient.WriteAsync($"{baseAddress + 28}", step.VoltageReference);
-                    await modbusClient.WriteAsync($"{baseAddress + 29}", step.VoltageLimit);
+                    await modbusClient.WriteAsync($"{baseAddress + 0}", step.Step); // 步数
+                    await modbusClient.WriteAsync($"{baseAddress + 1}", step.Name); // 名称（如果支持字符串写入）
+                    await modbusClient.WriteAsync($"{baseAddress + 2}", step.Time); // 时间（s）
+
+                    // 温度参数 T1-T6
+                    await modbusClient.WriteAsync($"{baseAddress + 3}", step.T1);
+                    await modbusClient.WriteAsync($"{baseAddress + 4}", step.T2);
+                    await modbusClient.WriteAsync($"{baseAddress + 5}", step.T3);
+                    await modbusClient.WriteAsync($"{baseAddress + 6}", step.T4);
+                    await modbusClient.WriteAsync($"{baseAddress + 7}", step.T5);
+                    await modbusClient.WriteAsync($"{baseAddress + 8}", step.T6);
+
+                    // 气体参数
+                    await modbusClient.WriteAsync($"{baseAddress + 9}", step.N2);
+                    await modbusClient.WriteAsync($"{baseAddress + 10}", step.Sih4);
+                    await modbusClient.WriteAsync($"{baseAddress + 11}", step.N2o);
+                    await modbusClient.WriteAsync($"{baseAddress + 12}", step.Nh3);
+
+                    // 压力值
+                    await modbusClient.WriteAsync($"{baseAddress + 13}", step.PressureValue);
+
+                    // 功率参数
+                    await modbusClient.WriteAsync($"{baseAddress + 14}", step.Power);
+
+                    // 脉冲参数
+                    await modbusClient.WriteAsync($"{baseAddress + 15}", step.PulseOn);
+                    await modbusClient.WriteAsync($"{baseAddress + 16}", step.PulseOff);
+
+                    // 运动参数
+                    await modbusClient.WriteAsync($"{baseAddress + 17}", step.MoveSpeed);
+                    await modbusClient.WriteAsync($"{baseAddress + 18}", step.RetreatSpeed);
+
+                    // 辅热参数
+                    await modbusClient.WriteAsync($"{baseAddress + 19}", step.AuxiliaryHeatTemperature);
+
+                    // 垂直速度
+                    await modbusClient.WriteAsync($"{baseAddress + 20}", step.VerticalSpeed);
                 }
 
                 // 写入工艺步骤总数
@@ -319,11 +318,19 @@ namespace WpfApp4.Services
             }
         }
 
-        // 添加清空事件的方法
-        public void ClearEvents()
+
+        /// <summary>
+        /// 清理资源，取消数据更新任务并取消事件订阅
+        /// </summary>
+        public void Cleanup()
         {
-            ProcessStarted = null;
-            ProcessEnded = null;
+            foreach (var cts in _cancellationTokenSources.Values)
+            {
+                cts?.Cancel();
+                cts?.Dispose();
+            }
+            PlcCommunicationService.Instance.ConnectionStateChanged -= OnPlcConnectionStateChanged;
         }
+
     }
 } 

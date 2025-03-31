@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using WpfApp4.Models;
 using HslCommunication.ModBus;
 using WpfApp.Services;
+using System.Windows;
 
 namespace WpfApp4.Services
 {
@@ -15,17 +16,19 @@ namespace WpfApp4.Services
             new Lazy<FurnacePlcDataService>(() => new FurnacePlcDataService());
         public static FurnacePlcDataService Instance => _instance.Value;
 
-        private CancellationTokenSource _cancellationTokenSource;
         private Dictionary<int, ModbusTcpNet> _modbusClients;
         private Dispatcher _dispatcher;
 
         // 每个炉管的PLC数据
         public Dictionary<int, FurnacePlcData> FurnacePlcDataDict { get; private set; }
-
+        //创建用于维护炉管的任务管理字典
+        public Dictionary<int, CancellationTokenSource> _cancellationTokenSources = new Dictionary<int, CancellationTokenSource>(); 
         private FurnacePlcDataService()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
+            //获取到6个炉管的PLC对象
             _modbusClients = new Dictionary<int, ModbusTcpNet>();
+            //获取到六个炉管PLC数据
             FurnacePlcDataDict = new Dictionary<int, FurnacePlcData>();
 
             // 初始化6个炉管的PLC客户端和数据对象
@@ -50,21 +53,22 @@ namespace WpfApp4.Services
 
         private Task StartDataUpdate(int furnaceIndex)
         {
-            if (_cancellationTokenSource != null)
+            if (_cancellationTokenSources.TryGetValue(furnaceIndex,out var cts))
             {
-                _cancellationTokenSource.Cancel();
-                _cancellationTokenSource.Dispose();
+                cts.Cancel();
+                cts.Dispose();
             }
-            _cancellationTokenSource = new CancellationTokenSource();
+            cts = new CancellationTokenSource();
+            _cancellationTokenSources[furnaceIndex] = cts;
 
             Task.Run(async () =>
             {
-                while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                while (!_cancellationTokenSources[furnaceIndex].Token.IsCancellationRequested)
                 {
                     try
                     {
                         await UpdatePlcDataAsync(furnaceIndex);
-                        await Task.Delay(100, _cancellationTokenSource.Token); // 100ms 更新间隔
+                        await Task.Delay(100, _cancellationTokenSources[furnaceIndex].Token); // 100ms 更新间隔
                     }
                     catch (OperationCanceledException)
                     {
@@ -73,10 +77,10 @@ namespace WpfApp4.Services
                     catch (Exception ex)
                     {
                         Console.WriteLine($"炉管{furnaceIndex + 1} 数据更新异常: {ex.Message}");
-                        await Task.Delay(1000, _cancellationTokenSource.Token); // 发生异常时等待较长时间
+                        await Task.Delay(1000, _cancellationTokenSources[furnaceIndex].Token); // 发生异常时等待较长时间
                     }
                 }
-            }, _cancellationTokenSource.Token);
+            }, _cancellationTokenSources[furnaceIndex].Token);
 
             return Task.CompletedTask;
         }
@@ -110,7 +114,7 @@ namespace WpfApp4.Services
                 data.VerticalLowerLimit = _modbusClients[furnaceIndex].ReadCoil($"{addr++}").Content;      // 地址 10
 
                 // 在UI线程更新数据
-                await _dispatcher.InvokeAsync(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     // 更新桨区舟检测传感器状态
                     FurnacePlcDataDict[furnaceIndex].PaddleBoatSensor = data.PaddleBoatSensor;
@@ -143,7 +147,11 @@ namespace WpfApp4.Services
 
         public void Cleanup()
         {
-            _cancellationTokenSource?.Cancel();
+            foreach(var cts in _cancellationTokenSources.Values)
+            {
+                cts?.Cancel();
+                cts?.Dispose();
+            }
             PlcCommunicationService.Instance.ConnectionStateChanged -= OnPlcConnectionStateChanged;
         }
     }

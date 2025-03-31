@@ -13,7 +13,7 @@ namespace WpfApp4.ViewModel
         private readonly int furnaceIndex;  // 用于访问集合的实际索引
 
         [ObservableProperty]
-        private ObservableCollection<FurnaceData> monitoringData;
+        private ObservableCollection<RegularCollectDataModel> _monitoringData;
 
         public ProcessMonitoringVM(int tubeNumber)
         {
@@ -21,7 +21,7 @@ namespace WpfApp4.ViewModel
             furnaceIndex = tubeNumber - 1;  // 将显示用的炉管号转换为实际的集合索引
 
             // 创建一个只包含当前炉管数据的集合
-            MonitoringData = new ObservableCollection<FurnaceData> { FurnaceService.Instance.Furnaces[furnaceIndex] };
+            MonitoringData = GlobalMonitoringService.Instance._plcDataExcelLists[furnaceIndex];
         }
     }
 } 

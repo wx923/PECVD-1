@@ -10,6 +10,8 @@ using WpfApp4.Models;
 using WpfApp4.Services;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.Logging;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using System.Linq;
 
 namespace WpfApp4.ViewModel
 {
@@ -19,7 +21,7 @@ namespace WpfApp4.ViewModel
         private readonly ModbusTcpNet _robotPlc;
         private readonly MotionPlcDataService _motionPlcDataService;
         private readonly FurnacePlcDataService _furnacePlcDataService = FurnacePlcDataService.Instance;
-        private readonly MotionBoatService _boatService = MotionBoatService.Instance;
+        private readonly MongoDbService _mongoDbService=MongoDbService.Instance;
         
         // 获取PLC数据的属性
         public MotionPlcData MotionPlcData => _motionPlcDataService.MotionPlcData;
@@ -28,9 +30,6 @@ namespace WpfApp4.ViewModel
         // 区域舟信息
         [ObservableProperty]
         private ObservableCollection<AreaBoatInfo> _storageAreas;
-
-        [ObservableProperty]
-        private ObservableCollection<AreaBoatInfo> _paddleAreas;
 
         // 事件日志相关
         public class EventLog
@@ -100,13 +99,11 @@ namespace WpfApp4.ViewModel
 
             // 初始化区域舟信息集合
             StorageAreas = new ObservableCollection<AreaBoatInfo>();
-            PaddleAreas = new ObservableCollection<AreaBoatInfo>();
 
-            // 初始化6个暂存区和6个桨区
-            for (int i = 0; i < 6; i++)
+            // 初始化7个暂存区和6个桨区
+            for (int i = 0; i < 13; i++)
             {
                 StorageAreas.Add(new AreaBoatInfo());
-                PaddleAreas.Add(new AreaBoatInfo());
             }
 
             // 启动区域舟信息更新
@@ -124,37 +121,77 @@ namespace WpfApp4.ViewModel
                 {
                     try
                     {
-                        var boats = _boatService.Boats;
+                        var boats = _mongoDbService.GlobalMotionBoats;
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             // 清空所有区域的舟信息
                             foreach (var area in StorageAreas)
                             {
                                 area.BoatNumber = 0;
-                                area.CurrentCoolingTime = 0;
-                                area.TotalCoolingTime = 0;
-                                area.Status = 2;
-                            }
-                            foreach (var area in PaddleAreas)
-                            {
-                                area.BoatNumber = 0;
-                                area.CurrentCoolingTime = 0;
-                                area.TotalCoolingTime = 0;
-                                area.Status = 4;
+                                area.Status = 0;
                             }
 
                             // 更新区域舟信息
                             foreach (var boat in boats)
                             {
-                                if (boat.Location >= 1 && boat.Location <= 6)  // 暂存区
+                                switch (boat.Location)
                                 {
-                                    var area = StorageAreas[boat.Location - 1];
-                                    UpdateAreaInfo(area, boat);
-                                }
-                                else if (boat.Location >= 7 && boat.Location <= 12)  // 桨区
-                                {
-                                    var area = PaddleAreas[boat.Location - 7];
-                                    UpdateAreaInfo(area, boat);
+                                    case 1:
+                                        StorageAreas[0].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[0].Status = boat.Status;
+                                        break;
+                                    case 2:
+                                        StorageAreas[1].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[1].Status = boat.Status;
+                                        break;
+                                    case 3:
+                                        StorageAreas[2].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[2].Status = boat.Status;
+                                        break;
+                                    case 4:
+                                        StorageAreas[3].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[3].Status = boat.Status;
+                                        break;
+                                    case 5:
+                                        StorageAreas[4].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[4].Status = boat.Status;
+                                        break;
+                                    case 6:
+                                        StorageAreas[5].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[5].Status = boat.Status;
+                                        break;
+                                    case 7:
+                                        StorageAreas[6].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[6].Status = boat.Status;
+                                        break;
+                                    case 8:
+                                        StorageAreas[7].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[7].Status = boat.Status;
+                                        break;
+                                    case 9:
+                                        StorageAreas[8].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[8].Status = boat.Status;
+                                        break;
+                                    case 10:
+                                        StorageAreas[9].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[9].Status = boat.Status;
+                                        break;
+                                    case 11:
+                                        StorageAreas[10].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[10].Status = boat.Status;
+                                        break;
+                                    case 12:
+                                        StorageAreas[11].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[11].Status = boat.Status;
+                                        break;
+                                    case 13:
+                                        StorageAreas[12].BoatNumber = boat.BoatNumber;
+                                        StorageAreas[12].Status = boat.Status;
+                                        break;
+                                    default: 
+                                        EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"找不到需要更新的对象" });
+                                        break;
+
                                 }
                             }
                         });
@@ -167,14 +204,6 @@ namespace WpfApp4.ViewModel
                     await Task.Delay(1000); // 每秒更新一次
                 }
             });
-        }
-
-        private void UpdateAreaInfo(AreaBoatInfo area, MotionBoatModel boat)
-        {
-            area.BoatNumber = boat.BoatNumber;
-            area.CurrentCoolingTime = boat.CurrentCoolingTime;
-            area.TotalCoolingTime = boat.TotalCoolingTime;
-            area.Status = boat.Status;
         }
 
         // 源位置和目标位置
@@ -249,7 +278,7 @@ namespace WpfApp4.ViewModel
         }
 
         // 获取位置代码
-        private byte GetPositionCode(string position)
+        private int GetPositionCode(string position)
         {
             return position switch
             {
@@ -259,12 +288,13 @@ namespace WpfApp4.ViewModel
                 "暂存区4" => 4,
                 "暂存区5" => 5,
                 "暂存区6" => 6,
-                "桨区1" => 7,
-                "桨区2" => 8,
-                "桨区3" => 9,
-                "桨区4" => 10,
-                "桨区5" => 11,
-                "桨区6" => 12,
+                "暂存区7" => 7,
+                "桨区1" => 8,
+                "桨区2" => 9,
+                "桨区3" => 10,
+                "桨区4" => 11,
+                "桨区5" => 12,
+                "桨区6" => 13,
                 _ => throw new ArgumentException($"未知的位置: {position}")
             };
         }
@@ -318,12 +348,23 @@ namespace WpfApp4.ViewModel
                 }
 
                 // 获取源位置和目标位置的代号
-                byte sourceCode = GetPositionCode(SelectedSourcePosition);
-                byte targetCode = GetPositionCode(SelectedTargetPosition);
+                int sourceCode = GetPositionCode(SelectedSourcePosition);
+                int targetCode = GetPositionCode(SelectedTargetPosition);
                 
                 // 如果所有轴都没有在运动，则继续执行启动逻辑
                 EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"开始执行自动运动: 从 {SelectedSourcePosition} 到 {SelectedTargetPosition}" });
-                
+
+                //找出全局舟对象对应的舟对象
+                var boat=_mongoDbService.GlobalMotionBoats.FirstOrDefault(boat => boat.Location==sourceCode);
+                if (boat != null)
+                {
+                    boat.Location=targetCode;
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"没有找到在{SelectedSourcePosition}位置上的舟" });
+                    return;
+                }
                 // 更新按钮状态
                 IsStartEnabled = false;  // 禁用启动按钮
                 IsPauseEnabled = true;   // 启用暂停按钮
@@ -486,6 +527,18 @@ namespace WpfApp4.ViewModel
                     return;
                 }
 
+                //获取对应的区域的舟对象
+                var boat = _mongoDbService.GlobalMotionBoats.FirstOrDefault(boat => boat.Location == int.Parse(furnaceNumber + 7));
+                if (boat != null)
+                {
+                    boat.Status = 3;
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"炉管{furnaceNumber}没有对应的舟对象，无法进入炉内" });
+                    return ;
+                }
+
                 // 获取对应炉管的PLC客户端
                 var tubePlc = PlcCommunicationService.Instance.ModbusTcpClients[(PlcCommunicationService.PlcType)furnaceIndex];
 
@@ -526,6 +579,18 @@ namespace WpfApp4.ViewModel
                 {
                     EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"炉管{furnaceNumber}垂直轴正在运动中，无法移动出炉" });
                     return;
+                }
+
+
+                //获取对应的区域的舟对象
+                var boat = _mongoDbService.GlobalMotionBoats.FirstOrDefault(boat => boat.Location == int.Parse(furnaceNumber + 7));
+                if (boat != null)
+                {
+                    boat.Status = 2;
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"炉管{furnaceNumber}没有对应的舟对象，无法进入炉内" });
                 }
 
                 // 获取对应炉管的PLC客户端
@@ -917,6 +982,58 @@ namespace WpfApp4.ViewModel
             }
         }
 
+
+        //上料命令
+        [RelayCommand]
+        private async Task MaterialLoading()
+        {
+            try
+            {
+                if (MotionPlcDataService.Instance.MotionPlcData.Storage1BoatSensor)
+                {
+                    var boat = new MotionBoatModel
+                    {
+                        Location = 1,
+                        Status = 0
+                    };
+                    await MongoDbService.Instance.UpdataMotionBoatAsync(boat);
+                    MongoDbService.Instance.GlobalMotionBoats.Add(boat);
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"已完成上料命令" });
+
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"上料区没有舟" });
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"上料命令发生错误: {ex.Message}" });
+            }
+        }
+        //出料命令
+        [RelayCommand]
+        private async Task MaterialMoving()
+        {
+            try
+            {
+                if (MotionPlcDataService.Instance.MotionPlcData.Storage1BoatSensor)
+                {
+                    var motionBoat = MongoDbService.Instance.GlobalMotionBoats.FirstOrDefault(boat => boat.Location == 1);
+                    _ = await MongoDbService.Instance.DeleteMotionBoatAsync(motionBoat);
+                    _ = MongoDbService.Instance.GlobalMotionBoats.Remove(motionBoat);
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"出料区完成出料动作，请尽快取舟出去" });
+                }
+                else
+                {
+                    EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"出料区没有舟无法完成出料动作" });
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLogs.Add(new EventLog { Time = DateTime.Now, Message = $"上料命令发生错误: {ex.Message}" });
+            }
+        }
         /// <summary>
         /// 清空事件记录命令
         /// </summary>
