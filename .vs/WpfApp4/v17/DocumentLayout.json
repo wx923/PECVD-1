@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\models\\homepagemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:models\\homepagemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\viewmodel\\homepageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:viewmodel\\homepageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\services\\homepageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:services\\homepageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\homepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\homepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\page\\usepage\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:page\\usepage\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|c:\\users\\admin\\desktop\\pecvd-program-master\\wpfapp4\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F9633995-001A-4C30-8217-E205FDD84A1A}|WpfApp4.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,6 +39,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "HomePageModel.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\HomePageModel.cs",
+              "RelativeDocumentMoniker": "Models\\HomePageModel.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Models\\HomePageModel.cs",
+              "RelativeToolTip": "Models\\HomePageModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-31T03:32:17.795Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "HomePage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\HomePage.xaml.cs",
               "RelativeDocumentMoniker": "page\\usepage\\HomePage.xaml.cs",
@@ -43,7 +64,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomePageService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\HomePageService.cs",
+              "RelativeDocumentMoniker": "Services\\HomePageService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\Services\\HomePageService.cs",
+              "RelativeToolTip": "Services\\HomePageService.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAgwJ4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-31T01:32:02.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "HomePageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\HomePageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\HomePageViewModel.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\ViewModel\\HomePageViewModel.cs",
+              "RelativeToolTip": "ViewModel\\HomePageViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-31T01:10:59.325Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "HomePage.xaml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\page\\usepage\\HomePage.xaml",
               "RelativeDocumentMoniker": "page\\usepage\\HomePage.xaml",
@@ -51,19 +98,6 @@
               "RelativeToolTip": "page\\usepage\\HomePage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-03-30T08:36:58.011Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\PECVD-program-master\\WpfApp4\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAAwFAAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T03:32:47.124Z",
               "EditorCaption": ""
             }
           ]
