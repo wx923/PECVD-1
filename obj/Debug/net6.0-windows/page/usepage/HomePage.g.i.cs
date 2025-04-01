@@ -65,7 +65,7 @@ namespace WpfApp4.page.usepage {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfApp4;component/page/usepage/homepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WpfApp4;V1.0.0.0;component/page/usepage/homepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\page\usepage\HomePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
