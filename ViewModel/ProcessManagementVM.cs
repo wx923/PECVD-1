@@ -43,6 +43,7 @@ namespace WpfApp4.ViewModel
             await LoadProcessFiles();
         }
 
+        //设置默认打开的工艺配方文件
         private async Task LoadProcessFiles()
         {
             try 
@@ -62,6 +63,7 @@ namespace WpfApp4.ViewModel
             }
         }
 
+        //从本地文件中导入工艺配方文件
         [RelayCommand]
         private async Task ImportExcel()
         {
@@ -153,7 +155,7 @@ namespace WpfApp4.ViewModel
                 }
             }
         }
-
+        #region 单元格操作辅助函数
         private string GetCellValue(ExcelWorksheet worksheet, int row, int col)
         {
             var cell = worksheet.Cells[row, col].Value;
@@ -171,7 +173,9 @@ namespace WpfApp4.ViewModel
                 
             return 0;
         }
+        #endregion
 
+        //修改工艺配方文件之后的保存操作
         [RelayCommand]
         private async Task SaveChanges()
         {
@@ -223,6 +227,7 @@ namespace WpfApp4.ViewModel
             }
         }
 
+        //从数据库中切换当前显示的工艺配方文件信息
         partial void OnSelectedFileChanged(ProcessFileInfo value)
         {
             if (value == null || IsLoading) return;
