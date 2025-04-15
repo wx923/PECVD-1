@@ -14,7 +14,7 @@
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="800"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
@@ -448,76 +448,72 @@
                 </materialDesign:Card>
             </Grid>
         </Grid>
-        <materialDesign:Card Grid.Column="0" Grid.RowSpan="2" Margin="5">
+        <materialDesign:Card Grid.Column="0" Margin="5">
             <StackPanel Orientation="Vertical">
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                        <Button
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
-                            Margin="4,0"
-                            ToolTip="清除运行日志" Command="{Binding ClearOperationLogsCommand}">
+                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                        <DatePicker Margin="4,0" Width="120" materialDesign:HintAssist.Hint="起始日期" SelectedDate="{Binding StartDate}"/>
+                        <TextBlock Text=" 至 " VerticalAlignment="Center" Margin="4,0"/>
+                        <DatePicker Margin="4,0" Width="120" materialDesign:HintAssist.Hint="结束日期" SelectedDate="{Binding EndDate}"/>
+                        <Button Style="{StaticResource MaterialDesignOutlinedButton}" Margin="4,0" ToolTip="查询日志" Command="{Binding QueryLogsByDateRangeCommand}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Delete" Margin="0,0,4,0"/>
-                                <TextBlock Text="清除运行日志"/>
+                                <materialDesign:PackIcon Kind="Magnify" Margin="0,0,4,0"/>
+                                <TextBlock Text="查询"/>
                             </StackPanel>
                         </Button>
-                        <Button
-                            Style="{StaticResource MaterialDesignOutlinedButton}"
-                            Margin="4,0"
-                            ToolTip="清除报警日志" Command="{Binding ClearAlarmLogsCommand}">
+                        <Button Style="{StaticResource MaterialDesignOutlinedButton}" Margin="4,0" ToolTip="生成测试记录" Command="{Binding GenerateTestRecordsCommand}">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Delete" Margin="0,0,4,0"/>
-                                <TextBlock Text="清除报警日志"/>
+                                <materialDesign:PackIcon Kind="Plus" Margin="0,0,4,0"/>
+                                <TextBlock Text="生成测试"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
                 </Grid>
-                
-                <TextBlock Text="操作日志" Margin="5" FontSize="16"/>
-                <DataGrid Height="250" 
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      Margin="5"
-                      Grid.Row="1"
-                      ItemsSource="{Binding OperationLogs}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="时间" Width="150" 
-                                      Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
-                        <DataGridTextColumn Header="事件" Width="*"
-                                      Binding="{Binding Details}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <TextBlock Text="报警日志" Margin="5,10,5,5" FontSize="16"/>
-                <!-- 报警日志 DataGrid -->
-                <DataGrid Height="300" 
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      Margin="5"
-                      Grid.Row="3"
-                      ItemsSource="{Binding AlarmLogs}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="时间" Width="170"
-                                      Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
-                        <DataGridTextColumn Header="报警类型" Width="90"
-                                      Binding="{Binding Level}"/>
-                        <DataGridTextColumn Header="报警信息" Width="*"
-                                      Binding="{Binding Message}"/>
-                        <DataGridTextColumn Header="来源" Width="80"
-                                      Binding="{Binding Source}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <TabControl Margin="5" Height="780">
+                    <TabItem Header="报警记录">
+                        <DataGrid Height="760" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" ItemsSource="{Binding AlarmrLogs}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="报警触发时间" Width="170" Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
+                                <DataGridTextColumn Header="触发报警的用户" Width="100" Binding="{Binding User}"/>
+                                <DataGridTextColumn Header="报警等级" Width="80" Binding="{Binding Level}"/>
+                                <DataGridTextColumn Header="报警恢复时间" Width="170" Binding="{Binding RecoveryTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}, TargetNullValue='未恢复'}"/>
+                                <DataGridTextColumn Header="报警详情" Width="*" Binding="{Binding Details}"/>
+                                <DataGridTextColumn Header="报警的描述信息" Width="120" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="操作记录">
+                        <DataGrid Height="760" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" ItemsSource="{Binding OperationRecords}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="操作触发时间" Width="170" Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
+                                <DataGridTextColumn Header="执行操作的用户" Width="100" Binding="{Binding User}"/>
+                                <DataGridTextColumn Header="操作恢复时间" Width="170" Binding="{Binding RecoveryTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}, TargetNullValue='未恢复'}"/>
+                                <DataGridTextColumn Header="操作详情" Width="*" Binding="{Binding Details}"/>
+                                <DataGridTextColumn Header="操作的描述信息" Width="120" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="运行记录">
+                        <DataGrid Height="760" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" ItemsSource="{Binding RunningRecords}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="操作发生的时间" Width="170" Binding="{Binding OperationTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
+                                <DataGridTextColumn Header="执行操作的用户" Width="100" Binding="{Binding User}"/>
+                                <DataGridTextColumn Header="操作模式" Width="80" Binding="{Binding OperationMode}"/>
+                                <DataGridTextColumn Header="设备名称" Width="100" Binding="{Binding DeviceName}"/>
+                                <DataGridTextColumn Header="舟号" Width="80" Binding="{Binding BoatNumber}"/>
+                                <DataGridTextColumn Header="舟状态" Width="80" Binding="{Binding BoatStatus}"/>
+                                <DataGridTextColumn Header="运行记录的描述信息" Width="*" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
             </StackPanel>
         </materialDesign:Card>
     </Grid>

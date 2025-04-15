@@ -2,27 +2,26 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using WpfApp4.Models;
 using System.Windows;
 using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq.Expressions;
+using WpfApp4.Models;
 
 namespace WpfApp4.Services
 {
     public class MongoDbService
     {
         // 添加单例实例
-        private static readonly Lazy<MongoDbService> _instance = 
+        private static readonly Lazy<MongoDbService> _instance =
             new Lazy<MongoDbService>(() => new MongoDbService());
         public static MongoDbService Instance => _instance.Value;
 
-        //代表数据库
+        // 代表数据库
         public readonly IMongoDatabase _database;
 
-        //代表数据库里面的集合
+        // 代表数据库里面的集合
         private readonly IMongoCollection<Boat> _boats;
         private readonly IMongoCollection<BoatMonitor> _monitors;
         private readonly IMongoCollection<ProcessExcelModel> _processExcelCollection;
@@ -31,18 +30,22 @@ namespace WpfApp4.Services
         private readonly IMongoCollection<Position> _positions;
         private readonly IMongoCollection<MotionBoatModel> _motionBoatModel;
         private readonly IMongoCollection<GlobalMonitoringStatusModel> _processFlowStepsCollection;
-
+        // 新增三个记录集合
+        private readonly IMongoCollection<Alarmr> _alarmLogs;
+        private readonly IMongoCollection<OperationRecord> _operationRecords;
+        private readonly IMongoCollection<RunningRecord> _runningRecords;
 
         // 全局数据集合
         public ObservableCollection<Boat> GlobalBoats { get; private set; }
         public ObservableCollection<BoatMonitor> GlobalMonitors { get; private set; }
         public ObservableCollection<ProcessFileInfo> GlobalProcessFiles { get; private set; }
-
         public ObservableCollection<Position> GlobalPositions { get; private set; }
-
         public ObservableCollection<MotionBoatModel> GlobalMotionBoats { get; private set; }
-
         public ObservableCollection<GlobalMonitoringStatusModel> GlobalProcessFlowSteps { get; private set; }
+        // 新增三个全局记录集合
+        public ObservableCollection<Alarmr> GlobalAlarmLogs { get; private set; }
+        public ObservableCollection<OperationRecord> GlobalOperationRecords { get; private set; }
+        public ObservableCollection<RunningRecord> GlobalRunningRecords { get; private set; }
 
         private MongoDbService()
         {
@@ -53,6 +56,11 @@ namespace WpfApp4.Services
             GlobalPositions = new ObservableCollection<Position>();
             GlobalMotionBoats = new ObservableCollection<MotionBoatModel>();
             GlobalProcessFlowSteps = new ObservableCollection<GlobalMonitoringStatusModel>();
+            // 初始化新全局集合
+            GlobalAlarmLogs = new ObservableCollection<Alarmr>();
+            GlobalOperationRecords = new ObservableCollection<OperationRecord>();
+            GlobalRunningRecords = new ObservableCollection<RunningRecord>();
+
             try
             {
                 var settings = MongoClientSettings.FromConnectionString("mongodb://localhost:27017");
@@ -66,7 +74,7 @@ namespace WpfApp4.Services
 
                 _database = client.GetDatabase("PECVD");
 
-                // 确保集合存在，如果过集合不存在，则创建集合
+                // 确保集合存在，如果集合不存在，则创建集合
                 var collections = _database.ListCollectionNames().ToList();
                 if (!collections.Contains("Boats"))
                     _database.CreateCollection("Boats");
@@ -79,20 +87,20 @@ namespace WpfApp4.Services
                 if (!collections.Contains("FurnaceData"))
                     _database.CreateCollection("FurnaceData");
                 if (!collections.Contains("Positions"))
-                {
                     _database.CreateCollection("Positions");
-                }
-
                 if (!collections.Contains("MotionBoats"))
-                {
                     _database.CreateCollection("MotionBoats");
-                }
                 if (!collections.Contains("ProcessFlowStep"))
-                {
                     _database.CreateCollection("ProcessFlowStep");
-                }
+                // 新增三个记录集合
+                if (!collections.Contains("AlarmLogs"))
+                    _database.CreateCollection("AlarmLogs");
+                if (!collections.Contains("OperationRecords"))
+                    _database.CreateCollection("OperationRecords");
+                if (!collections.Contains("RunningRecords"))
+                    _database.CreateCollection("RunningRecords");
 
-                //获取集合
+                // 获取集合
                 _boats = _database.GetCollection<Boat>("Boats");
                 _monitors = _database.GetCollection<BoatMonitor>("BoatMonitors");
                 _processExcelCollection = _database.GetCollection<ProcessExcelModel>("ProcessExcel");
@@ -101,6 +109,11 @@ namespace WpfApp4.Services
                 _positions = _database.GetCollection<Position>("Positions");
                 _motionBoatModel = _database.GetCollection<MotionBoatModel>("MotionBoats");
                 _processFlowStepsCollection = _database.GetCollection<GlobalMonitoringStatusModel>("ProcessFlowStep");
+                // 获取新集合
+                _alarmLogs = _database.GetCollection<Alarmr>("AlarmLogs");
+                _operationRecords = _database.GetCollection<OperationRecord>("OperationRecords");
+                _runningRecords = _database.GetCollection<RunningRecord>("RunningRecords");
+
                 // 初始化完成后加载数据
                 _ = LoadAllDataAsync();
             }
@@ -122,14 +135,23 @@ namespace WpfApp4.Services
                 GlobalPositions.Clear();
                 GlobalMotionBoats.Clear();
                 GlobalProcessFlowSteps.Clear();
+                // 清空新全局集合
+                GlobalAlarmLogs.Clear();
+                GlobalOperationRecords.Clear();
+                GlobalRunningRecords.Clear();
 
                 // 从数据库加载数据
                 var boats = await _boats.Find(_ => true).ToListAsync();
                 var monitors = await _monitors.Find(_ => true).ToListAsync();
                 var processFiles = await _processFileCollection.Find(_ => true).ToListAsync();
-                var positions= await _positions.Find(_ => true).ToListAsync();
-                var motionBoats=await _motionBoatModel.Find(_ => true).ToListAsync();
+                var positions = await _positions.Find(_ => true).ToListAsync();
+                var motionBoats = await _motionBoatModel.Find(_ => true).ToListAsync();
                 var processFlowSteps = await _processFlowStepsCollection.Find(_ => true).ToListAsync();
+                // 加载新集合数据
+                var alarmLogs = await _alarmLogs.Find(_ => true).ToListAsync();
+                var operationRecords = await _operationRecords.Find(_ => true).ToListAsync();
+                var runningRecords = await _runningRecords.Find(_ => true).ToListAsync();
+
                 // 更新集合并添加属性变更事件
                 foreach (var boat in boats)
                 {
@@ -154,42 +176,58 @@ namespace WpfApp4.Services
                     position.PropertyChanged += OnPositionPropertyChanged;
                     GlobalPositions.Add(position);
                 }
-                foreach(var motionBoat in motionBoats)
+
+                foreach (var motionBoat in motionBoats)
                 {
                     motionBoat.PropertyChanged += OnMotionBoatPropertyChanged;
                     GlobalMotionBoats.Add(motionBoat);
                 }
-                //如果对象为空的话，创建六个炉管的对象
-                if (!processFlowSteps.Any()) 
+
+                // 如果对象为空的话，创建六个炉管的对象
+                if (!processFlowSteps.Any())
                 {
-                        for (int i = 0; i < 6; i++){
+                    for (int i = 0; i < 6; i++)
+                    {
                         var flowStep = new GlobalMonitoringStatusModel
                         {
                             Fnum = i,
                         };
-
                         await UpdataProcessFlowStepAsync(flowStep);
-                        var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq(x => x.Fnum,i);
+                        var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq(x => x.Fnum, i);
                         var a = _processFlowStepsCollection.Find(filter).FirstOrDefault();
                         GlobalProcessFlowSteps.Add(flowStep);
                     }
                 }
-                else {
+                else
+                {
                     foreach (var flowStep in processFlowSteps)
                     {
                         flowStep.PropertyChanged += OnProcessFlowStepChanged;
                         GlobalProcessFlowSteps.Add(flowStep);
                     }
                 }
-                
+
+                // 更新新全局集合（无需属性变更事件，因为不支持修改）
+                foreach (var alarm in alarmLogs)
+                {
+                    GlobalAlarmLogs.Add(alarm);
+                }
+
+                foreach (var operation in operationRecords)
+                {
+                    GlobalOperationRecords.Add(operation);
+                }
+
+                foreach (var running in runningRecords)
+                {
+                    GlobalRunningRecords.Add(running);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"加载数据失败: {ex.Message}");
             }
         }
-
-
 
         #region 属性变更事件处理
         private async void OnBoatPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -240,11 +278,11 @@ namespace WpfApp4.Services
 
         private async void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (sender is Position postion)
+            if (sender is Position position)
             {
                 try
                 {
-                    await UpdatePositionAsync(postion);
+                    await UpdatePositionAsync(position);
                 }
                 catch (Exception ex)
                 {
@@ -268,19 +306,18 @@ namespace WpfApp4.Services
             }
         }
 
-
-
         private async void OnProcessFlowStepChanged(object? sender, PropertyChangedEventArgs e)
         {
-            try 
-            { if (sender is GlobalMonitoringStatusModel flowStep)
+            try
+            {
+                if (sender is GlobalMonitoringStatusModel flowStep)
                     await UpdataProcessFlowStepAsync(flowStep);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show($"更新工艺过程数据失败:{ex.Message}");
             }
         }
-
         #endregion
 
         #region Boat Operations
@@ -427,7 +464,6 @@ namespace WpfApp4.Services
         #endregion
 
         #region 工艺文件和工艺文件名操作
-
         public async Task UpdateProcessExcelAsync(string fileId, List<ProcessExcelModel> processes)
         {
             try
@@ -438,7 +474,7 @@ namespace WpfApp4.Services
 
                 // 获取对应的集合
                 var collection = _database.GetCollection<ProcessExcelModel>(fileInfo.CollectionName);
-                
+
                 // 删除集合中的所有现有数据
                 await collection.DeleteManyAsync(_ => true);
 
@@ -453,6 +489,7 @@ namespace WpfApp4.Services
                 throw new Exception($"更新工艺Excel数据失败: {ex.Message}");
             }
         }
+
         // 保存新的工艺文件
         public async Task<string> SaveProcessFileAsync(string fileName, string description, List<ProcessExcelModel> data)
         {
@@ -470,13 +507,13 @@ namespace WpfApp4.Services
                 Description = description,
                 CollectionName = collectionName  // 使用处理后的文件名作为集合名
             };
-            
+
             await _processFileCollection.InsertOneAsync(fileInfo);
-            
+
             // 获取新的集合并插入数据
             var collection = _database.GetCollection<ProcessExcelModel>(fileInfo.CollectionName);
             await collection.InsertManyAsync(data);
-            
+
             return fileInfo.Id;
         }
 
@@ -510,7 +547,8 @@ namespace WpfApp4.Services
                 await _processFileCollection.DeleteOneAsync(x => x.Id == fileId);
             }
         }
-        //判断是否有重复的集合名
+
+        // 判断是否有重复的集合名
         public async Task<bool> CollectionExistsAsync(string collectionName)
         {
             try
@@ -529,6 +567,98 @@ namespace WpfApp4.Services
             catch (Exception ex)
             {
                 throw new Exception($"检查集合是否存在时出错: {ex.Message}");
+            }
+        }
+        #endregion
+
+        #region 记录操作
+        // 添加报警记录
+        public async Task AddAlarmLogAsync(Alarmr alarm)
+        {
+            try
+            {
+                await _alarmLogs.InsertOneAsync(alarm);
+                GlobalAlarmLogs.Add(alarm);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"添加报警记录失败: {ex.Message}");
+            }
+        }
+
+        // 查询报警记录（按时间范围）
+        public async Task<List<Alarmr>> GetAlarmLogsByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var filter = Builders<Alarmr>.Filter.Gte(x => x.Timestamp, startDate) &
+                            Builders<Alarmr>.Filter.Lte(x => x.Timestamp, endDate);
+                return await _alarmLogs.Find(filter).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"查询报警记录失败: {ex.Message}");
+                return new List<Alarmr>();
+            }
+        }
+
+        // 添加操作记录
+        public async Task AddOperationRecordAsync(OperationRecord operation)
+        {
+            try
+            {
+                await _operationRecords.InsertOneAsync(operation);
+                GlobalOperationRecords.Add(operation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"添加操作记录失败: {ex.Message}");
+            }
+        }
+
+        // 查询操作记录（按时间范围）
+        public async Task<List<OperationRecord>> GetOperationRecordsByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var filter = Builders<OperationRecord>.Filter.Gte(x => x.Timestamp, startDate) &
+                            Builders<OperationRecord>.Filter.Lte(x => x.Timestamp, endDate);
+                return await _operationRecords.Find(filter).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"查询操作记录失败: {ex.Message}");
+                return new List<OperationRecord>();
+            }
+        }
+
+        // 添加运行记录
+        public async Task AddRunningRecordAsync(RunningRecord running)
+        {
+            try
+            {
+                await _runningRecords.InsertOneAsync(running);
+                GlobalRunningRecords.Add(running);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"添加运行记录失败: {ex.Message}");
+            }
+        }
+
+        // 查询运行记录（按时间范围）
+        public async Task<List<RunningRecord>> GetRunningRecordsByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var filter = Builders<RunningRecord>.Filter.Gte(x => x.OperationTime, startDate) &
+                            Builders<RunningRecord>.Filter.Lte(x => x.OperationTime, endDate);
+                return await _runningRecords.Find(filter).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"查询运行记录失败: {ex.Message}");
+                return new List<RunningRecord>();
             }
         }
         #endregion
@@ -579,10 +709,10 @@ namespace WpfApp4.Services
             {
                 // 获取指定名称的集合
                 var collection = _database.GetCollection<ProcessExcelModel>(collectionName);
-                
+
                 // 获取集合中的所有数据
                 var data = await collection.Find(_ => true).ToListAsync();
-                
+
                 return data ?? new List<ProcessExcelModel>();
             }
             catch (Exception ex)
@@ -608,8 +738,6 @@ namespace WpfApp4.Services
                 return false;
             }
         }
-
-
 
         #region 坐标相关操作
         public async Task<bool> UpdatePositionAsync(Position position)
@@ -642,10 +770,8 @@ namespace WpfApp4.Services
         }
         #endregion
 
-
-
         #region 运动舟对象
-        //更新运动舟对象
+        // 更新运动舟对象
         public async Task<bool> UpdataMotionBoatAsync(MotionBoatModel motionBoat)
         {
             try
@@ -655,26 +781,29 @@ namespace WpfApp4.Services
 
                 if (existing != null)
                 {
-                    var result = await _motionBoatModel.ReplaceOneAsync(filter, existing);
+                    var result = await _motionBoatModel.ReplaceOneAsync(filter, motionBoat);
                     return result.ModifiedCount > 0;
                 }
-                else {
+                else
+                {
                     await _motionBoatModel.InsertOneAsync(motionBoat);
                     return true;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show($"更新舟对象失败:{ex.Message}");
                 return false;
             }
         }
 
-        //删除数据库舟对象
+        // 删除数据库舟对象
         public async Task<bool> DeleteMotionBoatAsync(MotionBoatModel motionBoat)
         {
-            try {
-                var filter = Builders<MotionBoatModel>.Filter.Eq("Location",1);
-                 var result= await _motionBoatModel.DeleteOneAsync(filter);
+            try
+            {
+                var filter = Builders<MotionBoatModel>.Filter.Eq("Location", motionBoat.Location);
+                var result = await _motionBoatModel.DeleteOneAsync(filter);
                 if (result.DeletedCount > 0)
                 {
                     MessageBox.Show($"删除舟对象成功");
@@ -686,19 +815,16 @@ namespace WpfApp4.Services
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"删除舟对象失败:{ex.Message}");
                 return false;
             }
         }
-
         #endregion
 
         #region 工艺过程数据
-        //创建六个对象
-
-        //数据更新操作
+        // 数据更新操作
         public async Task<bool> UpdataProcessFlowStepAsync(GlobalMonitoringStatusModel flowStep)
         {
             try
@@ -706,10 +832,10 @@ namespace WpfApp4.Services
                 var filter = Builders<GlobalMonitoringStatusModel>.Filter.Eq("Fnum", flowStep.Fnum);
                 var existing = await _processFlowStepsCollection.Find(filter).FirstOrDefaultAsync();
 
-                if (existing !=null)
+                if (existing != null)
                 {
-                   var result = await _processFlowStepsCollection.ReplaceOneAsync(filter, flowStep);
-                   return result.ModifiedCount > 0;
+                    var result = await _processFlowStepsCollection.ReplaceOneAsync(filter, flowStep);
+                    return result.ModifiedCount > 0;
                 }
                 else
                 {
@@ -717,7 +843,7 @@ namespace WpfApp4.Services
                     return true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"更新舟对象失败:{ex.Message}");
                 return false;
@@ -725,5 +851,4 @@ namespace WpfApp4.Services
         }
         #endregion
     }
-
 }
