@@ -1,0 +1,443 @@
+﻿<Page x:Class="WpfApp4.page.usepage.MotionModuleParameterSetup"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp4.page.usepage"
+      mc:Ignorable="d" 
+      Title="运动模块参数设置" Height="900" Width="1400"
+      Background="White">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧区域：13个区域 -->
+        <WrapPanel Grid.Column="0" Orientation="Horizontal" ItemHeight="210" ItemWidth="270">
+            <!-- 生成 13 个区域：暂存区1~7 + 桨台1~6，每个区域中包含4组X/Y输入框和按钮 -->
+            <!-- 暂存区1 -->
+            <GroupBox Header="暂存区1" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <!-- 暂存区2~7 和 桨台1~6 可依照暂存区1复制，仅修改 Header 即可 -->
+            <GroupBox Header="暂存区2" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="暂存区3" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="暂存区4" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="暂存区5" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="暂存区6" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="桨台1" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="桨台2" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="桨台3" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="桨台4" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="桨台5" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="桨台6" Margin="1">
+                <StackPanel>
+                    <!-- 点1~4 -->
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点1 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="3,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点2 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点3 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Text="点4 X:" Width="45" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <TextBlock Text="Y:" Width="20" VerticalAlignment="Center"/>
+                        <TextBox Width="50" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="5,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </WrapPanel>
+
+        <!-- 右侧参数区域 -->
+        <StackPanel Grid.Column="1" Margin="10">
+            <GroupBox Header="个别参数下发">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <TextBlock Text="参数A：" Width="80" VerticalAlignment="Center"/>
+                        <TextBox Width="100" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="10,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <TextBlock Text="参数B：" Width="80" VerticalAlignment="Center"/>
+                        <TextBox Width="100" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="10,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <TextBlock Text="参数C：" Width="80" VerticalAlignment="Center"/>
+                        <TextBox Width="100" BorderThickness="1" BorderBrush="Gray"/>
+                        <Button Content="下发" Width="60" Margin="10,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Page>
