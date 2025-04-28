@@ -34,6 +34,7 @@ namespace WpfApp4.Services
         private readonly IMongoCollection<Alarmr> _alarmLogs;
         private readonly IMongoCollection<OperationRecord> _operationRecords;
         private readonly IMongoCollection<RunningRecord> _runningRecords;
+        private readonly IMongoCollection<ProcessRecordInfo> _processRecordCollection;
 
         // 全局数据集合
         public ObservableCollection<Boat> GlobalBoats { get; private set; }
@@ -46,6 +47,7 @@ namespace WpfApp4.Services
         public ObservableCollection<Alarmr> GlobalAlarmLogs { get; private set; }
         public ObservableCollection<OperationRecord> GlobalOperationRecords { get; private set; }
         public ObservableCollection<RunningRecord> GlobalRunningRecords { get; private set; }
+        public ObservableCollection<ProcessRecordInfo> GlobalProcessRecords { get; private set; }
 
         private MongoDbService()
         {
@@ -60,6 +62,7 @@ namespace WpfApp4.Services
             GlobalAlarmLogs = new ObservableCollection<Alarmr>();
             GlobalOperationRecords = new ObservableCollection<OperationRecord>();
             GlobalRunningRecords = new ObservableCollection<RunningRecord>();
+            GlobalProcessRecords = new ObservableCollection<ProcessRecordInfo>();
 
             try
             {
@@ -99,6 +102,8 @@ namespace WpfApp4.Services
                     _database.CreateCollection("OperationRecords");
                 if (!collections.Contains("RunningRecords"))
                     _database.CreateCollection("RunningRecords");
+                if (!collections.Contains("ProcessRecords"))
+                    _database.CreateCollection("ProcessRecords");
 
                 // 获取集合
                 _boats = _database.GetCollection<Boat>("Boats");
@@ -113,6 +118,7 @@ namespace WpfApp4.Services
                 _alarmLogs = _database.GetCollection<Alarmr>("AlarmLogs");
                 _operationRecords = _database.GetCollection<OperationRecord>("OperationRecords");
                 _runningRecords = _database.GetCollection<RunningRecord>("RunningRecords");
+                _processRecordCollection = _database.GetCollection<ProcessRecordInfo>("ProcessRecords");
 
                 // 初始化完成后加载数据
                 _ = LoadAllDataAsync();
@@ -139,6 +145,7 @@ namespace WpfApp4.Services
                 GlobalAlarmLogs.Clear();
                 GlobalOperationRecords.Clear();
                 GlobalRunningRecords.Clear();
+                GlobalProcessRecords.Clear();
 
                 // 从数据库加载数据
                 var boats = await _boats.Find(_ => true).ToListAsync();
@@ -151,6 +158,7 @@ namespace WpfApp4.Services
                 var alarmLogs = await _alarmLogs.Find(_ => true).ToListAsync();
                 var operationRecords = await _operationRecords.Find(_ => true).ToListAsync();
                 var runningRecords = await _runningRecords.Find(_ => true).ToListAsync();
+                var processRecords = await _processRecordCollection.Find(_ => true).ToListAsync();
 
                 // 更新集合并添加属性变更事件
                 foreach (var boat in boats)
@@ -221,6 +229,13 @@ namespace WpfApp4.Services
                 foreach (var running in runningRecords)
                 {
                     GlobalRunningRecords.Add(running);
+                }
+
+                // 在LoadAllDataAsync方法中加载ProcessRecords
+                GlobalProcessRecords.Clear();
+                foreach (var record in processRecords)
+                {
+                    GlobalProcessRecords.Add(record);
                 }
             }
             catch (Exception ex)

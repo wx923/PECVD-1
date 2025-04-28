@@ -143,7 +143,7 @@
                 <Button x:Name="BtnMonitoringAlarm" Content="监控报警" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToMonitoringAlarmPage"/>
                 <Button x:Name="BtnProcessManagement" Content="配方管理" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToProcessManagementPage"/>
                 <Button x:Name="BtnBoatManagement" Content="舟管理" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToBoatManagementPage"/>
-
+                <Button x:Name="BtnDataShow" Content="数据展示" Style="{StaticResource TopNavigationButtonStyle}" Click="NavigateToDataShowPage"/>
             </StackPanel>
         </Border>
         <!--顶部导航栏-->

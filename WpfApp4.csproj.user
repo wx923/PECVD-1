@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Update="page\otherpage\spacedataup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="page\usepage\DataShowPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="page\usepage\MotionModuleParameterSetup.xaml.cs">
@@ -14,6 +19,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="page\usepage\BoatManagementPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="page\usepage\DataShowPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="page\usepage\HomePage.xaml">

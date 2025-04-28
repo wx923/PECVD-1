@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>WpfApp4</id>
+    <version>1.0.0</version>
+    <authors>WpfApp4</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="6eae78d3161c1b61508601d6d4307a2faae94ad5" />
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="CommunityToolkit.Mvvm" version="8.3.2" exclude="Build,Analyzers" />
+        <dependency id="EPPlus" version="7.4.2" exclude="Build,Analyzers" />
+        <dependency id="HslCommunication" version="12.1.3" exclude="Build,Analyzers" />
+        <dependency id="MaterialDesignColors" version="3.1.0" exclude="Build,Analyzers" />
+        <dependency id="MaterialDesignThemes" version="5.1.0" exclude="Build,Analyzers" />
+        <dependency id="MongoDB.Driver" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="NPOI" version="2.7.2" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\bin\Debug\net6.0-windows\WpfApp4.runtimeconfig.json" target="lib\net6.0-windows7.0\WpfApp4.runtimeconfig.json" />
+    <file src="C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\bin\Debug\net6.0-windows\WpfApp4.dll" target="lib\net6.0-windows7.0\WpfApp4.dll" />
+  </files>
+</package>
