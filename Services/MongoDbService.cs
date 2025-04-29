@@ -865,5 +865,12 @@ namespace WpfApp4.Services
             }
         }
         #endregion
+
+        public async Task<List<ProcessDataDisplayModel>> GetProcessDataByCollectionName(string collectionName)
+        {
+            var collection = _database.GetCollection<ProcessDataDisplayModel>(collectionName);
+            return await collection.Find(_ => true).ToListAsync();
+        }
+
     }
 }

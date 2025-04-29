@@ -1,17 +1,17 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace WpfApp4.Models
 {
     // 工艺流程记录信息集合
     public class ProcessRecordInfo : ObservableObject
     {
-        private string _id;
-        public string Id
-        {
-            get => _id;
-            set => SetProperty(ref _id, value);
-        }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id;
+
 
         private int _tubeNumber;
         public int TubeNumber

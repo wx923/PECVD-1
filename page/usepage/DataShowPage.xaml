@@ -32,6 +32,10 @@
                       SelectedItem="{Binding SelectedCollection}"
                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                       MaxDropDownHeight="300"/>
+            <Button Content="加载数据"
+                    Margin="20,0,0,0"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding LoadDataCommand}"/>
             <Button Content="Export to Excel"
                     Margin="20,0,0,0"
                     Style="{StaticResource MaterialDesignRaisedButton}"
