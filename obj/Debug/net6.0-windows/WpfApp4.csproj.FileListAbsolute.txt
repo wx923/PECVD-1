@@ -103,3 +103,4 @@ C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\obj\Debug\net6.0-windows\ref
 C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\obj\Debug\net6.0-windows\WpfApp4.pdb
 C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\obj\Debug\net6.0-windows\WpfApp4.genruntimeconfig.cache
 C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\obj\Debug\net6.0-windows\ref\WpfApp4.dll
+C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\obj\Debug\net6.0-windows\WpfApp4_Content.g.cs

@@ -63,9 +63,9 @@ namespace WpfApp4.ViewModel
             {
                 // 获取当天时间范围（本地时间）
                 var todayStart = DateTime.Today; // 00:00:00 本地时间
-                var todayEnd = todayStart.AddDays(1).AddTicks(-1); // 23:59:59.9999999 本地时间
+                var todayEnd = todayStart.AddDays(1).AddSeconds(-1); // 23:59:59 本地时间
 
-                // 转换为 UTC 时间用于查询（假设数据库存储的是 UTC 时间）
+                // 转换为 UTC 时间用于查询
                 var todayStartUtc = todayStart.ToUniversalTime();
                 var todayEndUtc = todayEnd.ToUniversalTime();
 
@@ -91,7 +91,7 @@ namespace WpfApp4.ViewModel
                     AlarmrLogs.Clear();
                     foreach (var log in alarmLogs)
                     {
-                        // 将 UTC 时间转换为本地时间（如果数据库返回的是 UTC 时间）
+                        // 将 UTC 时间转换为本地时间
                         log.Timestamp = log.Timestamp.ToLocalTime();
                         AlarmrLogs.Add(log);
                     }
@@ -217,27 +217,37 @@ namespace WpfApp4.ViewModel
                     return;
                 }
 
+                // 转换为 UTC 时间
+                var startDateUtc = StartDate.Value.ToUniversalTime();
+                var endDateUtc = EndDate.Value.ToUniversalTime();
+
                 // 查询数据库
-                var alarmrLogs = await MongoDbService.Instance.GetAlarmLogsByDateRangeAsync(StartDate.Value, EndDate.Value);
-                var operationRecords = await MongoDbService.Instance.GetOperationRecordsByDateRangeAsync(StartDate.Value, EndDate.Value);
-                var runningRecords = await MongoDbService.Instance.GetRunningRecordsByDateRangeAsync(StartDate.Value, EndDate.Value);
+                var alarmrLogs = await MongoDbService.Instance.GetAlarmLogsByDateRangeAsync(startDateUtc, endDateUtc);
+                var operationRecords = await MongoDbService.Instance.GetOperationRecordsByDateRangeAsync(startDateUtc, endDateUtc);
+                var runningRecords = await MongoDbService.Instance.GetRunningRecordsByDateRangeAsync(startDateUtc, endDateUtc);
 
                 // 更新集合
                 AlarmrLogs.Clear();
                 foreach (var log in alarmrLogs)
                 {
+                    // 将 UTC 时间转换回本地时间显示
+                    log.Timestamp = log.Timestamp.ToLocalTime();
                     AlarmrLogs.Add(log);
                 }
 
                 OperationRecords.Clear();
                 foreach (var record in operationRecords)
                 {
+                    // 将 UTC 时间转换回本地时间显示
+                    record.Timestamp = record.Timestamp.ToLocalTime();
                     OperationRecords.Add(record);
                 }
 
                 RunningRecords.Clear();
                 foreach (var record in runningRecords)
                 {
+                    // 将 UTC 时间转换回本地时间显示
+                    record.OperationTime = record.OperationTime.ToLocalTime();
                     RunningRecords.Add(record);
                 }
             }
