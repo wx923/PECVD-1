@@ -1,0 +1,100 @@
+﻿<Page x:Class="WpfApp4.page.usepage.DataShowPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+       xmlns:oxy="http://oxyplot.org/wpf"
+      xmlns:Converter="clr-namespace:WpfApp4.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DataShowPage"
+      Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+
+    <Page.Resources>
+        <Converter:BoolToVis x:Key="BoolToVis" />
+        <Converter:InverseBoolToVis x:Key="InverseBoolToVis" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- First Row: Controls -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <ComboBox materialDesign:HintAssist.Hint="Select Collection"
+                      Width="200"
+                      ItemsSource="{Binding Collections}"
+                      SelectedItem="{Binding SelectedCollection}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      MaxDropDownHeight="300"/>
+            <Button Content="加载数据"
+                    Margin="20,0,0,0"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding LoadDataCommand}"/>
+            <Button Content="Export to Excel"
+                    Margin="20,0,0,0"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding ExportToExcelCommand}"/>
+            <Button Content="Toggle View"
+                    Margin="20,0,0,0"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding ToggleViewCommand}"/>
+        </StackPanel>
+
+        <!-- First Row: Controls -->
+        <Grid Grid.Row="1">
+            <!-- Data Grid View -->
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Visibility="{Binding IsTableView, Converter={StaticResource BoolToVis}}">
+                <DataGrid Visibility="Visible"
+                          ItemsSource="{Binding CollectionData}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Style="{StaticResource MaterialDesignDataGrid}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="T1" Binding="{Binding T1}" />
+                        <DataGridTextColumn Header="T2" Binding="{Binding T2}" />
+                        <DataGridTextColumn Header="T3" Binding="{Binding T3}" />
+                        <DataGridTextColumn Header="T4" Binding="{Binding T4}" />
+                        <DataGridTextColumn Header="T5" Binding="{Binding T5}" />
+                        <DataGridTextColumn Header="T6" Binding="{Binding T6}" />
+                        <DataGridTextColumn Header="T7" Binding="{Binding T7}" />
+                        <DataGridTextColumn Header="T8" Binding="{Binding T8}" />
+                        <DataGridTextColumn Header="T9" Binding="{Binding T9}" />
+                        <DataGridTextColumn Header="N2" Binding="{Binding N2}" />
+                        <DataGridTextColumn Header="SiH4" Binding="{Binding SiH4}" />
+                        <DataGridTextColumn Header="N2O" Binding="{Binding N2O}" />
+                        <DataGridTextColumn Header="H2" Binding="{Binding H2}" />
+                        <DataGridTextColumn Header="PH3" Binding="{Binding PH3}" />
+                        <DataGridTextColumn Header="压力" Binding="{Binding Pressure}" />
+                        <DataGridTextColumn Header="功率1" Binding="{Binding Power1}" />
+                        <DataGridTextColumn Header="功率2" Binding="{Binding Power2}" />
+                        <DataGridTextColumn Header="进/出" Binding="{Binding InOut}" />
+                        <DataGridTextColumn Header="平移速度" Binding="{Binding MoveSpeed}" />
+                        <DataGridTextColumn Header="上下速" Binding="{Binding UpDownSpeed}" />
+                        <DataGridTextColumn Header="辅热时间" Binding="{Binding TypicalHeatTime}" />
+                        <DataGridTextColumn Header="辅热温度" Binding="{Binding AssistTemp}" />
+                        <DataGridTextColumn Header="脉冲开1" Binding="{Binding PulseOn1}" />
+                        <DataGridTextColumn Header="脉冲关1" Binding="{Binding PulseOff1}" />
+                        <DataGridTextColumn Header="脉冲开2" Binding="{Binding PulseOn2}" />
+                        <DataGridTextColumn Header="脉冲关2" Binding="{Binding PulseOff2}" />
+                        <DataGridTextColumn Header="射频电流" Binding="{Binding RFCurrent}" />
+                        <DataGridTextColumn Header="电流参考值（A）" Binding="{Binding CurrentRef}" />
+                        <DataGridTextColumn Header="电流卡控值（A）" Binding="{Binding CurrentLimit}" />
+                        <DataGridTextColumn Header="射频电压" Binding="{Binding RFVoltage}" />
+                        <DataGridTextColumn Header="电压参考值（V）" Binding="{Binding VoltageRef}" />
+                        <DataGridTextColumn Header="电压卡控值（V）" Binding="{Binding VoltageLimit}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+            <!-- OxyPlot 曲线图区域 -->
+            <oxy:PlotView Visibility="{Binding IsTableView, Converter={StaticResource InverseBoolToVis}}"
+                          Model="{Binding PlotModel}"
+                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        </Grid>
+    </Grid>
+</Page>

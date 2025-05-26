@@ -3,743 +3,1145 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp4.page.usepage"
      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:WpfApp4.page.usepage" xmlns:converters="clr-namespace:WpfApp4.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1500"
-      Title="Page4">
+      d:DesignHeight="900" d:DesignWidth="1600"
+      Title="GlobalMonitoringPage">
 
     <Page.Resources>
-        <converters:BoolToOnOffConverter x:Key="BoolToOnOffConverter"/>
-
-        <Style x:Key="AlternatingRowStyle" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Style.Triggers>
-                <Trigger Property="Grid.Row" Value="1">
-                    <Setter Property="Background" Value="LightGray"/>
-                </Trigger>
-                <Trigger Property="Grid.Row" Value="3">
-                    <Setter Property="Background" Value="LightGray"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
+        <!-- 表格样式 -->
         <Style x:Key="TableHeaderStyle" TargetType="Border">
-            <Setter Property="Background" Value="#FFE5E5E5"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+            <Setter Property="Background" Value="#F5F5F5"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
 
         <Style x:Key="TableCellStyle" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDDDDD"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
-
     </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="450"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="670"/>
-            <ColumnDefinition Width="600"/>
-        </Grid.ColumnDefinitions>
-        <Canvas Background="#FFE5E5E5" Grid.Column="0" Grid.Row="0" Margin="10,10,5,5" >
-            <!-- 文本框 -->
-            <!-- 第1条线 -->
-            <TextBlock Text="SiH4" Canvas.Top="25" Canvas.Left="0"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" HorizontalAlignment="Left" Canvas.Top="2" VerticalAlignment="Center" Width="72"/>
-            <StackPanel Orientation="Vertical" Canvas.Left="130" Canvas.Top="2"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="69.794" Canvas.Top="2" Width="108"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="34.23" Canvas.Left="56.106" RenderTransformOrigin="0.5,0.5" Width="82">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <TextBlock Text="V1" Canvas.Left="81.217" Canvas.Top="6.063" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Border Canvas.Left="69.794" Canvas.Top="23.25" Width="50" Height="30" 
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV1, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border Canvas.Left="178" Canvas.Top="16" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc1ActualValue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border Canvas.Left="178" Canvas.Top="41" Width="61" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc1Setpoint}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="180.222" Canvas.Top="3.01" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="59"><Run Text="MFC1"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="209.722" Canvas.Top="2" Width="108" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="314.683" Canvas.Top="21.12" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV2, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="326.106" Canvas.Top="5.88" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Language="zh-cn" Text="2"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="56.25" Width="60" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="77.05"/>
-            <Border Canvas.Left="69.794" Canvas.Top="76.5" Width="50" Height="30" 
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV3, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="81.217" Canvas.Top="61.26" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="3"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="56.25" Width="60" Canvas.Left="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="103.565" Canvas.Left="-39.564" RenderTransformOrigin="0.5,0.5" Width="101" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <TextBlock Text="N2" Canvas.Top="148.513" Canvas.Left="0" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.538,1.578"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="125.536" Width="231" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="105.385" Canvas.Left="48.989" RenderTransformOrigin="0.5,0.5" Width="63" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="95.747" Width="77" Canvas.Left="96.333" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="178" Canvas.Top="103" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc2ActualValue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border Canvas.Left="178" Canvas.Top="128" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc2Setpoint}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="180" Canvas.Top="86" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="MFC"/><Run Language="zh-cn" Text="2"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="138.005" Canvas.Left="48.989" RenderTransformOrigin="0.5,0.5" Width="63" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Line X1="30" Y1="30" X2="250" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="158.036" Width="218" Canvas.Left="95.666" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="313.146" Canvas.Top="177.339" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV6, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="324.568" Canvas.Top="162.099" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="6"/></TextBlock>
-            <Border Canvas.Left="314.684" Canvas.Top="116.79" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV5, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="326.106" Canvas.Top="101.55" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24"><Run Language="zh-cn" Text="V5"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="208.722" Canvas.Top="97.487" Width="107" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="333.683" Canvas.Top="2" Width="99" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="333.683" Canvas.Top="97.487" Width="61" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="332.145" Canvas.Top="158.036" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="200" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="104.32" Canvas.Left="282.094" RenderTransformOrigin="0.5,0.5" Width="188" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <TextBlock Text="NH3" Canvas.Top="267.465" Canvas.Left="0" RenderTransformOrigin="0.538,1.578" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBlock Text="N20" Canvas.Top="367.638" Canvas.Left="0" RenderTransformOrigin="0.538,1.578" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="245.585" Width="73" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="171.23" Canvas.Left="-40.013" RenderTransformOrigin="0.5,0.5" Width="97" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="190.839" Width="68" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="6.794"/>
-            <Border Canvas.Left="69.794" Canvas.Top="210.142" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV4, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="81.217" Canvas.Top="194.902" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="4"/></TextBlock>
-            <Border Canvas.Left="69.794" Canvas.Top="264.888" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV7, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="81.217" Canvas.Top="249.648" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="38"><Run Text="V"/><Run Language="zh-cn" Text="7"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="246.917" Width="90" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="87.46"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="193.003" Width="60" Canvas.Left="89.285" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="178" Canvas.Top="256" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc3ActualValue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border Canvas.Left="178.222" Canvas.Top="279.825" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.Mfc3Setpoint}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="180" Canvas.Top="236" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="MFC"/><Run Language="zh-cn" Text="3"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="226.042" Canvas.Left="70.002" RenderTransformOrigin="0.5,0.5" Width="87" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="245.585" Width="105" Canvas.Left="209.722" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="313.146" Canvas.Top="263.941" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV10, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="318.684" Canvas.Top="248.638" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="34">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-1.477"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="-0.054"/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform><Run Text="V"/><Run Language="zh-cn" Text="10"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="245.585" Width="92" Canvas.Left="331.682" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="345.465" Width="73" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="72.462" Canvas.Top="364.768" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV11, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="75" Canvas.Top="349.528" RenderTransformOrigin="-0.428,0.138" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="V"/><Run Language="zh-cn" Text="11"/></TextBlock>
-            <Line X1="30" Y1="30" X2="200" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="224.146" Canvas.Left="-79.573" RenderTransformOrigin="0.5,0.5" Width="234" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Border Canvas.Left="71.627" Canvas.Top="313.98" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV12, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="76.166" Canvas.Top="300.073" RenderTransformOrigin="-0.428,0.138" Width="38" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V12"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="295.646" Width="53" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="19.333"/>
-            <Border Canvas.Left="178" Canvas.Top="354" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc4ActualValue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border Canvas.Left="178" Canvas.Top="379" Width="61" Height="25"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="{Binding DataCollection.Mfc4Setpoint}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="180" Canvas.Top="339" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="MFC"/><Run Language="zh-cn" Text="4"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="347.705" Width="83" Canvas.Left="92.285" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="295.646" Width="62" Canvas.Left="89.285" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="327.432" Canvas.Left="70.668" RenderTransformOrigin="0.5,0.5" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="345.465" Width="107" Canvas.Left="208.106" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="313.145" Canvas.Top="363.821" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV13, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="318.683" Canvas.Top="348.518" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Center" VerticalAlignment="Top"><Run Text="V13"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="347.268" Width="91" Canvas.Left="332.683" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="400" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="189.268" Canvas.Left="207.745" RenderTransformOrigin="0.5,0.5" Width="373" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Rectangle Height="62" Canvas.Left="431.333" Stroke="Black" Canvas.Top="19.79" Width="134" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="534.901" Canvas.Top="0.12" Width="98" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="300" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="62.939" Canvas.Left="382.401" RenderTransformOrigin="0.5,0.5" Width="483" HorizontalAlignment="Center" VerticalAlignment="Top" Height="46">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-            <Border Canvas.Left="513" Canvas.Top="110" Width="70" Height="20" 
-        BorderBrush="Black" BorderThickness="1" 
-        HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap" Text="{Binding DataCollection.VacuumGaugeSetPressure}" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
 
-            <Border Canvas.Left="513" Canvas.Top="92" Width="70"  Height="20"
-        BorderBrush="Black" BorderThickness="1" 
-        HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap" Text="{Binding DataCollection.VacuumGaugeActualPressure}" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="554" Canvas.Top="88" Width="73" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="538.236" Canvas.Top="132.798" Width="91" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="534.455" Canvas.Top="152.04" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV8, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="545.877" Canvas.Top="136.8" RenderTransformOrigin="-0.428,0.138" HorizontalAlignment="Left" VerticalAlignment="Center" Width="27"><Run Text="V"/><Run Language="zh-cn" Text="8"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="452.898" Canvas.Top="132.798" Width="82" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Canvas.Left="439.333" Canvas.Top="153.111" RenderTransformOrigin="-0.428,0.138" Width="59" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Language="zh-cn" Text="排气"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="541.888" Canvas.Top="194.902" Width="91" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="536.456" Canvas.Top="213.195" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV20, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="547.878" Canvas.Top="197.955" RenderTransformOrigin="-0.428,0.138" Width="27" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Language="zh-cn" Text="20"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="572.958" Canvas.Top="265.273" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="565.236" Canvas.Top="284.693" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1">
-                <TextBlock Text="{Binding DataCollection.ValveV9, Converter={StaticResource BoolToOnOffConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="576.236" Canvas.Top="269.336" RenderTransformOrigin="-0.428,0.138" Width="27" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Text="V"/><Run Language="zh-cn" Text="9"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="522.223" Canvas.Top="265.273" Width="44" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Border Canvas.Left="501" Canvas.Top="285" Width="50" Height="30"
-                    Background="White" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <TextBlock Text="{Binding DataCollection.ButterflyValveOpening}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Canvas.Left="513" Canvas.Top="271" RenderTransformOrigin="-0.428,0.138" Width="34" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-1.477"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="-0.054"/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform><Run Language="zh-cn" Text="蝶阀"/></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="441" Canvas.Top="265" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Rectangle Height="25" Canvas.Left="430" Stroke="Black" Canvas.Top="286" Width="39" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Canvas.Left="442" Canvas.Top="269" RenderTransformOrigin="-0.428,0.138" Width="18" HorizontalAlignment="Left" VerticalAlignment="Center" Text="泵">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-1.477"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="-0.054"/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform></TextBlock>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Left="453" Canvas.Top="196" Width="84" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Line X1="30" Y1="30" X2="130" Y2="30" Stroke="LightCoral" StrokeThickness="5" Canvas.Top="242" Canvas.Left="406" RenderTransformOrigin="0.5,0.5" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Line.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Line.RenderTransform>
-            </Line>
-        </Canvas>
-        <!--工艺运行过程监测  -->
-        <!-- (1,0) 舟状态区域 -->
-        <materialDesign:Card Grid.Row="1" Grid.Column="0" Margin="10,5,5,10">
-            <StackPanel Margin="10">
-                <TextBlock Text="舟状态" FontWeight="Bold" Margin="0,0,0,5"/>
-                <TextBlock Text="{Binding ProgressMonitor.BoatStatus}" HorizontalAlignment="Center"/>
-                <TextBlock Text="桨台状态" Margin="0,10,0,5"/>
-                <TextBlock Text="待定" HorizontalAlignment="Center"/>
-                <!-- 根据实际数据绑定 -->
+    <Canvas>
+        <!-- 气体管道标注 -->
+        <TextBlock Canvas.Left="350" Canvas.Top="680" Text="N2" Foreground="{DynamicResource PrimaryHueMidBrush}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="700" Text="NH3" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="720" Text="SiH4" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="740" Text="N2O" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="760" Text="O2" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="780" Text="CH4" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="800" Text="B2H6" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="820" Text="H2" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="840" Text="PH3" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" FontSize="10"/>
+        <TextBlock Canvas.Left="350" Canvas.Top="860" Text="CO2" Foreground="{DynamicResource SecondaryHueMidBrush}" HorizontalAlignment="Center" FontSize="10"/>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="417" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
             </StackPanel>
-        </materialDesign:Card>
-
-        <!-- (0,1 和 1,1) 第二列，跨越两行 -->
-        <materialDesign:Card Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="5,10,10,10">
-            <StackPanel Margin="10">
-                <!-- 工艺运行过程（突出显示） -->
-                <materialDesign:Card Background="#FFF0F0F0" Margin="0,0,0,10">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="工艺运行过程" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
-                        <Border BorderBrush="Gray" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="180"/>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- 表头 -->
-                                <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="工艺文件名" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="工艺步" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="工艺类型" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="工艺步时间" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="4" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="舟状态" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="5" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="炉门状态" HorizontalAlignment="Center"/>
-                                </Border>
-
-                                <!-- 数据 -->
-                                <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding ProgressMonitor.ProcessFileName}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding ProgressMonitor.ProcessCurrentStep}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding ProgressMonitor.ProcessType}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding CountdownValue}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="4" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding ProgressMonitor.BoatStatus}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="5" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding ProgressMonitor.FurnaceDoorStatus}" HorizontalAlignment="Center"/>
-                                </Border>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </materialDesign:Card>
-
-                <!-- 射频模块 -->
-                <materialDesign:Card Margin="0,0,0,10">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="射频监控" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Margin="0,0,20,0">
-                                <TextBlock Text="射频电压(V)：" Margin="0,3"/>
-                                <TextBlock Text="{Binding DataCollection.RfVoltage}"/>
-                                <TextBlock Text="射频电流(A)：" Margin="0,3"/>
-                                <TextBlock Text="{Binding DataCollection.RfCurrent}"/>
-                                <TextBlock Text="射频功率(W)：" Margin="0,3"/>
-                                <TextBlock Text="{Binding DataCollection.RfPower}"/>
-                            </StackPanel>
-                            <!-- 可添加更多射频参数 -->
-                        </StackPanel>
-                    </StackPanel>
-                </materialDesign:Card>
-
-                <!-- 温区模块 -->
-                <materialDesign:Card Margin="0,0,0,10">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="温度监控" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <Border BorderBrush="Gray" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="65"/>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="45"/>
-                                    <ColumnDefinition Width="45"/>
-                                    <ColumnDefinition Width="45"/>
-                                    <ColumnDefinition Width="45"/>
-                                    <ColumnDefinition Width="45"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- 表头 -->
-                                <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="温区" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                                </Border>
-                                <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="T1" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="T2" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="T3" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="4" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="T4" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="5" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="T5" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="6" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                    <TextBlock Text="T6" HorizontalAlignment="Center"/>
-                                </Border>
-
-                                <!-- 外偶 -->
-                                <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="外偶" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                                </Border>
-                                <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleExternalT1}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleExternalT2}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleExternalT3}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="4" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleExternalT4}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="5" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleExternalT5}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="6" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleExternalT6}" HorizontalAlignment="Center"/>
-                                </Border>
-
-                                <!-- 内偶 -->
-                                <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="内偶" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                                </Border>
-                                <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleInternalT1}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleInternalT2}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="3" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleInternalT3}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="4" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleInternalT4}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="5" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleInternalT5}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="6" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.ThermocoupleInternalT6}" HorizontalAlignment="Center"/>
-                                </Border>
-
-                                <!-- 设定温度 -->
-                                <Border Grid.Column="0" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="设定温度" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                                </Border>
-                                <Border Grid.Column="1" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.SetpointTemperatureT1}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="2" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.SetpointTemperatureT2}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="3" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.SetpointTemperatureT3}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="4" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.SetpointTemperatureT4}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="5" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.SetpointTemperatureT5}" HorizontalAlignment="Center"/>
-                                </Border>
-                                <Border Grid.Column="6" Grid.Row="3" Style="{StaticResource TableCellStyle}">
-                                    <TextBlock Text="{Binding DataCollection.SetpointTemperatureT6}" HorizontalAlignment="Center"/>
-                                </Border>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </materialDesign:Card>
-
-                <!-- MFC 气体流量值模块 -->
-                <materialDesign:Card Margin="0,0,0,10">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="MFC 气体流量" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- 表头 -->
-                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="MFC1" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="MFC2" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="MFC3" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="MFC4" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 实际值 -->
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc1ActualValue}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc2ActualValue}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc3ActualValue}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc4ActualValue}" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 设定点 -->
-                            <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc1Setpoint}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc2Setpoint}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc3Setpoint}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.Mfc4Setpoint}" HorizontalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </StackPanel>
-                </materialDesign:Card>
-
-                <!-- 三相电表模块 -->
-                <materialDesign:Card Margin="0,0,0,10">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="辅热三相电" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- 表头 -->
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="A" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="B" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="C" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 行标签 -->
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="V" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="I" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 数据 -->
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.AuxiliaryHeatingAVoltage}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.AuxiliaryHeatingBVoltage}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.AuxiliaryHeatingCVoltage}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.AuxiliaryHeatingACurrent}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.AuxiliaryHeatingBCurrent}" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="3" Grid.Row="2" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="{Binding DataCollection.AuxiliaryHeatingCCurrent}" HorizontalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </StackPanel>
-                </materialDesign:Card>
-
-                <!-- 冷却模块 -->
-                <materialDesign:Card Margin="0,0,0,10">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="冷却监控" FontWeight="Bold" Margin="0,0,0,5"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- 表头 -->
-                            <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="过滤器温度1" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="过滤器温度2" HorizontalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
-                                <TextBlock Text="循环工艺" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <!-- 数据 -->
-                            <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="待定" HorizontalAlignment="Center"/>
-                                <!-- 根据实际数据绑定 -->
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="待定" HorizontalAlignment="Center"/>
-                                <!-- 根据实际数据绑定 -->
-                            </Border>
-                            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource TableCellStyle}">
-                                <TextBlock Text="待定" HorizontalAlignment="Center"/>
-                                <!-- 根据实际数据绑定 -->
-                            </Border>
-                        </Grid>
-                    </StackPanel>
-                </materialDesign:Card>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="100000" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="N2" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
             </StackPanel>
-        </materialDesign:Card>
-    </Grid>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="467" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="NH3" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="517" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="SiH4" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="567" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="N2O" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="617" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="O2" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="667" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="CH4" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="717" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="B2H6" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="767" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="H2" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="817" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="PH3" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="867" Canvas.Top="534">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="CO2" FontSize="10" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Ellipse Width="10" Height="10" Fill="Black" Margin="0,0,5,0"/>
+                <Ellipse Width="10" Height="10" Fill="Black"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Canvas.Left="917" Canvas.Top="544">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25"  Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TextBlock" FontSize="10" Margin="2,6,2,7"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Height="25" Width="51" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" Text="TMA" FontSize="9" Margin="2,6,2,7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- N2气体管道连接线 -->
+        <Path Stroke="Blue" StrokeThickness="1" Data="M 353,692 L 440,692 L 440,640"/>
+        <Path Stroke="Blue" StrokeThickness="1" Data="M 353,692 L 485,692 L 485,640"/>
+        <Path Stroke="Blue" StrokeThickness="1" Data="M 353,692 L 585,692 L 585,640"/>
+        <Path Stroke="Blue" StrokeThickness="1" Data="M 353,692 L 685,692 L 685,640"/>
+        <Path Stroke="Blue" StrokeThickness="1" Data="M 353,692 L 785,692 L 785,640"/>
+        <Path Stroke="Blue" StrokeThickness="1" Data="M 353,692 L 885,692 L 885,640"/>
+
+        <!-- NH3气体管道连接线 -->
+        <Path Stroke="Red" StrokeThickness="1" Data="M 353,714 L 500,714 L 500,640"/>
+
+        <!-- SiH4气体管道连接线 -->
+        <Path Stroke="Green" StrokeThickness="1" Data="M 353,734 L 550,734 L 550,640"/>
+
+        <!-- N2O气体管道连接线 -->
+        <Path Stroke="Purple" StrokeThickness="1" Data="M 353,754 L 600,754 L 600,640"/>
+
+        <!-- O2气体管道连接线 -->
+        <Path Stroke="Orange" StrokeThickness="1" Data="M 353,774 L 650,774 L 650,640"/>
+
+        <!-- CH4气体管道连接线 -->
+        <Path Stroke="Brown" StrokeThickness="1" Data="M 353,794 L 700,794 L 700,640"/>
+
+        <!-- B2H6气体管道连接线 -->
+        <Path Stroke="Teal" StrokeThickness="1" Data="M 353,814 L 750,814 L 750,640"/>
+
+        <!-- H2气体管道连接线 -->
+        <Path Stroke="Pink" StrokeThickness="1" Data="M 353,834 L 800,834 L 800,640"/>
+
+        <!-- PH3气体管道连接线 -->
+        <Path Stroke="DarkGreen" StrokeThickness="1" Data="M 353,854 L 850,854 L 850,640"/>
+
+        <!-- CO2气体管道连接线 -->
+        <Path Stroke="DarkBlue" StrokeThickness="1" Data="M 353,874 L 900,874 L 900,640"/>
+
+        <!-- 气体管道主管道（除N2外所有StackPanel顶部第一个Ellipse） -->
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 485,533 L 485,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 535,533 L 535,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 585,533 L 585,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 635,533 L 635,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 685,533 L 685,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 735,533 L 735,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 785,533 L 785,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 835,533 L 835,494"/>
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 885,533 L 885,494"/>
+        <!-- 从右向左连成一条线 -->
+        <Path Stroke="Orange" StrokeThickness="2" Data="M 885,494 L 400,494 L 400,530 L 290,530"/>
+        <!-- StackPanel的第二个Ellipse连线 -->
+        <Path Stroke="Green" StrokeThickness="2" Data="M 440,533 L 440,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 500,533 L 500,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 550,533 L 550,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 600,533 L 600,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 650,533 L 650,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 700,533 L 700,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 750,533 L 750,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 800,533 L 800,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 850,533 L 850,450"/>
+        <Path Stroke="Green" StrokeThickness="2" Data="M 900,533 L 900,450"/>
+        <!-- 从右向左连成一条线 -->
+        <Path Stroke="Green" StrokeThickness="2" Data="M 901,450 L 439,450"/>
+
+        <!-- 石英管炉 -->
+        <Rectangle Width="265" Height="112" Fill="LightGray" Stroke="Black" StrokeThickness="2" Canvas.Left="571" Canvas.Top="275.25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <!-- 石英管炉前连接线 -->
+        <Path Stroke="Green" StrokeThickness="2" Data="M 760,450 L 760,386"/>
+        <!-- 石英管炉后连接线 -->
+        <Path Stroke="Black" StrokeThickness="2" Data="M 600,380 L 250,380"/>
+        <!-- 石英管炉后连接线文字 -->
+        <Border BorderBrush="Black" BorderThickness="1" Height="23" Canvas.Left="345" Canvas.Top="352" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" Height="15" Margin="0,4,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="54" FontSize="10"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Height="23" Canvas.Left="345" Canvas.Top="385" Width="70" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock HorizontalAlignment="Center" Height="15" Margin="0,4,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="54" FontSize="10"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Height="23" Canvas.Left="345" Canvas.Top="410" Width="70" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock HorizontalAlignment="Center" Height="15" Margin="0,4,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="54" FontSize="10"/>
+        </Border>
+
+        <!-- 蝶阀开度量 -->
+        <TextBlock Height="39" Canvas.Left="250" TextWrapping="Wrap" Text="mTorr/Min" Canvas.Top="335" Width="60" HorizontalAlignment="Center" VerticalAlignment="Top" />
+
+        <!-- 小管道 -->
+        <Path Stroke="Black" StrokeThickness="2" Data="M 325,380 L 325,450"/>
+        <Ellipse Width="15" Height="15" Fill="Black" Canvas.Left="317.333" Canvas.Top="450.335" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Path Stroke="Black" StrokeThickness="2" Data="M 325,380 L 325,450"/>
+        <Path Stroke="Black" StrokeThickness="2" Data="M 325,466 L 325 529"/>
+        <!-- 大管道 -->
+        <Path Stroke="Black" StrokeThickness="2" Data="M 280,380 L 280,520"/>
+        <Ellipse Width="15" Height="15" Fill="Black" Canvas.Left="272.333" Canvas.Top="521.998" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Path Stroke="Black" StrokeThickness="2" Data="M 280,540 L 280,600"/>
+        <TextBlock Height="16" Canvas.Left="286" TextWrapping="Wrap" Canvas.Top="558" Width="64" Text="泵前压力" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Height="14" Canvas.Left="287.333" TextWrapping="Wrap"  Canvas.Top="576.5" Width="52" FontSize="10" Text="XX"/>
+        <Image Source="C:\Users\admin\Desktop\PECVD-program-master\WpfApp4\common\pump.png" Canvas.Left="261" Canvas.Top="602" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Path Stroke="Black" StrokeThickness="2" Data="M 280,643 L 280,750"/>
+        <TextBlock Height="16" Canvas.Left="286" TextWrapping="Wrap" Canvas.Top="660" Width="64" Text="泵后压力" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Height="14" Canvas.Left="287.333" TextWrapping="Wrap"  Canvas.Top="680" Width="52" FontSize="10" Text="XX"/>
+
+
+
+
+
+        <!-- 桨台状态-->
+        <!-- 长方形 -->
+        <Rectangle Width="143" Height="10" Fill="LightGray" Stroke="Black" StrokeThickness="2" Canvas.Left="717" Canvas.Top="114" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <!-- 下方两个圆（水平排列） -->
+        <Ellipse Width="10" Height="10" Fill="LightBlue" Stroke="Black" StrokeThickness="2" Canvas.Left="717" Canvas.Top="129" RenderTransformOrigin="0.567,0.55" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Ellipse Width="10" Height="10" Fill="LightBlue" Stroke="Black" StrokeThickness="2" Canvas.Left="840" Canvas.Top="129" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <!-- 右侧两个圆（垂直排列） -->
+        <Ellipse Width="10" Height="10" Fill="LightGreen" Stroke="Black" StrokeThickness="2" Canvas.Left="865" Canvas.Top="49.333" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Ellipse Width="10" Height="10" Fill="LightGreen" Stroke="Black" StrokeThickness="2" Canvas.Left="865.5" Canvas.Top="93" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <!-- 温度表格 -->
+        <Grid Canvas.Left="10" Canvas.Top="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 列头 -->
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="3" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="4" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="5" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="6" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="7" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="8" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="9" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="T9" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+
+            <!-- 行头+数据 -->
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="温度" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="内偶" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="外偶" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="0" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="SV" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="0" BorderBrush="#888888" BorderThickness="1" Background="#F0F0F0" Padding="2">
+                <TextBlock Text="电流" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            </Border>
+
+            <!-- 温度行数据 -->
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[0]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[1]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="3" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[2]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="4" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[3]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="5" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[4]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="6" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[5]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="7" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[6]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="8" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[7]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="9" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Temperature[8]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+
+            <!-- 内偶行数据 -->
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[0]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="2" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[1]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="3" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[2]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="4" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[3]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="5" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[4]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="6" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[5]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="7" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[6]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="8" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[7]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="9" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding InnerCouple[8]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+
+            <!-- 外偶行数据 -->
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[0]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="2" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[1]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="3" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[2]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="4" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[3]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="5" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[4]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="6" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[5]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="7" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[6]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="8" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[7]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="9" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding OuterCouple[8]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+
+            <!-- SV行数据 -->
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[0]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="2" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[1]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="3" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[2]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="4" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[3]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="5" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[4]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="6" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[5]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="7" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[6]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="8" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[7]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="9" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding SV[8]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+
+            <!-- 电流行数据 -->
+            <Border Grid.Row="5" Grid.Column="1" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[0]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="2" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[1]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="3" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[2]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="4" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[3]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="5" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[4]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="6" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[5]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="7" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[6]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="8" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[7]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="9" BorderBrush="#888888" BorderThickness="1" Background="#FFFFFF" Padding="2">
+                <TextBlock Text="{Binding Current[8]}" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
+        </Grid>
+
+        <!-- 设备状态表格 -->
+        <Grid Canvas.Left="10" Canvas.Top="140">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 行头 -->
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="电源功率" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="脉冲开" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="脉冲关" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="电流" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="电压" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="PDTime" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="PDCount" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="7" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="VDTime" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="8" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="VDCount" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="9" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="CDTime" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="10" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="CDCount" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="11" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="Acr1times" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="12" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="Acr2Times" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="13" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="RE1Alarm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="14" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="RE2Alarm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 其余两列空白 -->
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="7" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="7" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="8" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="8" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="9" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="9" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="10" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="10" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="11" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="11" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="12" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="12" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="13" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="13" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="14" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="14" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 最后两行空白 -->
+            <Border Grid.Row="15" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="15" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="15" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="16" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="16" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="16" Grid.Column="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+        </Grid>
+
+        <!-- 工艺信息表格（两列） -->
+        <Grid Canvas.Left="10" Canvas.Top="580">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <!-- 前三行：左侧标签，右侧数值 -->
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="工艺时间" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="工艺运行次数" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="25" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="设备ID" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="32629" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 后面几行合并两列 -->
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="2024/10/29" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="PLC 2024-07-09-01" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="20KW" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="IO 0000-00-00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+        </Grid>
+
+        <!-- 过滤器温度及循环工艺表格（新增） -->
+        <Grid Canvas.Left="30" Canvas.Top="780">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <!-- 第一行 -->
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="过滤器温度1" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="000" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" />
+            </Border>
+            <!-- 第二行 -->
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="过滤器温度2" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="000" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第三行 -->
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="循环工艺" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="FALSE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第四行 -->
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="工艺已循环次数" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第五行 -->
+            <Border Grid.Row="4" Grid.Column="0" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="工艺循环名称" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="#888888" BorderThickness="1">
+                <TextBlock Text="xxx" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第六行，合并两列 -->
+            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#888888" BorderThickness="1">
+                <Button Content="结束工艺自动循环" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Padding="0,0,0,0" Height="18" />
+            </Border>
+        </Grid>
+
+        <!-- 单行电流表格 -->
+        <Grid Canvas.Left="500" Canvas.Top="250">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="18"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="1360.8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="3" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="电流" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="4" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="5" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="6" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+        </Grid>
+
+        <!-- 三项电流表格 -->
+        <Grid Canvas.Left="1040" Canvas.Top="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <!-- 第一行 -->
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#444444" BorderThickness="1"/>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="B" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="3" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="C" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第二行 -->
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="V" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="12" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="3" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第三行 -->
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="I" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="2" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="3" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第四行，合并后三列 -->
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="W" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+        </Grid>
+
+        <!-- 冷却水等参数表格 -->
+        <Grid Canvas.Left="1100" Canvas.Top="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+            </Grid.ColumnDefinitions>
+            <!-- 第一行 -->
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="冷却水流量" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="12L/min" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第二行 -->
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="冷却水温度" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="54℃" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第三行 -->
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="温度" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第四行 -->
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="风速" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第五行 -->
+            <Border Grid.Row="4" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="TMB伴热温度" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="54℃" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第六行 -->
+            <Border Grid.Row="5" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="TAB伴热设定" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="54℃" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第七行 -->
+            <Border Grid.Row="6" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="氮气积累" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第八行 -->
+            <Border Grid.Row="7" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="回压氮气积累" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="7" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第九行 -->
+            <Border Grid.Row="8" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="CDA积累" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="8" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <!-- 第十行 -->
+            <Border Grid.Row="9" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="尾气柜氮气" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+            <Border Grid.Row="9" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+            </Border>
+        </Grid>
+
+        <!-- 工艺进度表格 -->
+        <Grid Canvas.Left="1100" Canvas.Top="650">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="步倒计时" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0:00:00" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="步设定时间" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0:00:00" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="总倒计时" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0:00:00" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="总设定时" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0:00:00" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="已运行时" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="0:00:00" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="当前工艺" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="6666" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="当前步" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="6" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="1" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="7" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="总步数" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="7" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="30" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="8" Grid.Column="0" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="当前舟号" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="8" Grid.Column="1" BorderBrush="#444444" BorderThickness="1">
+                <TextBlock Text="555" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center"/>
+            </Border>
+        </Grid>
+        <TextBlock Height="16" Canvas.Left="286" TextWrapping="Wrap" Canvas.Top="558" Width="64" Text="泵前压力" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Height="14" Canvas.Left="287.333" TextWrapping="Wrap"  Canvas.Top="576.5" Width="52" FontSize="10" Text="XX"/>
+        <TextBlock Height="16" Canvas.Left="781" TextWrapping="Wrap" Canvas.Top="93" Width="37" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Language="zh-cn" Text="桨台"/></TextBlock>
+
+        <Border Height="20" Canvas.Left="926"  Canvas.Top="650" Width="50" Background="Green" BorderThickness="0" >
+            <TextBlock Text="TMA准备" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"> </TextBlock>
+        </Border>
+
+        <Border Height="20" Canvas.Left="926"  Canvas.Top="680" Width="50" Background="Green" BorderThickness="0" >
+            <TextBlock Text="TMA正常" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </Border>
+
+
+    </Canvas>
 </Page>

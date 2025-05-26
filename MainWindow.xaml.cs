@@ -162,6 +162,10 @@ namespace WpfApp4
             NavigateToPage(typeof(ProcessManagementPage), 0, BtnProcessManagement);
         }
 
+        private void NavigateToDataShowPage(object sender, RoutedEventArgs e)
+        {
+            NavigateToPage(typeof(DataShowPage), CurrentTubeNumber, BtnDataShow);
+        }
 
         //从字典中获取页面
         private Page GetOrCreatePage(Type pageType,int tubeNumber)
@@ -179,6 +183,8 @@ namespace WpfApp4
                     page = new ProcessMonitoringPage(tubeNumber);
                 else if (pageType == typeof(AlarmPage))
                     page = new AlarmPage(tubeNumber);
+                else if (pageType == typeof(DataShowPage))
+                    page = new DataShowPage(tubeNumber);
                 else if (pageType == typeof(MotionControlPage))
                     page = new MotionControlPage();
                 else if (pageType == typeof(HomePage))
