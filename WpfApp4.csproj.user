@@ -5,6 +5,9 @@
     <Compile Update="page\otherpage\spacedataup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="page\usepage\MotionModuleParameterSetup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="page\otherpage\spacedataup.xaml">
@@ -14,6 +17,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="page\usepage\HomePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="page\usepage\MotionModuleParameterSetup.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="page\usepage\ProcessManagementPage.xaml">

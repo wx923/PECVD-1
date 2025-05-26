@@ -52,9 +52,9 @@
                 BorderBrush="LightGray" 
                 BorderThickness="1" 
                 CornerRadius="4"
-                Margin="0,5,0,10">
-            <StackPanel Orientation="Horizontal" Margin="10,5">
-                <ItemsControl ItemsSource="{Binding PlcStatuses}">
+                Margin="0,0,0,0">
+            <StackPanel Orientation="Horizontal" Margin="0,0">
+                <ItemsControl ItemsSource="{Binding FurnaceConnectionStatus}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
@@ -62,18 +62,26 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="5,0" BorderThickness="1" BorderBrush="#DDDDDD" CornerRadius="4" Padding="8,4">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                                    <Ellipse Width="12" Height="12" 
-                                             Margin="5,0"
-                                             Fill="{Binding IsConnected, Converter={StaticResource BoolToColorConverter}}"/>
-                                    <Button Content="{Binding IsConnected, Converter={StaticResource ConnectedTextConverter}}"
-                                            Command="{Binding ConnectCommand}"
-                                            Style="{StaticResource PlcConnectButtonStyle}"
-                                            Margin="5,0,0,0"/>
-                                </StackPanel>
-                            </Border>
+                            <StackPanel Margin="2" Orientation="Horizontal">
+                                <Ellipse Width="20" Height="20">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Fill" Value="Red" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Value}" Value="True">
+                                                    <Setter Property="Fill" Value="Green" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+                                <TextBlock Text="{Binding Key, StringFormat='炉管 {0}'}" VerticalAlignment="Center" />
+                                <!-- 添加按钮，绑定命令 -->
+                                <Button Content="切换状态" 
+                                Command="{Binding DataContext.ToggleFurnaceStatusCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                CommandParameter="{Binding Key}" 
+                                Margin="5,0,0,0" />
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -111,7 +119,6 @@
                              FontSize="18" 
                              HorizontalAlignment="Center"
                              Margin="0,5"/>
-                    
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -130,11 +137,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- 表格边框和网格线 -->
-                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" 
-                              BorderBrush="LightGray"
-                                BorderThickness="1">
+                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -153,8 +156,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <!-- 表头 -->
                                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -165,8 +166,6 @@
                                         <TextBlock Text="数值" Grid.Column="1" Padding="5" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 内偶温度 -->
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -174,11 +173,23 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="内偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures1"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures2"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures3"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures4"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures5"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures6"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures7"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures8"/>
+                                                    <Binding Path="FurnaceData[0].InnerTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- 外偶温度 -->
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -186,23 +197,33 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="外偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[0].OutTemperatures1"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures2"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures3"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures4"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures5"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures6"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures7"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures8"/>
+                                                    <Binding Path="FurnaceData[0].OutTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- He流量 -->
                                 <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="He流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="N2流量" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].N2FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- NH3流量 -->
                                 <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -210,11 +231,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="NH3流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].Nh3FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- SiH4流量 -->
                                 <Border Grid.Row="5" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -222,11 +241,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="SiH4流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].SiH4FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- N2O流量 -->
                                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -234,47 +251,39 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="N2O流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].N2OFlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频A相 -->
                                 <Border Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频A相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="射频功率" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].RfPower, StringFormat='{}{0:F1} W'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频B相 -->
                                 <Border Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频B相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="压力值" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].Pressure, StringFormat='{}{0:F1} Pa'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频C相 -->
                                 <Border Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频C相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="辅热温度" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].AuxiliaryHeatTemperature, StringFormat='{}{0:F1} ℃'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 工艺状态 -->
                                 <Border Grid.Row="10" Grid.ColumnSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -282,7 +291,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="工艺状态" Padding="5"/>
-                                        <TextBlock Text="当前无工艺运行" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[0].ProcessStatus}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -303,7 +312,7 @@
                              FontSize="18" 
                              HorizontalAlignment="Center"
                              Margin="0,5"/>
-                    
+
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -322,11 +331,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- 表格边框和网格线 -->
-                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" 
-                              BorderBrush="LightGray"
-                                BorderThickness="1">
+                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -345,8 +350,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <!-- 表头 -->
                                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -357,8 +360,6 @@
                                         <TextBlock Text="数值" Grid.Column="1" Padding="5" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 内偶温度 -->
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -366,11 +367,23 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="内偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures1"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures2"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures3"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures4"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures5"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures6"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures7"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures8"/>
+                                                    <Binding Path="FurnaceData[1].InnerTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- 外偶温度 -->
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -378,23 +391,33 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="外偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[1].OutTemperatures1"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures2"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures3"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures4"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures5"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures6"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures7"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures8"/>
+                                                    <Binding Path="FurnaceData[1].OutTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- He流量 -->
                                 <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="He流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="N2流量" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].N2FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- NH3流量 -->
                                 <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -402,11 +425,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="NH3流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].Nh3FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- SiH4流量 -->
                                 <Border Grid.Row="5" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -414,11 +435,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="SiH4流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].SiH4FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- N2O流量 -->
                                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -426,47 +445,39 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="N2O流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].N2OFlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频A相 -->
                                 <Border Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频A相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="射频功率" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].RfPower, StringFormat='{}{0:F1} W'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频B相 -->
                                 <Border Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频B相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="压力值" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].Pressure, StringFormat='{}{0:F1} Pa'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频C相 -->
                                 <Border Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频C相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="辅热温度" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].AuxiliaryHeatTemperature, StringFormat='{}{0:F1} ℃'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 工艺状态 -->
                                 <Border Grid.Row="10" Grid.ColumnSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -474,7 +485,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="工艺状态" Padding="5"/>
-                                        <TextBlock Text="当前无工艺运行" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[1].ProcessStatus}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -495,7 +506,7 @@
                              FontSize="18" 
                              HorizontalAlignment="Center"
                              Margin="0,5"/>
-                    
+
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -514,11 +525,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- 表格边框和网格线 -->
-                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" 
-                              BorderBrush="LightGray"
-                                BorderThickness="1">
+                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -537,8 +544,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <!-- 表头 -->
                                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -549,8 +554,6 @@
                                         <TextBlock Text="数值" Grid.Column="1" Padding="5" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 内偶温度 -->
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -558,11 +561,23 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="内偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures1"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures2"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures3"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures4"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures5"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures6"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures7"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures8"/>
+                                                    <Binding Path="FurnaceData[2].InnerTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- 外偶温度 -->
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -570,23 +585,33 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="外偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[2].OutTemperatures1"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures2"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures3"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures4"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures5"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures6"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures7"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures8"/>
+                                                    <Binding Path="FurnaceData[2].OutTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- He流量 -->
                                 <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="He流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="N2流量" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].N2FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- NH3流量 -->
                                 <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -594,11 +619,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="NH3流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].Nh3FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- SiH4流量 -->
                                 <Border Grid.Row="5" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -606,11 +629,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="SiH4流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].SiH4FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- N2O流量 -->
                                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -618,47 +639,39 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="N2O流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].N2OFlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频A相 -->
                                 <Border Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频A相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="射频功率" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].RfPower, StringFormat='{}{0:F1} W'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频B相 -->
                                 <Border Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频B相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="压力值" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].Pressure, StringFormat='{}{0:F1} Pa'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频C相 -->
                                 <Border Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频C相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="辅热温度" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].AuxiliaryHeatTemperature, StringFormat='{}{0:F1} ℃'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 工艺状态 -->
                                 <Border Grid.Row="10" Grid.ColumnSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -666,7 +679,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="工艺状态" Padding="5"/>
-                                        <TextBlock Text="当前无工艺运行" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[2].ProcessStatus}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -687,7 +700,7 @@
                              FontSize="18" 
                              HorizontalAlignment="Center"
                              Margin="0,5"/>
-                    
+
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -706,11 +719,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- 表格边框和网格线 -->
-                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" 
-                              BorderBrush="LightGray"
-                                BorderThickness="1">
+                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -729,8 +738,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <!-- 表头 -->
                                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -741,8 +748,6 @@
                                         <TextBlock Text="数值" Grid.Column="1" Padding="5" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 内偶温度 -->
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -750,11 +755,23 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="内偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures1"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures2"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures3"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures4"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures5"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures6"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures7"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures8"/>
+                                                    <Binding Path="FurnaceData[3].InnerTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- 外偶温度 -->
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -762,23 +779,33 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="外偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[3].OutTemperatures1"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures2"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures3"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures4"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures5"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures6"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures7"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures8"/>
+                                                    <Binding Path="FurnaceData[3].OutTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- He流量 -->
                                 <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="He流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="N2流量" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].N2FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- NH3流量 -->
                                 <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -786,11 +813,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="NH3流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].Nh3FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- SiH4流量 -->
                                 <Border Grid.Row="5" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -798,11 +823,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="SiH4流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].SiH4FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- N2O流量 -->
                                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -810,47 +833,39 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="N2O流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].N2OFlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频A相 -->
                                 <Border Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频A相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="射频功率" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].RfPower, StringFormat='{}{0:F1} W'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频B相 -->
                                 <Border Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频B相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="压力值" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].Pressure, StringFormat='{}{0:F1} Pa'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频C相 -->
                                 <Border Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频C相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="辅热温度" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].AuxiliaryHeatTemperature, StringFormat='{}{0:F1} ℃'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 工艺状态 -->
                                 <Border Grid.Row="10" Grid.ColumnSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -858,7 +873,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="工艺状态" Padding="5"/>
-                                        <TextBlock Text="当前无工艺运行" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[3].ProcessStatus}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -879,7 +894,7 @@
                              FontSize="18" 
                              HorizontalAlignment="Center"
                              Margin="0,5"/>
-                    
+
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -898,11 +913,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- 表格边框和网格线 -->
-                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" 
-                              BorderBrush="LightGray"
-                                BorderThickness="1">
+                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -921,8 +932,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <!-- 表头 -->
                                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -933,8 +942,6 @@
                                         <TextBlock Text="数值" Grid.Column="1" Padding="5" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 内偶温度 -->
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -942,11 +949,23 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="内偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures1"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures2"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures3"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures4"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures5"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures6"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures7"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures8"/>
+                                                    <Binding Path="FurnaceData[4].InnerTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- 外偶温度 -->
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -954,23 +973,33 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="外偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[4].OutTemperatures1"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures2"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures3"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures4"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures5"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures6"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures7"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures8"/>
+                                                    <Binding Path="FurnaceData[4].OutTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- He流量 -->
                                 <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="He流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="N2流量" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].N2FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- NH3流量 -->
                                 <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -978,11 +1007,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="NH3流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].Nh3FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- SiH4流量 -->
                                 <Border Grid.Row="5" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -990,11 +1017,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="SiH4流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].SiH4FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- N2O流量 -->
                                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1002,47 +1027,39 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="N2O流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].N2OFlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频A相 -->
                                 <Border Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频A相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="射频功率" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].RfPower, StringFormat='{}{0:F1} W'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频B相 -->
                                 <Border Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频B相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="压力值" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].Pressure, StringFormat='{}{0:F1} Pa'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频C相 -->
                                 <Border Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频C相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="辅热温度" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].AuxiliaryHeatTemperature, StringFormat='{}{0:F1} ℃'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 工艺状态 -->
                                 <Border Grid.Row="10" Grid.ColumnSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1050,7 +1067,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="工艺状态" Padding="5"/>
-                                        <TextBlock Text="当前无工艺运行" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[4].ProcessStatus}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -1071,7 +1088,7 @@
                              FontSize="18" 
                              HorizontalAlignment="Center"
                              Margin="0,5"/>
-                    
+
                     <Grid Grid.Row="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -1090,13 +1107,10 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- 表格边框和网格线 -->
-                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" 
-                              BorderBrush="LightGray"
-                                BorderThickness="1">
+                        <Border Grid.RowSpan="11" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -1112,8 +1126,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <!-- 表头 -->
                                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1124,8 +1136,6 @@
                                         <TextBlock Text="数值" Grid.Column="1" Padding="5" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 内偶温度 -->
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1133,11 +1143,23 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="内偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures1"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures2"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures3"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures4"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures5"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures6"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures7"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures8"/>
+                                                    <Binding Path="FurnaceData[5].InnerTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- 外偶温度 -->
                                 <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1145,23 +1167,33 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="外偶温度" Padding="5"/>
-                                        <TextBlock Text="0.0, 0.0, 0.0, 0.0, 0.0, 0.0" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Grid.Column="1" Padding="5">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:F1}, {1:F1}, {2:F1}, {3:F1}, {4:F1}, {5:F1}, {6:F1}, {7:F1}, {8:F1}">
+                                                    <Binding Path="FurnaceData[5].OutTemperatures1"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures2"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures3"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures4"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures5"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures6"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures7"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures8"/>
+                                                    <Binding Path="FurnaceData[5].OutTemperatures9"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
                                     </Grid>
                                 </Border>
-
-                                <!-- He流量 -->
                                 <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="He流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="N2流量" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].N2FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- NH3流量 -->
                                 <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1169,11 +1201,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="NH3流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].Nh3FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- SiH4流量 -->
                                 <Border Grid.Row="5" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1181,11 +1211,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="SiH4流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].SiH4FlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- N2O流量 -->
                                 <Border Grid.Row="6" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1193,47 +1221,39 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="N2O流量" Padding="5"/>
-                                        <TextBlock Text="0.0 sccm" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].N2OFlowRate, StringFormat='{}{0:F1} sccm'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频A相 -->
                                 <Border Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频A相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="射频功率" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].RfPower, StringFormat='{}{0:F1} W'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频B相 -->
                                 <Border Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频B相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="压力值" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].Pressure, StringFormat='{}{0:F1} Pa'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 射频C相 -->
                                 <Border Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="射频C相" Padding="5"/>
-                                        <TextBlock Text="0.0 W" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="辅热温度" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].AuxiliaryHeatTemperature, StringFormat='{}{0:F1} ℃'}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
-
-                                <!-- 工艺状态 -->
                                 <Border Grid.Row="10" Grid.ColumnSpan="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -1241,7 +1261,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="工艺状态" Padding="5"/>
-                                        <TextBlock Text="当前无工艺运行" Grid.Column="1" Padding="5"/>
+                                        <TextBlock Text="{Binding FurnaceData[5].ProcessStatus}" Grid.Column="1" Padding="5"/>
                                     </Grid>
                                 </Border>
                             </Grid>

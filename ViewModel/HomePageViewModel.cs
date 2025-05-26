@@ -1,101 +1,74 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WpfApp.Services;
+using WpfApp4.Models;
+using WpfApp4.Services;
 
 namespace WpfApp4.ViewModel
 {
-    public class HomePageViewModel : INotifyPropertyChanged
+    public partial class HomePageViewModel : ObservableObject
     {
-        private readonly PlcCommunicationService _plcService;
-        public ObservableCollection<PlcStatusViewModel> PlcStatuses { get; } = new();
+        private Dictionary<int, bool> _furnaceConnectionStatus;
+        private Dictionary<int, HomePageModel> _furnaceData;
+        public Dictionary<int, bool> FurnaceConnectionStatus
+        {
+            get => _furnaceConnectionStatus;
+            private set => SetProperty(ref _furnaceConnectionStatus, value); // 可通知属性
+        }
+
+        public Dictionary<int, HomePageModel> FurnaceData
+        {
+            get => _furnaceData;
+            private set => SetProperty(ref _furnaceData, value);
+        }
 
         public HomePageViewModel()
         {
-            _plcService = PlcCommunicationService.Instance;
-            InitializePlcStatuses();
+            // 初始化
+            _furnaceConnectionStatus = new Dictionary<int, bool>();
+            _furnaceData = HomePageService.Instance._viewModel;
+            SyncFurnaceStatus();
+
+            // 订阅事件
+            PlcCommunicationService.Instance.ConnectionStateChanged += OnPlcConnectionStateChanged;
         }
 
-        private void InitializePlcStatuses()
+        private void SyncFurnaceStatus()
         {
-            // 直接使用PlcCommunicationService中的连接状态
-            foreach (var plcState in _plcService.ConnectionStates)
+            var states = PlcCommunicationService.Instance.ConnectionStates;
+            var newStatus = new Dictionary<int, bool>();
+            for (int i = 0; i < 6; i++)
             {
-                string name;
-                if (plcState.Key == PlcCommunicationService.PlcType.Motion)
-                {
-                    name = "运动PLC";
-                }
-                else
-                {
-                    int furnaceNumber = (int)plcState.Key + 1;
-                    name = $"炉管{furnaceNumber}";
-                }
-
-                PlcStatuses.Add(new PlcStatusViewModel(name, plcState.Key));
+                newStatus[i] = states[(PlcCommunicationService.PlcType)i];
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class PlcStatusViewModel : INotifyPropertyChanged
-    {
-        private readonly PlcCommunicationService _plcService;
-
-        public string Name { get; }
-        public PlcCommunicationService.PlcType PlcType { get; }
-
-        public bool IsConnected => _plcService.IsConnected(PlcType);
-
-        public ICommand ConnectCommand { get; }
-
-        public PlcStatusViewModel(string name, PlcCommunicationService.PlcType plcType)
-        {
-            Name = name;
-            PlcType = plcType;
-            _plcService = PlcCommunicationService.Instance;
-            
-            ConnectCommand = new AsyncRelayCommand(async () =>
-            {
-                try
-                {
-                    if (IsConnected)
-                    {
-                        _plcService.Disconnect(PlcType);
-                    }
-                    else
-                    {
-                        var result = await _plcService.ConnectAsync(PlcType);
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
-            });
-
-            _plcService.ConnectionStateChanged += OnPlcConnectionStateChanged;
+            FurnaceConnectionStatus = newStatus; // 赋值新字典，触发通知
         }
 
         private void OnPlcConnectionStateChanged(object sender, (PlcCommunicationService.PlcType PlcType, bool IsConnected) e)
         {
-            if (e.PlcType == this.PlcType)
+            int plcIndex = (int)e.PlcType;
+            if (plcIndex < 6) // 只处理炉管 PLC (0-5)
             {
-                OnPropertyChanged(nameof(IsConnected));
+                _furnaceConnectionStatus[plcIndex] = e.IsConnected;
+                // 这里可以选择不直接赋值新字典，而是手动通知
+                OnPropertyChanged(nameof(FurnaceConnectionStatus));
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+        [RelayCommand]
+        private void ToggleFurnaceStatus(int furnaceIndex)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            _furnaceConnectionStatus[furnaceIndex] = true;
+            FurnaceConnectionStatus = new Dictionary<int, bool>(_furnaceConnectionStatus); // 强制替换引用
+            MessageBox.Show($"炉管 {furnaceIndex} 状态已切换为: {_furnaceConnectionStatus[furnaceIndex]}");
         }
+
     }
 } 
